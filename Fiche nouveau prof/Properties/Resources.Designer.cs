@@ -59,25 +59,5 @@ namespace Fiche_nouveau_prof.Properties {
                 resourceCulture = value;
             }
         }
-        
-        /// <summary>
-        ///   Recherche une ressource localisée de type System.Byte[].
-        /// </summary>
-        internal static byte[] NouveauProf {
-            get {
-                object obj = ResourceManager.GetObject("NouveauProf", resourceCulture);
-                return ((byte[])(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Recherche une ressource localisée de type System.Byte[].
-        /// </summary>
-        internal static byte[] NouveauProf1 {
-            get {
-                object obj = ResourceManager.GetObject("NouveauProf1", resourceCulture);
-                return ((byte[])(obj));
-            }
-        }
     }
 }
