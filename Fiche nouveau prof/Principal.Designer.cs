@@ -48,6 +48,7 @@
             // 
             // Nom
             // 
+            this.Nom.CharacterCasing = System.Windows.Forms.CharacterCasing.Lower;
             this.Nom.Location = new System.Drawing.Point(299, 152);
             this.Nom.Name = "Nom";
             this.Nom.Size = new System.Drawing.Size(100, 20);
@@ -55,6 +56,7 @@
             // 
             // Prénom
             // 
+            this.Prénom.CharacterCasing = System.Windows.Forms.CharacterCasing.Lower;
             this.Prénom.Location = new System.Drawing.Point(299, 191);
             this.Prénom.Name = "Prénom";
             this.Prénom.Size = new System.Drawing.Size(100, 20);
@@ -65,24 +67,25 @@
             this.BtnValider.Location = new System.Drawing.Point(299, 386);
             this.BtnValider.Name = "BtnValider";
             this.BtnValider.Size = new System.Drawing.Size(75, 23);
-            this.BtnValider.TabIndex = 3;
+            this.BtnValider.TabIndex = 5;
             this.BtnValider.Text = "Valider";
             this.BtnValider.UseVisualStyleBackColor = true;
             this.BtnValider.Click += new System.EventHandler(this.BtnValider_Click);
             // 
             // Email
             // 
+            this.Email.CharacterCasing = System.Windows.Forms.CharacterCasing.Lower;
             this.Email.Location = new System.Drawing.Point(299, 231);
             this.Email.Name = "Email";
             this.Email.Size = new System.Drawing.Size(100, 20);
-            this.Email.TabIndex = 4;
+            this.Email.TabIndex = 3;
             // 
             // Copieur
             // 
             this.Copieur.Location = new System.Drawing.Point(299, 275);
             this.Copieur.Name = "Copieur";
             this.Copieur.Size = new System.Drawing.Size(100, 20);
-            this.Copieur.TabIndex = 5;
+            this.Copieur.TabIndex = 4;
             // 
             // BtnEnvoyer
             // 

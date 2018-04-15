@@ -17,6 +17,15 @@ namespace Fiche_nouveau_prof
             InitializeComponent();
         }
 
+        private void OuvertureLogiciel(object sender, EventArgs e)
+        {
+            CopieRessources();
+            RemplirListeBox(ListeProfs,
+                Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + "\\Nouveaux profs 2017-2018", "*.*");
+            Nom.Focus();
+            Nom.Select();
+        }
+
         private void CopieFichiersTypeWord(Stream input, Stream output)
         {
             var buffer = new byte[32768];
@@ -39,13 +48,6 @@ namespace Fiche_nouveau_prof
             CopieFichiersTypeWord(source, destination);
             source?.Dispose();
             destination.Dispose();
-        }
-
-        private void OuvertureLogiciel(object sender, EventArgs e)
-        {
-            CopieRessources();
-            RemplirListeBox(ListeProfs,
-                Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + "\\Nouveaux profs 2017-2018", "*.docx");
         }
 
         private void RemplirListeBox(CheckedListBox lsb, string folder, string fileType)
@@ -104,8 +106,8 @@ namespace Fiche_nouveau_prof
                 }
             }
 
-            fichierWord.SaveAs(Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + "\\Nouveaux profs 2017-2018\\Identifiants " + Prénom.Text + " " + Nom.Text + ".docx");
-            fichierWord.ExportAsFixedFormat(Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + "\\Nouveaux profs 2017-2018\\Identifiants " + Prénom.Text + " " + Nom.Text + ".pdf",
+            fichierWord.SaveAs(Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + "\\Nouveaux profs 2017-2018\\Identifiants " + CultureInfo.InvariantCulture.TextInfo.ToTitleCase(Prénom.Text) + " " + CultureInfo.InvariantCulture.TextInfo.ToTitleCase(Nom.Text) + ".docx");
+            fichierWord.ExportAsFixedFormat(Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + "\\Nouveaux profs 2017-2018\\Identifiants " + CultureInfo.InvariantCulture.TextInfo.ToTitleCase(Prénom.Text) + " " + CultureInfo.InvariantCulture.TextInfo.ToTitleCase(Nom.Text) + ".pdf",
                          Word.WdExportFormat.wdExportFormatPDF);
 
             fichierWord.Close();
@@ -113,7 +115,7 @@ namespace Fiche_nouveau_prof
             GC.Collect();
 
             RemplirListeBox(ListeProfs,
-                Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + "\\Nouveaux profs 2017-2018", "*.docx");
+                Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + "\\Nouveaux profs 2017-2018", "*.*");
         }
 
         private void BtnEnvoyer_Click(object sender, EventArgs e)
@@ -122,15 +124,15 @@ namespace Fiche_nouveau_prof
             SmtpClient smtpServer = new SmtpClient("smtp.orange.fr");
             mail.From = new MailAddress("admin@clg-stjacques.fr");
             mail.To.Add("manceaulaurent@yahoo.fr");
-            mail.Subject = "Test Mail - 1";
-            mail.Body = "mail with attachment";
+            mail.Subject = "Identifiants profs";
+            mail.Body = "Ci-joint les identifiants nécessaires";
 
             foreach (var item in ListeProfs.CheckedItems)
             {
                 try
                 {
-                    Attachment attachment;
-                    attachment = new Attachment(Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + "\\Nouveaux profs 2017-2018\\" + item);
+                    //Attachment attachment;
+                    var attachment = new Attachment(Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + "\\Nouveaux profs 2017-2018\\" + item);
                     mail.Attachments.Add(attachment);
                 }
                 catch (Exception ex)
@@ -143,7 +145,7 @@ namespace Fiche_nouveau_prof
             smtpServer.EnableSsl = false;
 
             smtpServer.Send(mail);
-            MessageBox.Show(@"mail Send");
+            MessageBox.Show(@"Mail envoyé");
         }
 
         public static string EnleverAccents(string text)
