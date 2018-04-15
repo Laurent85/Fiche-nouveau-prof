@@ -1,6 +1,6 @@
 ﻿namespace Fiche_nouveau_prof
 {
-    partial class Form1
+    partial class Principal
     {
         /// <summary>
         /// Variable nécessaire au concepteur.
@@ -103,7 +103,7 @@
             this.label1.TabIndex = 7;
             this.label1.Text = "label1";
             // 
-            // Form1
+            // Principal
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -116,9 +116,9 @@
             this.Controls.Add(this.Prénom);
             this.Controls.Add(this.Nom);
             this.Controls.Add(this.ListeProfs);
-            this.Name = "Form1";
-            this.Text = "Form1";
-            this.Load += new System.EventHandler(this.Form1_Load);
+            this.Name = "Principal";
+            this.Text = "Principal";
+            this.Load += new System.EventHandler(this.OuvertureLogiciel);
             this.ResumeLayout(false);
             this.PerformLayout();
 
