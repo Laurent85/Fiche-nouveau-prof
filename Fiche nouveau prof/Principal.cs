@@ -10,14 +10,14 @@ using Word = Microsoft.Office.Interop.Word;
 
 namespace Fiche_nouveau_prof
 {
-    public partial class Form1 : Form
+    public partial class Principal : Form
     {
-        public Form1()
+        public Principal()
         {
             InitializeComponent();
         }
 
-        private void CopieFichiersTypeExcel(Stream input, Stream output)
+        private void CopieFichiersTypeWord(Stream input, Stream output)
         {
             var buffer = new byte[32768];
             while (true)
@@ -36,12 +36,12 @@ namespace Fiche_nouveau_prof
             var assembly = Assembly.GetExecutingAssembly();
             var source = assembly.GetManifestResourceStream("Fiche_nouveau_prof.Resources.NouveauProf.docx");
             var destination = File.Open(chemin, FileMode.CreateNew);
-            CopieFichiersTypeExcel(source, destination);
+            CopieFichiersTypeWord(source, destination);
             source?.Dispose();
             destination.Dispose();
         }
 
-        private void Form1_Load(object sender, EventArgs e)
+        private void OuvertureLogiciel(object sender, EventArgs e)
         {
             CopieRessources();
             RemplirListeBox(ListeProfs,
