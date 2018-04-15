@@ -7,3 +7,6 @@ d:\mes documents\visual studio 2015\Projects\Fiche nouveau prof\Fiche nouveau pr
 d:\mes documents\visual studio 2015\Projects\Fiche nouveau prof\Fiche nouveau prof\obj\Debug\Fiche nouveau prof.exe
 d:\mes documents\visual studio 2015\Projects\Fiche nouveau prof\Fiche nouveau prof\obj\Debug\Fiche nouveau prof.pdb
 d:\mes documents\visual studio 2015\Projects\Fiche nouveau prof\Fiche nouveau prof\obj\Debug\Fiche_nouveau_prof.Principal.resources
+C:\Users\User\documents\visual studio 2015\Projects\Fiche nouveau prof\Fiche nouveau prof\bin\Debug\Fiche nouveau prof.exe.config
+C:\Users\User\documents\visual studio 2015\Projects\Fiche nouveau prof\Fiche nouveau prof\obj\Debug\Fiche nouveau prof.exe
+C:\Users\User\documents\visual studio 2015\Projects\Fiche nouveau prof\Fiche nouveau prof\obj\Debug\Fiche nouveau prof.pdb
