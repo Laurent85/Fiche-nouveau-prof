@@ -13,10 +13,20 @@ C:\Users\User\documents\visual studio 2015\Projects\Fiche nouveau prof\Fiche nou
 C:\Users\User\documents\visual studio 2015\Projects\Fiche nouveau prof\Fiche nouveau prof\bin\Debug\Resources\NouveauProf.docx
 C:\Users\User\documents\visual studio 2015\Projects\Fiche nouveau prof\Fiche nouveau prof\bin\Debug\Fiche nouveau prof.exe
 C:\Users\User\documents\visual studio 2015\Projects\Fiche nouveau prof\Fiche nouveau prof\bin\Debug\Fiche nouveau prof.pdb
-C:\Users\User\documents\visual studio 2015\Projects\Fiche nouveau prof\Fiche nouveau prof\obj\Debug\Fiche nouveau prof.csprojResolveAssemblyReference.cache
 C:\Users\User\documents\visual studio 2015\Projects\Fiche nouveau prof\Fiche nouveau prof\obj\Debug\Fiche_nouveau_prof.Principal.resources
 C:\Users\User\documents\visual studio 2015\Projects\Fiche nouveau prof\Fiche nouveau prof\obj\Debug\Fiche_nouveau_prof.Properties.Resources.resources
 C:\Users\User\documents\visual studio 2015\Projects\Fiche nouveau prof\Fiche nouveau prof\obj\Debug\Fiche nouveau prof.csproj.GenerateResource.Cache
 C:\Users\User\documents\visual studio 2015\Projects\Fiche nouveau prof\Fiche nouveau prof\obj\Debug\Interop.ActiveDs.dll
 C:\Users\User\documents\visual studio 2015\Projects\Fiche nouveau prof\Fiche nouveau prof\obj\Debug\Fiche nouveau prof.csproj.ResolveComReference.cache
 C:\Users\User\documents\visual studio 2015\Projects\Fiche nouveau prof\Fiche nouveau prof\bin\Debug\Resources\FichesEleves.docx
+C:\Users\User\documents\visual studio 2015\Projects\Fiche nouveau prof\Fiche nouveau prof\bin\Debug\EPPlus.dll
+C:\Users\User\documents\visual studio 2015\Projects\Fiche nouveau prof\Fiche nouveau prof\bin\Debug\EPPlus.xml
+C:\Users\User\documents\visual studio 2015\Projects\Fiche nouveau prof\Fiche nouveau prof\bin\Debug\Spire.Common.dll
+C:\Users\User\documents\visual studio 2015\Projects\Fiche nouveau prof\Fiche nouveau prof\bin\Debug\Spire.License.dll
+C:\Users\User\documents\visual studio 2015\Projects\Fiche nouveau prof\Fiche nouveau prof\bin\Debug\Spire.Pdf.dll
+C:\Users\User\documents\visual studio 2015\Projects\Fiche nouveau prof\Fiche nouveau prof\bin\Debug\Spire.XLS.dll
+C:\Users\User\documents\visual studio 2015\Projects\Fiche nouveau prof\Fiche nouveau prof\bin\Debug\Microsoft.mshtml.dll
+C:\Users\User\documents\visual studio 2015\Projects\Fiche nouveau prof\Fiche nouveau prof\bin\Debug\Spire.Common.xml
+C:\Users\User\documents\visual studio 2015\Projects\Fiche nouveau prof\Fiche nouveau prof\bin\Debug\Spire.Pdf.xml
+C:\Users\User\documents\visual studio 2015\Projects\Fiche nouveau prof\Fiche nouveau prof\bin\Debug\Spire.XLS.xml
+C:\Users\User\documents\visual studio 2015\Projects\Fiche nouveau prof\Fiche nouveau prof\bin\Debug\Resources\AD.png

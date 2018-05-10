@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Principal));
             this.ListeRésultats = new System.Windows.Forms.CheckedListBox();
             this.txbNom = new System.Windows.Forms.TextBox();
             this.txbPrénom = new System.Windows.Forms.TextBox();
@@ -59,7 +60,7 @@
             this.grpBxConnexionAd = new System.Windows.Forms.GroupBox();
             this.btnImportUtilisateurs = new System.Windows.Forms.Button();
             this.lblCheminFichierExcel = new System.Windows.Forms.Label();
-            this.button1 = new System.Windows.Forms.Button();
+            this.BtnSynthèse = new System.Windows.Forms.Button();
             this.lblTitre = new System.Windows.Forms.Label();
             this.cboxOu = new System.Windows.Forms.ComboBox();
             this.lblOu = new System.Windows.Forms.Label();
@@ -83,11 +84,13 @@
             this.BtnLancerImportPhotos = new System.Windows.Forms.Button();
             this.lblClasseElève = new System.Windows.Forms.Label();
             this.lblCompteUtilisateur = new System.Windows.Forms.Label();
+            this.PbxLogoAd = new System.Windows.Forms.PictureBox();
             this.grpBxConnexionAd.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.grpboxChoixFiltre.SuspendLayout();
             this.grpbxChoixContexte.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.PhotoElève)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PbxLogoAd)).BeginInit();
             this.SuspendLayout();
             // 
             // ListeRésultats
@@ -381,15 +384,15 @@
             this.lblCheminFichierExcel.Size = new System.Drawing.Size(0, 13);
             this.lblCheminFichierExcel.TabIndex = 35;
             // 
-            // button1
+            // BtnSynthèse
             // 
-            this.button1.Location = new System.Drawing.Point(1341, 50);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 36;
-            this.button1.Text = "button1";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.BtnSynthèse.Location = new System.Drawing.Point(1175, 479);
+            this.BtnSynthèse.Name = "BtnSynthèse";
+            this.BtnSynthèse.Size = new System.Drawing.Size(141, 23);
+            this.BtnSynthèse.TabIndex = 36;
+            this.BtnSynthèse.Text = "Synthèse des comptes";
+            this.BtnSynthèse.UseVisualStyleBackColor = true;
+            this.BtnSynthèse.Click += new System.EventHandler(this.BtnSynthèseDesComptesAd);
             // 
             // lblTitre
             // 
@@ -653,12 +656,23 @@
             this.lblCompteUtilisateur.TabIndex = 55;
             this.lblCompteUtilisateur.Text = "label1";
             // 
+            // PbxLogoAd
+            // 
+            this.PbxLogoAd.Image = global::Fiche_nouveau_prof.Properties.Resources.AD;
+            this.PbxLogoAd.Location = new System.Drawing.Point(18, 12);
+            this.PbxLogoAd.Name = "PbxLogoAd";
+            this.PbxLogoAd.Size = new System.Drawing.Size(230, 94);
+            this.PbxLogoAd.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.PbxLogoAd.TabIndex = 56;
+            this.PbxLogoAd.TabStop = false;
+            // 
             // Principal
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Cornsilk;
             this.ClientSize = new System.Drawing.Size(1472, 791);
+            this.Controls.Add(this.PbxLogoAd);
             this.Controls.Add(this.lblCompteUtilisateur);
             this.Controls.Add(this.lblClasseElève);
             this.Controls.Add(this.BtnLancerImportPhotos);
@@ -675,10 +689,11 @@
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.BtnSuppressionFiche);
             this.Controls.Add(this.lblTitre);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.BtnSynthèse);
             this.Controls.Add(this.grpBxConnexionAd);
             this.Controls.Add(this.BtnEnvoyerMail);
             this.Controls.Add(this.ListeRésultats);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Principal";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Principal";
@@ -692,6 +707,7 @@
             this.grpbxChoixContexte.ResumeLayout(false);
             this.grpbxChoixContexte.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.PhotoElève)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PbxLogoAd)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -730,7 +746,7 @@
         private System.Windows.Forms.GroupBox grpBxConnexionAd;
         private System.Windows.Forms.Button btnImportUtilisateurs;
         private System.Windows.Forms.Label lblCheminFichierExcel;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button BtnSynthèse;
         private System.Windows.Forms.Label lblTitre;
         private System.Windows.Forms.ComboBox cboxOu;
         private System.Windows.Forms.Label lblOu;
@@ -754,6 +770,7 @@
         private System.Windows.Forms.Button BtnLancerImportPhotos;
         private System.Windows.Forms.Label lblClasseElève;
         private System.Windows.Forms.Label lblCompteUtilisateur;
+        private System.Windows.Forms.PictureBox PbxLogoAd;
     }
 }
 

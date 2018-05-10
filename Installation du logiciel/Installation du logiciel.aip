@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<DOCUMENT Type="Advanced Installer" CreateVersion="14.6" version="14.6" Modules="architect" RootPath="." Language="en" Id="{32E67260-9939-495C-A6B8-C0C7615D1588}">
+  <COMPONENT cid="caphyon.advinst.msicomp.ProjectOptionsComponent">
+    <ROW Name="HiddenItems" Value="AppXProductDetailsComponent;AppXDependenciesComponent;AppXAppDetailsComponent;AppXVisualAssetsComponent;AppXCapabilitiesComponent;AppXAppDeclarationsComponent;AppXUriRulesComponent"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.MsiPropsComponent">
+    <ROW Property="AI_BITMAP_DISPLAY_MODE" Value="0"/>
+    <ROW Property="AI_PROPPATH_DIR_PERBUILD_AD.png" Value="..\Fiche nouveau prof\bin\Debug\Resources"/>
+    <ROW Property="AI_PROPPATH_DIR_PERBUILD_EPPlus.dll" Value="..\packages\EPPlus.4.5.1\lib\net40"/>
+    <ROW Property="AI_PROPPATH_DIR_PERBUILD_Fichenouveauprof.exe" Value="..\Fiche nouveau prof\bin\Debug"/>
+    <ROW Property="AI_PROPPATH_DIR_PERBUILD_Fichenouveauprof.exe.config" Value="..\Fiche nouveau prof\bin\Debug"/>
+    <ROW Property="AI_PROPPATH_DIR_PERBUILD_FichesEleves.docx" Value="..\Fiche nouveau prof\bin\Debug\Resources"/>
+    <ROW Property="AI_PROPPATH_DIR_PERBUILD_NouveauProf.docx" Value="..\Fiche nouveau prof\bin\Debug\Resources"/>
+    <ROW Property="AI_PROPPATH_DIR_PERBUILD_Spire.Common.dll" Value="..\..\..\..\..\..\..\Program Files (x86)\e-iceblue\Spire.XLS-FE\Bin\NET3.5"/>
+    <ROW Property="AI_PROPPATH_DIR_PERBUILD_Spire.License.dll" Value="..\..\..\..\..\..\..\Program Files (x86)\e-iceblue\Spire.XLS-FE\Bin\NET3.5"/>
+    <ROW Property="AI_PROPPATH_DIR_PERBUILD_Spire.Pdf.dll" Value="..\..\..\..\..\..\..\Program Files (x86)\e-iceblue\Spire.XLS-FE\Bin\NET3.5"/>
+    <ROW Property="AI_PROPPATH_DIR_PERBUILD_Spire.XLS.dll" Value="..\..\..\..\..\..\..\Program Files (x86)\e-iceblue\Spire.XLS-FE\Bin\NET3.5"/>
+    <ROW Property="AI_PROPPATH_FILENAME_PERBUILD_AD.png" Value="AD.png"/>
+    <ROW Property="AI_PROPPATH_FILENAME_PERBUILD_EPPlus.dll" Value="EPPlus.dll"/>
+    <ROW Property="AI_PROPPATH_FILENAME_PERBUILD_Fichenouveauprof.exe" Value="Fiche nouveau prof.exe"/>
+    <ROW Property="AI_PROPPATH_FILENAME_PERBUILD_Fichenouveauprof.exe.config" Value="Fiche nouveau prof.exe.config"/>
+    <ROW Property="AI_PROPPATH_FILENAME_PERBUILD_FichesEleves.docx" Value="FichesEleves.docx"/>
+    <ROW Property="AI_PROPPATH_FILENAME_PERBUILD_NouveauProf.docx" Value="NouveauProf.docx"/>
+    <ROW Property="AI_PROPPATH_FILENAME_PERBUILD_Spire.Common.dll" Value="Spire.Common.dll"/>
+    <ROW Property="AI_PROPPATH_FILENAME_PERBUILD_Spire.License.dll" Value="Spire.License.dll"/>
+    <ROW Property="AI_PROPPATH_FILENAME_PERBUILD_Spire.Pdf.dll" Value="Spire.Pdf.dll"/>
+    <ROW Property="AI_PROPPATH_FILENAME_PERBUILD_Spire.XLS.dll" Value="Spire.XLS.dll"/>
+    <ROW Property="ALLUSERS" Value="1"/>
+    <ROW Property="ARPCOMMENTS" Value="This installer database contains the logic and data required to install [|ProductName]." ValueLocId="*"/>
+    <ROW Property="Manufacturer" Value="Collège Saint Jacques"/>
+    <ROW Property="ProductCode" Value="1033:{6253D00E-0F73-401A-9CD5-743059F6A79C} " Type="16"/>
+    <ROW Property="ProductLanguage" Value="1033"/>
+    <ROW Property="ProductName" Value="Gestion Active Directory"/>
+    <ROW Property="ProductVersion" Value="1.0.2" Type="32"/>
+    <ROW Property="SecureCustomProperties" Value="OLDPRODUCTS;AI_NEWERPRODUCTFOUND"/>
+    <ROW Property="UpgradeCode" Value="{53E565F7-E64E-440B-B218-C825538EB345}"/>
+    <ROW Property="WindowsType9X" MultiBuildValue="DefaultBuild:Windows 9x/ME" ValueLocId="-"/>
+    <ROW Property="WindowsType9XDisplay" MultiBuildValue="DefaultBuild:Windows 9x/ME" ValueLocId="-"/>
+    <ROW Property="WindowsTypeNT40" MultiBuildValue="DefaultBuild:Windows NT 4.0" ValueLocId="-"/>
+    <ROW Property="WindowsTypeNT40Display" MultiBuildValue="DefaultBuild:Windows NT 4.0" ValueLocId="-"/>
+    <ROW Property="WindowsTypeNT50" MultiBuildValue="DefaultBuild:Windows 2000" ValueLocId="-"/>
+    <ROW Property="WindowsTypeNT50Display" MultiBuildValue="DefaultBuild:Windows 2000" ValueLocId="-"/>
+    <ROW Property="WindowsTypeNT5X" MultiBuildValue="DefaultBuild:Windows XP/2003 RTM, Windows XP/2003 SP1, Windows XP SP2 x86" ValueLocId="-"/>
+    <ROW Property="WindowsTypeNT5XDisplay" MultiBuildValue="DefaultBuild:Windows XP/2003 RTM, Windows XP/2003 SP1, Windows XP SP2 x86" ValueLocId="-"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.MsiDirsComponent">
+    <ROW Directory="APPDIR" Directory_Parent="TARGETDIR" DefaultDir="APPDIR:." IsPseudoRoot="1"/>
+    <ROW Directory="DesktopFolder" Directory_Parent="TARGETDIR" DefaultDir="DESKTO~1|DesktopFolder" IsPseudoRoot="1"/>
+    <ROW Directory="Fichenouveauprof_Dir" Directory_Parent="APPDIR" DefaultDir="FICHEN~1|Fiche nouveau prof"/>
+    <ROW Directory="Resources_Dir" Directory_Parent="Fichenouveauprof_Dir" DefaultDir="RESOUR~1|Resources"/>
+    <ROW Directory="SHORTCUTDIR" Directory_Parent="TARGETDIR" DefaultDir="SHORTC~1|SHORTCUTDIR" IsPseudoRoot="1"/>
+    <ROW Directory="TARGETDIR" DefaultDir="SourceDir"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.MsiCompsComponent">
+    <ROW Component="Fichenouveauprof_ContentOutput_Resources" ComponentId="{404A40B4-1B0B-47A9-A268-99715696B83E}" Directory_="Resources_Dir" Attributes="0" KeyPath="NouveauProf.docx" Type="0"/>
+    <ROW Component="Fichenouveauprof_PrimaryOutput" ComponentId="{BE7A855D-415D-48DE-9613-0F317F4F11D0}" Directory_="Fichenouveauprof_Dir" Attributes="0" KeyPath="Fichenouveauprof.exe"/>
+    <ROW Component="Fichenouveauprof_References" ComponentId="{94CCAAD1-9D7A-4795-AA01-40C8A2931D08}" Directory_="Fichenouveauprof_Dir" Attributes="0" KeyPath="Spire.XLS.dll"/>
+    <ROW Component="ProductInformation" ComponentId="{87C160E7-B789-4283-BEF0-6333A03B4B28}" Directory_="APPDIR" Attributes="4" KeyPath="Version"/>
+    <ROW Component="SHORTCUTDIR" ComponentId="{9983ABC2-20CE-49A6-A06F-8F46E2EBF56D}" Directory_="SHORTCUTDIR" Attributes="0"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.MsiFeatsComponent">
+    <ROW Feature="MainFeature" Title="MainFeature" Description="Description" Display="1" Level="1" Directory_="APPDIR" Attributes="0" Components="Fichenouveauprof_ContentOutput_Resources Fichenouveauprof_PrimaryOutput Fichenouveauprof_References ProductInformation SHORTCUTDIR"/>
+    <ATTRIBUTE name="CurrentFeature" value="MainFeature"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.MsiFilesComponent">
+    <ROW File="AD.png" Component_="Fichenouveauprof_ContentOutput_Resources" FileName="[|AI_PROPPATH_FILENAME_PERBUILD_AD.png]" Attributes="0" SourcePath="&lt;AI_APPPATH_PERBUILD_AD.png&gt;" SelfReg="false"/>
+    <ROW File="EPPlus.dll" Component_="Fichenouveauprof_References" FileName="[|AI_PROPPATH_FILENAME_PERBUILD_EPPlus.dll]" Attributes="0" SourcePath="&lt;AI_APPPATH_PERBUILD_EPPlus.dll&gt;" SelfReg="false" NextFile="Spire.Common.dll"/>
+    <ROW File="Fichenouveauprof.exe" Component_="Fichenouveauprof_PrimaryOutput" FileName="FICHEN~2.EXE|[|AI_PROPPATH_FILENAME_PERBUILD_Fichenouveauprof.exe]" Attributes="0" SourcePath="&lt;AI_APPPATH_PERBUILD_Fichenouveauprof.exe&gt;" SelfReg="false" NextFile="Fichenouveauprof.exe.config" DigSign="true"/>
+    <ROW File="Fichenouveauprof.exe.config" Component_="Fichenouveauprof_PrimaryOutput" FileName="FICHEN~2.CON|[|AI_PROPPATH_FILENAME_PERBUILD_Fichenouveauprof.exe.config]" Attributes="0" SourcePath="&lt;AI_APPPATH_PERBUILD_Fichenouveauprof.exe.config&gt;" SelfReg="false" NextFile="EPPlus.dll"/>
+    <ROW File="FichesEleves.docx" Component_="Fichenouveauprof_ContentOutput_Resources" FileName="FICHES~2.DOC|[|AI_PROPPATH_FILENAME_PERBUILD_FichesEleves.docx]" Attributes="0" SourcePath="&lt;AI_APPPATH_PERBUILD_FichesEleves.docx&gt;" SelfReg="false" NextFile="AD.png"/>
+    <ROW File="NouveauProf.docx" Component_="Fichenouveauprof_ContentOutput_Resources" FileName="NOUVEA~2.DOC|[|AI_PROPPATH_FILENAME_PERBUILD_NouveauProf.docx]" Attributes="0" SourcePath="&lt;AI_APPPATH_PERBUILD_NouveauProf.docx&gt;" SelfReg="false" NextFile="FichesEleves.docx"/>
+    <ROW File="Spire.Common.dll" Component_="Fichenouveauprof_References" FileName="SPIREC~2.DLL|[|AI_PROPPATH_FILENAME_PERBUILD_Spire.Common.dll]" Attributes="0" SourcePath="&lt;AI_APPPATH_PERBUILD_Spire.Common.dll&gt;" SelfReg="false" NextFile="Spire.License.dll"/>
+    <ROW File="Spire.License.dll" Component_="Fichenouveauprof_References" FileName="SPIREL~2.DLL|[|AI_PROPPATH_FILENAME_PERBUILD_Spire.License.dll]" Attributes="0" SourcePath="&lt;AI_APPPATH_PERBUILD_Spire.License.dll&gt;" SelfReg="false" NextFile="Spire.Pdf.dll"/>
+    <ROW File="Spire.Pdf.dll" Component_="Fichenouveauprof_References" FileName="SPIREP~2.DLL|[|AI_PROPPATH_FILENAME_PERBUILD_Spire.Pdf.dll]" Attributes="0" SourcePath="&lt;AI_APPPATH_PERBUILD_Spire.Pdf.dll&gt;" SelfReg="false" NextFile="Spire.XLS.dll"/>
+    <ROW File="Spire.XLS.dll" Component_="Fichenouveauprof_References" FileName="SPIREX~2.DLL|[|AI_PROPPATH_FILENAME_PERBUILD_Spire.XLS.dll]" Attributes="0" SourcePath="&lt;AI_APPPATH_PERBUILD_Spire.XLS.dll&gt;" SelfReg="false" NextFile="NouveauProf.docx"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.AppPathsComponent">
+    <ROW Name="AI_APPPATH_PERBUILD_AD.png" Path="[|AI_PROPPATH_DIR_PERBUILD_AD.png]\[|AI_PROPPATH_FILENAME_PERBUILD_AD.png]" Type="2" Content="0"/>
+    <ROW Name="AI_APPPATH_PERBUILD_EPPlus.dll" Path="[|AI_PROPPATH_DIR_PERBUILD_EPPlus.dll]\[|AI_PROPPATH_FILENAME_PERBUILD_EPPlus.dll]" Type="2" Content="0"/>
+    <ROW Name="AI_APPPATH_PERBUILD_Fichenouveauprof.exe" Path="[|AI_PROPPATH_DIR_PERBUILD_Fichenouveauprof.exe]\[|AI_PROPPATH_FILENAME_PERBUILD_Fichenouveauprof.exe]" Type="2" Content="0"/>
+    <ROW Name="AI_APPPATH_PERBUILD_Fichenouveauprof.exe.config" Path="[|AI_PROPPATH_DIR_PERBUILD_Fichenouveauprof.exe.config]\[|AI_PROPPATH_FILENAME_PERBUILD_Fichenouveauprof.exe.config]" Type="2" Content="0"/>
+    <ROW Name="AI_APPPATH_PERBUILD_FichesEleves.docx" Path="[|AI_PROPPATH_DIR_PERBUILD_FichesEleves.docx]\[|AI_PROPPATH_FILENAME_PERBUILD_FichesEleves.docx]" Type="2" Content="0"/>
+    <ROW Name="AI_APPPATH_PERBUILD_NouveauProf.docx" Path="[|AI_PROPPATH_DIR_PERBUILD_NouveauProf.docx]\[|AI_PROPPATH_FILENAME_PERBUILD_NouveauProf.docx]" Type="2" Content="0"/>
+    <ROW Name="AI_APPPATH_PERBUILD_Spire.Common.dll" Path="[|AI_PROPPATH_DIR_PERBUILD_Spire.Common.dll]\[|AI_PROPPATH_FILENAME_PERBUILD_Spire.Common.dll]" Type="2" Content="0"/>
+    <ROW Name="AI_APPPATH_PERBUILD_Spire.License.dll" Path="[|AI_PROPPATH_DIR_PERBUILD_Spire.License.dll]\[|AI_PROPPATH_FILENAME_PERBUILD_Spire.License.dll]" Type="2" Content="0"/>
+    <ROW Name="AI_APPPATH_PERBUILD_Spire.Pdf.dll" Path="[|AI_PROPPATH_DIR_PERBUILD_Spire.Pdf.dll]\[|AI_PROPPATH_FILENAME_PERBUILD_Spire.Pdf.dll]" Type="2" Content="0"/>
+    <ROW Name="AI_APPPATH_PERBUILD_Spire.XLS.dll" Path="[|AI_PROPPATH_DIR_PERBUILD_Spire.XLS.dll]\[|AI_PROPPATH_FILENAME_PERBUILD_Spire.XLS.dll]" Type="2" Content="0"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.BootstrOptComponent">
+    <ROW BootstrOptKey="GlobalOptions" DownloadFolder="[AppDataFolder][|Manufacturer]\[|ProductName]\prerequisites" Options="2"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.BuildComponent">
+    <ROW BuildKey="DefaultBuild" BuildName="DefaultBuild" BuildOrder="1" BuildType="0" Languages="en" InstallationType="4" UseLargeSchema="true"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.DictionaryComponent">
+    <ROW Path="&lt;AI_DICTS&gt;ui.ail"/>
+    <ROW Path="&lt;AI_DICTS&gt;ui_en.ail"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.FragmentComponent">
+    <ROW Fragment="CommonUI.aip" Path="&lt;AI_FRAGS&gt;CommonUI.aip"/>
+    <ROW Fragment="FolderDlg.aip" Path="&lt;AI_THEMES&gt;classic\fragments\FolderDlg.aip"/>
+    <ROW Fragment="MaintenanceTypeDlg.aip" Path="&lt;AI_THEMES&gt;classic\fragments\MaintenanceTypeDlg.aip"/>
+    <ROW Fragment="MaintenanceWelcomeDlg.aip" Path="&lt;AI_THEMES&gt;classic\fragments\MaintenanceWelcomeDlg.aip"/>
+    <ROW Fragment="SequenceDialogs.aip" Path="&lt;AI_THEMES&gt;classic\fragments\SequenceDialogs.aip"/>
+    <ROW Fragment="Sequences.aip" Path="&lt;AI_FRAGS&gt;Sequences.aip"/>
+    <ROW Fragment="StaticUIStrings.aip" Path="&lt;AI_FRAGS&gt;StaticUIStrings.aip"/>
+    <ROW Fragment="UI.aip" Path="&lt;AI_THEMES&gt;classic\fragments\UI.aip"/>
+    <ROW Fragment="Validation.aip" Path="&lt;AI_FRAGS&gt;Validation.aip"/>
+    <ROW Fragment="VerifyRemoveDlg.aip" Path="&lt;AI_THEMES&gt;classic\fragments\VerifyRemoveDlg.aip"/>
+    <ROW Fragment="VerifyRepairDlg.aip" Path="&lt;AI_THEMES&gt;classic\fragments\VerifyRepairDlg.aip"/>
+    <ROW Fragment="WelcomeDlg.aip" Path="&lt;AI_THEMES&gt;classic\fragments\WelcomeDlg.aip"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.MsiBinaryComponent">
+    <ROW Name="aicustact.dll" SourcePath="&lt;AI_CUSTACTS&gt;aicustact.dll"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.MsiControlEventComponent">
+    <ROW Dialog_="FatalError" Control_="Finish" Event="DoAction" Argument="AI_SHOW_LOG" Condition="(MsiLogFileLocation AND AI_LOG_CHECKBOX)" Ordering="101" MsiKey="FatalError#Finish#DoAction#AI_SHOW_LOG#(MsiLogFileLocation AND AI_LOG_CHECKBOX)"/>
+    <ROW Dialog_="WelcomeDlg" Control_="Next" Event="NewDialog" Argument="FolderDlg" Condition="AI_INSTALL" Ordering="1"/>
+    <ROW Dialog_="FolderDlg" Control_="Next" Event="NewDialog" Argument="VerifyReadyDlg" Condition="AI_INSTALL" Ordering="201"/>
+    <ROW Dialog_="FolderDlg" Control_="Back" Event="NewDialog" Argument="WelcomeDlg" Condition="AI_INSTALL" Ordering="1"/>
+    <ROW Dialog_="MaintenanceWelcomeDlg" Control_="Next" Event="NewDialog" Argument="MaintenanceTypeDlg" Condition="AI_MAINT" Ordering="99"/>
+    <ROW Dialog_="VerifyReadyDlg" Control_="Install" Event="EndDialog" Argument="Return" Condition="AI_MAINT" Ordering="198"/>
+    <ROW Dialog_="VerifyReadyDlg" Control_="Back" Event="NewDialog" Argument="CustomizeDlg" Condition="AI_MAINT" Ordering="202"/>
+    <ROW Dialog_="VerifyReadyDlg" Control_="Install" Event="EndDialog" Argument="Return" Condition="AI_INSTALL" Ordering="197"/>
+    <ROW Dialog_="VerifyReadyDlg" Control_="Back" Event="NewDialog" Argument="FolderDlg" Condition="AI_INSTALL" Ordering="201"/>
+    <ROW Dialog_="CustomizeDlg" Control_="Next" Event="NewDialog" Argument="VerifyReadyDlg" Condition="AI_MAINT" Ordering="101"/>
+    <ROW Dialog_="CustomizeDlg" Control_="Back" Event="NewDialog" Argument="MaintenanceTypeDlg" Condition="AI_MAINT" Ordering="1"/>
+    <ROW Dialog_="MaintenanceTypeDlg" Control_="ChangeButton" Event="NewDialog" Argument="CustomizeDlg" Condition="AI_MAINT" Ordering="501"/>
+    <ROW Dialog_="MaintenanceTypeDlg" Control_="Back" Event="NewDialog" Argument="MaintenanceWelcomeDlg" Condition="AI_MAINT" Ordering="1"/>
+    <ROW Dialog_="MaintenanceTypeDlg" Control_="RemoveButton" Event="NewDialog" Argument="VerifyRemoveDlg" Condition="AI_MAINT AND InstallMode=&quot;Remove&quot;" Ordering="601"/>
+    <ROW Dialog_="VerifyRemoveDlg" Control_="Back" Event="NewDialog" Argument="MaintenanceTypeDlg" Condition="AI_MAINT AND InstallMode=&quot;Remove&quot;" Ordering="1"/>
+    <ROW Dialog_="MaintenanceTypeDlg" Control_="RepairButton" Event="NewDialog" Argument="VerifyRepairDlg" Condition="AI_MAINT AND InstallMode=&quot;Repair&quot;" Ordering="601"/>
+    <ROW Dialog_="VerifyRepairDlg" Control_="Back" Event="NewDialog" Argument="MaintenanceTypeDlg" Condition="AI_MAINT AND InstallMode=&quot;Repair&quot;" Ordering="1"/>
+    <ROW Dialog_="VerifyRepairDlg" Control_="Repair" Event="EndDialog" Argument="Return" Condition="AI_MAINT AND InstallMode=&quot;Repair&quot;" Ordering="399" Options="1"/>
+    <ROW Dialog_="VerifyRemoveDlg" Control_="Remove" Event="EndDialog" Argument="Return" Condition="AI_MAINT AND InstallMode=&quot;Remove&quot;" Ordering="299" Options="1"/>
+    <ROW Dialog_="PatchWelcomeDlg" Control_="Next" Event="NewDialog" Argument="VerifyReadyDlg" Condition="AI_PATCH" Ordering="201"/>
+    <ROW Dialog_="ResumeDlg" Control_="Install" Event="EndDialog" Argument="Return" Condition="AI_RESUME" Ordering="299"/>
+    <ROW Dialog_="VerifyReadyDlg" Control_="Install" Event="EndDialog" Argument="Return" Condition="AI_PATCH" Ordering="199"/>
+    <ROW Dialog_="VerifyReadyDlg" Control_="Back" Event="NewDialog" Argument="PatchWelcomeDlg" Condition="AI_PATCH" Ordering="203"/>
+    <ROW Dialog_="CustomizeDlg" Control_="Next" Event="DoAction" Argument="AI_InstallModeCheck" Condition="AI_MAINT" Ordering="100" MsiKey="CustomizeDlg#Next#DoAction#AI_InstallModeCheck#AI_MAINT"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.MsiCreateFolderComponent">
+    <ROW Directory_="SHORTCUTDIR" Component_="SHORTCUTDIR" ManualDelete="false"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.MsiCustActComponent">
+    <ROW Action="AI_DOWNGRADE" Type="19" Target="4010"/>
+    <ROW Action="AI_DpiContentScale" Type="1" Source="aicustact.dll" Target="DpiContentScale"/>
+    <ROW Action="AI_EnableDebugLog" Type="321" Source="aicustact.dll" Target="EnableDebugLog"/>
+    <ROW Action="AI_InstallModeCheck" Type="1" Source="aicustact.dll" Target="UpdateInstallMode" WithoutSeq="true"/>
+    <ROW Action="AI_PREPARE_UPGRADE" Type="65" Source="aicustact.dll" Target="PrepareUpgrade"/>
+    <ROW Action="AI_RESTORE_LOCATION" Type="65" Source="aicustact.dll" Target="RestoreLocation"/>
+    <ROW Action="AI_ResolveKnownFolders" Type="1" Source="aicustact.dll" Target="AI_ResolveKnownFolders"/>
+    <ROW Action="AI_SHOW_LOG" Type="65" Source="aicustact.dll" Target="LaunchLogFile" WithoutSeq="true"/>
+    <ROW Action="AI_STORE_LOCATION" Type="51" Source="ARPINSTALLLOCATION" Target="[APPDIR]"/>
+    <ROW Action="SET_APPDIR" Type="307" Source="APPDIR" Target="[ProgramFilesFolder][Manufacturer]\[ProductName]"/>
+    <ROW Action="SET_SHORTCUTDIR" Type="307" Source="SHORTCUTDIR" Target="[ProgramMenuFolder][ProductName]"/>
+    <ROW Action="SET_TARGETDIR_TO_APPDIR" Type="51" Source="TARGETDIR" Target="[APPDIR]"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.MsiIconsComponent">
+    <ROW Name="DesktopFolder.exe" SourcePath="..\..\..\..\..\Desktop\icone.ico" Index="0"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.MsiInstExSeqComponent">
+    <ROW Action="AI_DOWNGRADE" Condition="AI_NEWERPRODUCTFOUND AND (UILevel &lt;&gt; 5)" Sequence="210"/>
+    <ROW Action="AI_RESTORE_LOCATION" Condition="APPDIR=&quot;&quot;" Sequence="749"/>
+    <ROW Action="AI_STORE_LOCATION" Condition="(Not Installed) OR REINSTALL" Sequence="1501"/>
+    <ROW Action="AI_PREPARE_UPGRADE" Condition="AI_UPGRADE=&quot;No&quot; AND (Not Installed)" Sequence="1399"/>
+    <ROW Action="AI_ResolveKnownFolders" Sequence="52"/>
+    <ROW Action="AI_EnableDebugLog" Sequence="51"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.MsiInstallUISequenceComponent">
+    <ROW Action="AI_RESTORE_LOCATION" Condition="APPDIR=&quot;&quot;" Sequence="749"/>
+    <ROW Action="AI_ResolveKnownFolders" Sequence="53"/>
+    <ROW Action="AI_DpiContentScale" Sequence="52"/>
+    <ROW Action="AI_EnableDebugLog" Sequence="51"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.MsiLaunchConditionsComponent">
+    <ROW Condition="(VersionNT &lt;&gt; 400)" Description="[ProductName] cannot be installed on [WindowsTypeNT40Display]." DescriptionLocId="AI.LaunchCondition.NoNT40" IsPredefined="true" Builds="DefaultBuild"/>
+    <ROW Condition="(VersionNT &lt;&gt; 500)" Description="[ProductName] cannot be installed on [WindowsTypeNT50Display]." DescriptionLocId="AI.LaunchCondition.NoNT50" IsPredefined="true" Builds="DefaultBuild"/>
+    <ROW Condition="(VersionNT64 OR ((VersionNT &lt;&gt; 501) OR (ServicePackLevel = 3))) AND ((VersionNT &lt;&gt; 502) OR (ServicePackLevel = 2))" Description="[ProductName] cannot be installed on [WindowsTypeNT5XDisplay]." DescriptionLocId="AI.LaunchCondition.NoNT5X" IsPredefined="true" Builds="DefaultBuild"/>
+    <ROW Condition="VersionNT" Description="[ProductName] cannot be installed on [WindowsType9XDisplay]." DescriptionLocId="AI.LaunchCondition.No9X" IsPredefined="true" Builds="DefaultBuild"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.MsiRegsComponent">
+    <ROW Registry="Path" Root="-1" Key="Software\[Manufacturer]\[ProductName]" Name="Path" Value="[APPDIR]" Component_="ProductInformation"/>
+    <ROW Registry="Version" Root="-1" Key="Software\[Manufacturer]\[ProductName]" Name="Version" Value="[ProductVersion]" Component_="ProductInformation"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.MsiShortsComponent">
+    <ROW Shortcut="AI_PROPPATH_FILENAME_PERBUILD_Fiche" Directory_="DesktopFolder" Name="GESTIO~1|Gestion Active Directory" Component_="Fichenouveauprof_PrimaryOutput" Target="[#Fichenouveauprof.exe]" Hotkey="0" Icon_="DesktopFolder.exe" IconIndex="0" ShowCmd="1" WkDir="Fichenouveauprof_Dir"/>
+    <ROW Shortcut="Fichenouveauprof" Directory_="SHORTCUTDIR" Name="GESTIO~1|Gestion Active Directory" Component_="Fichenouveauprof_PrimaryOutput" Target="[#Fichenouveauprof.exe]" Hotkey="0" IconIndex="0" ShowCmd="1"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.MsiThemeComponent">
+    <ATTRIBUTE name="UsedTheme" value="classic"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.MsiUpgradeComponent">
+    <ROW UpgradeCode="[|UpgradeCode]" VersionMin="0.0.1" VersionMax="[|ProductVersion]" Attributes="257" ActionProperty="OLDPRODUCTS"/>
+    <ROW UpgradeCode="[|UpgradeCode]" VersionMin="[|ProductVersion]" Attributes="2" ActionProperty="AI_NEWERPRODUCTFOUND"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.VsProjectComponent">
+    <ROW ProjectId="{cedf500e-0b3c-4d88-9334-a102e2cb3ae4}" ProjectName="Fiche nouveau prof" OutputGroup="PrimaryOutput" OutputFile="Fichenouveauprof.exe" OutputFileShortcut="Fichenouveauprof"/>
+    <ROW ProjectId="{cedf500e-0b3c-4d88-9334-a102e2cb3ae4}" ProjectName="Fiche nouveau prof" OutputGroup="PrimaryOutput" OutputFile="Fichenouveauprof.exe.config"/>
+    <ROW ProjectId="{cedf500e-0b3c-4d88-9334-a102e2cb3ae4}" ProjectName="Fiche nouveau prof" OutputGroup="References" OutputFile="EPPlus.dll"/>
+    <ROW ProjectId="{cedf500e-0b3c-4d88-9334-a102e2cb3ae4}" ProjectName="Fiche nouveau prof" OutputGroup="References" OutputFile="Spire.Common.dll"/>
+    <ROW ProjectId="{cedf500e-0b3c-4d88-9334-a102e2cb3ae4}" ProjectName="Fiche nouveau prof" OutputGroup="References" OutputFile="Spire.License.dll"/>
+    <ROW ProjectId="{cedf500e-0b3c-4d88-9334-a102e2cb3ae4}" ProjectName="Fiche nouveau prof" OutputGroup="References" OutputFile="Spire.Pdf.dll"/>
+    <ROW ProjectId="{cedf500e-0b3c-4d88-9334-a102e2cb3ae4}" ProjectName="Fiche nouveau prof" OutputGroup="References" OutputFile="Spire.XLS.dll"/>
+    <ROW ProjectId="{cedf500e-0b3c-4d88-9334-a102e2cb3ae4}" ProjectName="Fiche nouveau prof" OutputGroup="ContentOutput" OutputFile="NouveauProf.docx"/>
+    <ROW ProjectId="{cedf500e-0b3c-4d88-9334-a102e2cb3ae4}" ProjectName="Fiche nouveau prof" OutputGroup="ContentOutput" OutputFile="FichesEleves.docx"/>
+    <ROW ProjectId="{cedf500e-0b3c-4d88-9334-a102e2cb3ae4}" ProjectName="Fiche nouveau prof" OutputGroup="ContentOutput" OutputFile="AD.png"/>
+  </COMPONENT>
+</DOCUMENT>

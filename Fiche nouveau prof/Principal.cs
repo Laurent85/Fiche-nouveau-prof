@@ -1,6 +1,7 @@
 ﻿using ActiveDs;
 using Microsoft.Office.Interop.Excel;
 using Microsoft.Office.Interop.Word;
+using OfficeOpenXml;
 using System;
 using System.Data;
 using System.DirectoryServices;
@@ -21,7 +22,7 @@ using Application = Microsoft.Office.Interop.Word.Application;
 using DataTable = System.Data.DataTable;
 using MailMessage = System.Net.Mail.MailMessage;
 using Path = System.IO.Path;
-using Range = Microsoft.Office.Interop.Excel.Range;
+using TableStyles = OfficeOpenXml.Table.TableStyles;
 using TextBox = System.Windows.Forms.TextBox;
 
 namespace Fiche_nouveau_prof
@@ -37,7 +38,7 @@ namespace Fiche_nouveau_prof
 
         private string ConnectionAd()
         {
-            string connectionAd = "LDAP://" + txtAdresseIp.Text + "/DC=" + txtDomaine1.Text + ",DC=" + txtDomaine2.Text;
+            var connectionAd = "LDAP://" + txtAdresseIp.Text + "/DC=" + txtDomaine1.Text + ",DC=" + txtDomaine2.Text;
             return connectionAd;
         }
 
@@ -65,11 +66,10 @@ namespace Fiche_nouveau_prof
             var chemin = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\NouveauProf.docx";
             var fichierWord = microsoftWord.Documents.Add(chemin);
             microsoftWord.Visible = false;
-            int i = 0;
-            int j = 0;
+            var i = 0;
+            var j = 0;
 
             foreach (Field champs in fichierWord.Fields)
-            {
                 if (champs.Code.Text.Contains("Prénom") && i == 0)
                 {
                     champs.Select();
@@ -102,7 +102,6 @@ namespace Fiche_nouveau_prof
                     champs.Select();
                     microsoftWord.Selection.TypeText(txbCopieur.Text);
                 }
-            }
 
             fichierWord.SaveAs(@"X:\Année 2017-2018\Nouveaux profs 2017-2018\Identifiants " +
                                CultureInfo.InvariantCulture.TextInfo.ToTitleCase(txbPrénom.Text) + " " +
@@ -122,15 +121,14 @@ namespace Fiche_nouveau_prof
 
         private void BtnEnvoyer_Click(object sender, EventArgs e)
         {
-            MailMessage mail = new MailMessage();
-            SmtpClient smtpServer = new SmtpClient("smtp.orange.fr");
+            var mail = new MailMessage();
+            var smtpServer = new SmtpClient("smtp.orange.fr");
             mail.From = new MailAddress("admin@clg-stjacques.fr");
             mail.To.Add("secretariat@collegesaintjacques.fr");
             mail.Subject = "Identifiants profs";
             mail.Body = "Ci-joint les identifiants nécessaires";
 
             foreach (var item in ListeRésultats.CheckedItems)
-            {
                 try
                 {
                     //Attachment attachment;
@@ -141,7 +139,6 @@ namespace Fiche_nouveau_prof
                 {
                     Console.WriteLine(ex.ToString());
                 }
-            }
             smtpServer.Port = 25;
             smtpServer.Credentials = new NetworkCredential("laurent_manceau@orange.fr", "Lothlu85");
             smtpServer.EnableSsl = false;
@@ -152,52 +149,45 @@ namespace Fiche_nouveau_prof
 
         private void BtnConnexionAD_Click(object sender, EventArgs e)
         {
-            DirectoryEntry entry = new DirectoryEntry(ConnectionAd(), txtDomaine1.Text + "\\" + txtUtilisateur.Text,
+            var entry = new DirectoryEntry(ConnectionAd(), txtDomaine1.Text + "\\" + txtUtilisateur.Text,
                 txtMotDePasse.Text);
-            DirectorySearcher ds = new DirectorySearcher(entry);
+            var ds = new DirectorySearcher(entry);
             ds.Filter = "(&(&(objectClass=user)(memberOf=CN=Administrateurs,CN=Builtin,DC=" + txtDomaine1.Text +
                         ",DC=" + txtDomaine2.Text + "))(samAccountName=" + txtUtilisateur.Text + "))";
-            SearchResult result = ds.FindOne();
+            var result = ds.FindOne();
 
             if (result != null)
-            {
                 lblEtatConnexionAd.Text = @"Connexion réussie !";
-            }
             else
-            {
                 lblEtatConnexionAd.Text = @"Echec de la connexion";
-            }
+            entry.Close();
         }
 
         private void BtnCréationUtilisateurAdClick(object sender, EventArgs e)
         {
-            if ((lblCheminFichierExcel.Text != "") && (cboxOu.SelectedItem.ToString() != "")) ImportUtilisateurs();
-            if ((lblCheminFichierExcel.Text == "") && (txbNom.Text != "") && (txbGroupe.Text != "") &&
-                (txbPrénom.Text != "") && (cboxOu.SelectedItem.ToString() != ""))
+            if (lblCheminFichierExcel.Text != "" && cboxOu.SelectedItem.ToString() != "") ImportUtilisateurs();
+            if (lblCheminFichierExcel.Text == "" && txbNom.Text != "" && txbGroupe.Text != "" &&
+                txbPrénom.Text != "" && cboxOu.SelectedItem.ToString() != "")
                 CréationUtilisateur(txbNom.Text, txbPrénom.Text, txbGroupe.Text, OuChoisie());
             TxbRechercherCompte_TextChanged(sender, e);
         }
 
         private void BtnImportUtilisateurs_Click(object sender, EventArgs e)
         {
-            OpenFileDialog fdlg = new OpenFileDialog();
+            var fdlg = new OpenFileDialog();
             fdlg.Title = @"C# Corner Open File Dialog";
             fdlg.InitialDirectory = @"c:\";
             fdlg.Filter = @"All files (*.*)|*.*|All files (*.*)|*.*";
             fdlg.FilterIndex = 2;
             fdlg.RestoreDirectory = true;
             if (fdlg.ShowDialog() == DialogResult.OK)
-            {
                 lblCheminFichierExcel.Text = fdlg.FileName;
-            }
         }
 
         private void BtnSuppressionFiche_Click(object sender, EventArgs e)
         {
             foreach (var item in ListeRésultats.CheckedItems)
-            {
                 File.Delete(@"X:\Année 2017-2018\Nouveaux profs 2017-2018\" + (string)item);
-            }
             RemplirListeBox(ListeRésultats, @"X:\Année 2017-2018\Nouveaux profs 2017-2018", "*.*");
         }
 
@@ -214,24 +204,27 @@ namespace Fiche_nouveau_prof
 
         private void BtnImportPhotos_Click(object sender, EventArgs e)
         {
-            FolderBrowserDialog folderDlg = new FolderBrowserDialog();
+            var folderDlg = new FolderBrowserDialog();
 
             folderDlg.ShowNewFolderButton = true;
 
             // Show the FolderBrowserDialog.
 
-            DialogResult result = folderDlg.ShowDialog();
+            var result = folderDlg.ShowDialog();
 
             if (result == DialogResult.OK)
 
-            {
                 lblCheminPhotos.Text = folderDlg.SelectedPath;
-            }
         }
 
         private void BtnLancerImportPhotos_Click(object sender, EventArgs e)
         {
             AjouterPhoto();
+        }
+
+        private void BtnSynthèseDesComptesAd(object sender, EventArgs e)
+        {
+            SynthèseComptesAd();
         }
 
         private void TxbRechercherCompte_TextChanged(object sender, EventArgs e)
@@ -277,23 +270,16 @@ namespace Fiche_nouveau_prof
         private void ChkBxSéléctionnerTout_CheckedChanged(object sender, EventArgs e)
         {
             if (ChkBxSéléctionnerTout.Checked)
-            {
-                for (int i = 0; i < ListeRésultats.Items.Count; i++)
-                {
+                for (var i = 0; i < ListeRésultats.Items.Count; i++)
                     ListeRésultats.SetItemChecked(i, true);
-                }
-            }
             else
-            {
-                for (int i = 0; i < ListeRésultats.Items.Count; i++)
-                {
+                for (var i = 0; i < ListeRésultats.Items.Count; i++)
                     ListeRésultats.SetItemChecked(i, false);
-                }
-            }
         }
 
         private void ListeRésultats_SelectedIndexChanged(object sender, EventArgs e)
         {
+            if (rdBtnTravaillerSurAd.Checked)
             AfficherPhotoElève();
         }
 
@@ -367,22 +353,6 @@ namespace Fiche_nouveau_prof
             }
         }
 
-        private void button1_Click(object sender, EventArgs e)
-        {
-            //SupprimerPermissions("Profs", @"\\serveur2008\Eleves\Boilou2");
-            //SupprimerToutesPermissions(@"\\serveur2008\Eleves\Boilou2");
-            //DéfinirPermissions("Administrateurs", @"\\serveur2008\Eleves\Boilou2", FileSystemRights.FullControl,AccessControlType.Allow);
-            //ModifierPermissions("Administrateurs", @"\\serveur2008\Eleves\Boilou2", FileSystemRights.Read,AccessControlType.Allow);
-            //PartagerDossier(@"E:\Commun_prof\Polices", @"Polices$", @"Laurent", "Administrateurs");
-            //AjouterPhoto();
-            //AfficherPhotoElève("Achale");
-            //SynthèseComptesAd();
-            //RemplirComboboxOu();
-            //RemplirListBoxAd("Person", "DisplayName");
-            //RemplirListBoxAd("Computer", "Name");
-            //RemplirListBoxAd("Group", "Name");
-        }
-
         private void CopieRessources(string fichierSource, string fichierDestination)
         {
             var chemin = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + fichierDestination;
@@ -431,7 +401,7 @@ namespace Fiche_nouveau_prof
             txt = txt.Replace(" ", "");
             txt = txt.ToLower();
             txt = txt.First().ToString().ToUpper() + txt.Substring(1);
-            byte[]
+            var
                 bytes = Encoding.GetEncoding("Cyrillic")
                     .GetBytes(txt); //Tailspin uses Cyrillic (ISO-8859-5); others use Hebraw (ISO-8859-8)
             return Encoding.ASCII.GetString(bytes);
@@ -447,12 +417,8 @@ namespace Fiche_nouveau_prof
         {
             string filtre = null;
             foreach (RadioButton filtrechoisi in grpbxChoixContexte.Controls)
-            {
                 if (filtrechoisi.Checked)
-                {
                     filtre = filtrechoisi.Text;
-                }
-            }
             return filtre;
         }
 
@@ -460,31 +426,25 @@ namespace Fiche_nouveau_prof
         {
             string filtre = null;
             foreach (RadioButton filtrechoisi in grpboxChoixFiltre.Controls)
-            {
                 if (filtrechoisi.Checked)
-                {
                     filtre = filtrechoisi.Text;
-                }
-            }
             return filtre;
         }
 
         private void RemplirComboboxOu()
         {
-            DirectoryEntry rootDse =
+            var rootDse =
                 new DirectoryEntry(
                     @"LDAP://" + txtAdresseIp.Text + "/OU=college,DC=" + txtDomaine1.Text + ",DC=" + txtDomaine2.Text,
                     @"stj\administrateur", "Lothlu85");
 
-            DirectorySearcher ouSearch = new DirectorySearcher(rootDse);
+            var ouSearch = new DirectorySearcher(rootDse);
             ouSearch.Filter = "(objectCategory=OrganizationalUnit)";
             SearchResultCollection résultats;
             résultats = ouSearch.FindAll();
 
             foreach (SearchResult résultat in résultats)
-            {
                 cboxOu.Items.Add(résultat.Properties["Name"][0].ToString());
-            }
 
             cboxOu.Refresh();
         }
@@ -492,24 +452,22 @@ namespace Fiche_nouveau_prof
         private void RemplirListeBox(CheckedListBox lsb, string folder, string fileType)
         {
             lsb.Items.Clear();
-            DirectoryInfo dinfo = new DirectoryInfo(folder);
-            FileInfo[] files = dinfo.GetFiles(fileType);
-            foreach (FileInfo file in files)
-            {
+            var dinfo = new DirectoryInfo(folder);
+            var files = dinfo.GetFiles(fileType);
+            foreach (var file in files)
                 lsb.Items.Add(file.Name);
-            }
             lblNombreListeProfs.Text = lsb.Items.Count + @" enregistrements";
         }
 
         private void RemplirListBoxAd(string catégorie, string propriété)
         {
             ListeRésultats.Items.Clear();
-            DirectoryEntry rootDse =
+            var rootDse =
                 new DirectoryEntry(
                     @"LDAP://" + txtAdresseIp.Text + "/OU=" + cboxOu.SelectedItem + ",OU=college,DC=" +
                     txtDomaine1.Text + ",DC=" + txtDomaine2.Text, @"stj\administrateur", "Lothlu85");
 
-            DirectorySearcher ouSearch = new DirectorySearcher(rootDse);
+            var ouSearch = new DirectorySearcher(rootDse);
             if (TxbRechercherCompte.Text != "")
                 ouSearch.Filter = "(&(objectCategory=" + catégorie + ") (name=*" + TxbRechercherCompte.Text + "*))";
             else ouSearch.Filter = "(objectCategory=" + catégorie + ")";
@@ -518,9 +476,7 @@ namespace Fiche_nouveau_prof
             résultats = ouSearch.FindAll();
 
             foreach (SearchResult résultat in résultats)
-            {
                 ListeRésultats.Items.Add(résultat.Properties[propriété][0].ToString());
-            }
 
             //cboxOu.Refresh();
             lblNombreListeProfs.Text = ListeRésultats.Items.Count + @" enregistrements";
@@ -557,14 +513,14 @@ namespace Fiche_nouveau_prof
 
         private void ImportUtilisateurs()
         {
-            Microsoft.Office.Interop.Excel.Application xlApp = new Microsoft.Office.Interop.Excel.Application();
-            Workbook xlWorkbook = xlApp.Workbooks.Open(lblCheminFichierExcel.Text);
+            var xlApp = new Microsoft.Office.Interop.Excel.Application();
+            var xlWorkbook = xlApp.Workbooks.Open(lblCheminFichierExcel.Text);
             _Worksheet xlWorksheet = xlWorkbook.Sheets[1];
-            Range xlRange = xlWorksheet.UsedRange;
+            var xlRange = xlWorksheet.UsedRange;
 
-            int rowCount = xlRange.Rows.Count;
+            var rowCount = xlRange.Rows.Count;
 
-            for (int i = 2; i <= rowCount; i++)
+            for (var i = 2; i <= rowCount; i++)
             {
                 CréationDossierUtilisateur(xlRange.Cells[i, 2].Value2.ToString());
                 CréationUtilisateur(xlRange.Cells[i, 2].Value2.ToString(), xlRange.Cells[i, 3].Value2.ToString(),
@@ -581,20 +537,20 @@ namespace Fiche_nouveau_prof
             nom = EnleverAccents(nom);
             prénom = EnleverAccents(prénom);
 
-            int i = 1;
-            string nouveauNom = nom;
+            var i = 1;
+            var nouveauNom = nom;
             while (UtilisateurExiste(nouveauNom))
             {
                 nouveauNom = nom + i;
                 i++;
             }
 
-            string adPath1 = "LDAP://" + txtAdresseIp.Text + "/OU=" + ou + ", OU=college, DC=" + txtDomaine1.Text +
-                             ",DC=" + txtDomaine2.Text;
-            DirectoryEntry entry = new DirectoryEntry(adPath1, txtDomaine1.Text + "\\" + txtUtilisateur.Text,
+            var adPath1 = "LDAP://" + txtAdresseIp.Text + "/OU=" + ou + ", OU=college, DC=" + txtDomaine1.Text +
+                          ",DC=" + txtDomaine2.Text;
+            var entry = new DirectoryEntry(adPath1, txtDomaine1.Text + "\\" + txtUtilisateur.Text,
                 txtMotDePasse.Text);
-            DirectoryEntries users = entry.Children;
-            DirectoryEntry newuser = users.Add("CN=" + nouveauNom, "user");
+            var users = entry.Children;
+            var newuser = users.Add("CN=" + nouveauNom, "user");
             newuser.Properties["samAccountName"].Value = nouveauNom;
             newuser.Properties["uid"].Value = nouveauNom;
             newuser.Properties["userPrincipalName"].Value = nouveauNom + "@stj.lan";
@@ -603,13 +559,9 @@ namespace Fiche_nouveau_prof
             newuser.Properties["displayname"].Add(nom + " " + prénom);
             newuser.Properties["mail"].Add(prénom + "." + nom + "@clg-stjacques.fr");
             if (ou == "Eleves")
-            {
                 newuser.Properties["description"].Add("Eleve de " + groupe);
-            }
             if (ou == "Profs")
-            {
                 newuser.Properties["description"].Add(groupe);
-            }
             newuser.Properties["profilePath"].Add(@"\\Serveur2008\profil\" + ou + @"\" + nouveauNom);
             newuser.Properties["homedirectory"].Add(@"\\Serveur2008\" + ou + @"\" + nouveauNom);
             newuser.Properties["homedrive"].Add("H:");
@@ -674,18 +626,16 @@ namespace Fiche_nouveau_prof
         {
             try
             {
-                DirectoryEntry entry =
+                var entry =
                     new DirectoryEntry(
                         "LDAP://" + txtAdresseIp.Text + "/OU=" + ou + ", OU=college, DC=" + txtDomaine1.Text + ",DC=" +
                         txtDomaine2.Text, @"stj\administrateur", "Lothlu85");
-                DirectoryEntry group = entry.Children.Add("CN=" + groupe, "group");
+                var group = entry.Children.Add("CN=" + groupe, "group");
                 group.Properties["sAmAccountName"].Value = groupe;
                 if (groupe == "Eleves")
-                {
                     group.Properties["groupType"].Value =
                         ADS_GROUP_TYPE_ENUM.ADS_GROUP_TYPE_DOMAIN_LOCAL_GROUP |
                         ADS_GROUP_TYPE_ENUM.ADS_GROUP_TYPE_SECURITY_ENABLED;
-                }
                 group.CommitChanges();
                 entry.Close();
             }
@@ -697,11 +647,11 @@ namespace Fiche_nouveau_prof
 
         private void CréationGroupeDistribution(string ou, string groupe)
         {
-            DirectoryEntry entry =
+            var entry =
                 new DirectoryEntry(
                     "LDAP://" + txtAdresseIp.Text + "/OU=" + ou + ", OU=college, DC=" + txtDomaine1.Text + ",DC=" +
                     txtDomaine2.Text, @"stj\administrateur", "Lothlu85");
-            DirectoryEntry group = entry.Children.Add("CN=distri-" + groupe, "group");
+            var group = entry.Children.Add("CN=distri-" + groupe, "group");
             group.Properties["sAmAccountName"].Value = "distri-" + groupe;
             group.Properties["groupType"].Value = 0x2;
             group.Properties["mail"].Value = "Classe" + groupe + "@clg-stjacques.fr";
@@ -711,7 +661,7 @@ namespace Fiche_nouveau_prof
 
         private void AjouterUtilisateurAuGroupe(string userId, string groupName, string ou)
         {
-            DirectoryEntry dirEntry =
+            var dirEntry =
                 new DirectoryEntry(
                     "LDAP://" + txtAdresseIp.Text + "/CN=" + groupName + ", OU=" + ou + ", OU=college, DC=" +
                     txtDomaine1.Text + ",DC=" + txtDomaine2.Text, @"stj\administrateur", "Lothlu85",
@@ -724,13 +674,13 @@ namespace Fiche_nouveau_prof
         private void DéfinirPermissions(string utilisateur, string cheminDossier, FileSystemRights accès,
             AccessControlType accèsType)
         {
-            DirectoryEntry deOu =
+            var deOu =
                 new DirectoryEntry(
                     "LDAP://" + txtAdresseIp.Text + "/DC=" + txtDomaine1.Text + ",DC=" + txtDomaine2.Text,
                     @"stj\administrateur", "Lothlu85", AuthenticationTypes.Secure);
-            DirectorySearcher rechercher = new DirectorySearcher(deOu, "(sAMAccountName=" + utilisateur + ")");
-            SearchResult compteAd = rechercher.FindOne();
-            SecurityIdentifier sid = new SecurityIdentifier(compteAd.Properties["objectSid"][0] as byte[], 0);
+            var rechercher = new DirectorySearcher(deOu, "(sAMAccountName=" + utilisateur + ")");
+            var compteAd = rechercher.FindOne();
+            var sid = new SecurityIdentifier(compteAd.Properties["objectSid"][0] as byte[], 0);
 
             var directoryInfo = new DirectoryInfo(cheminDossier);
             var directorySecurity = directoryInfo.GetAccessControl();
@@ -744,15 +694,15 @@ namespace Fiche_nouveau_prof
 
         private void PartagerDossier(string folderPath, string shareName, string description, string utilisateur)
         {
-            DirectoryEntry deOu =
+            var deOu =
                 new DirectoryEntry(
                     "LDAP://" + txtAdresseIp.Text + "/DC=" + txtDomaine1.Text + ",DC=" + txtDomaine2.Text,
                     @"stj\administrateur", "Lothlu85", AuthenticationTypes.Secure);
-            DirectorySearcher rechercher = new DirectorySearcher(deOu, "(sAMAccountName=" + utilisateur + ")");
-            SearchResult compteAd = rechercher.FindOne();
-            SecurityIdentifier sid = new SecurityIdentifier(compteAd.Properties["objectSid"][0] as byte[], 0);
+            var rechercher = new DirectorySearcher(deOu, "(sAMAccountName=" + utilisateur + ")");
+            var compteAd = rechercher.FindOne();
+            var sid = new SecurityIdentifier(compteAd.Properties["objectSid"][0] as byte[], 0);
 
-            byte[] utenteSidArray = new byte[sid.BinaryLength];
+            var utenteSidArray = new byte[sid.BinaryLength];
             sid.GetBinaryForm(utenteSidArray, 0);
 
             ManagementObject oGrpTrustee = new ManagementClass(new ManagementPath("Win32_Trustee"), null);
@@ -771,14 +721,14 @@ namespace Fiche_nouveau_prof
             oGrpSecurityDescriptor["ControlFlags"] = 4; //SE_DACL_PRESENT
             oGrpSecurityDescriptor["DACL"] = new object[] { oGrpAce };
             //for creating share on remote computer use:
-            ConnectionOptions options = new ConnectionOptions();
+            var options = new ConnectionOptions();
             options.Username = "administrateur";
             options.Password = "Lothlu85";
             var wmiScope = new ManagementScope(@"\\serveur2008\root\cimv2", options);
             wmiScope.Connect();
-            ManagementClass wmiShare = new ManagementClass(wmiScope, new ManagementPath("Win32_Share"), null);
-            ManagementClass mc = new ManagementClass("win32_share");
-            ManagementBaseObject inParams = wmiShare.GetMethodParameters("Create");
+            var wmiShare = new ManagementClass(wmiScope, new ManagementPath("Win32_Share"), null);
+            var mc = new ManagementClass("win32_share");
+            var inParams = wmiShare.GetMethodParameters("Create");
             inParams["Description"] = description;
             inParams["Name"] = shareName;
             inParams["Path"] = folderPath;
@@ -786,31 +736,27 @@ namespace Fiche_nouveau_prof
             inParams["MaximumAllowed"] = null;
             inParams["Password"] = null;
             inParams["Access"] = oGrpSecurityDescriptor;
-            ManagementBaseObject outParams = wmiShare.InvokeMethod("Create", inParams, null);
+            var outParams = wmiShare.InvokeMethod("Create", inParams, null);
         }
 
         private void SuppressionCompteAd()
         {
-            DataTable liste = new DataTable();
+            var liste = new DataTable();
             liste.Columns.Add("Chemin");
             liste.Columns.Add("Compte");
             foreach (var item in ListeRésultats.CheckedItems)
             {
-                DirectoryEntry rootDse =
+                var rootDse =
                     new DirectoryEntry(
                         @"LDAP://" + txtAdresseIp.Text + "/OU=" + cboxOu.SelectedItem + ",OU=college,DC=" +
                         txtDomaine1.Text + ",DC=" + txtDomaine2.Text, @"stj\administrateur", "Lothlu85");
-                DirectorySearcher ouSearch = new DirectorySearcher(rootDse);
+                var ouSearch = new DirectorySearcher(rootDse);
                 if (rdBtnUtilisateurs.Checked)
-                {
                     ouSearch.Filter = "(&(objectCategory=Person)(objectClass=user)(displayName=" + item + "))";
-                }
                 if (rdBtnGroupes.Checked)
-                {
                     ouSearch.Filter = "(&(objectCategory=Group)(Name=" + item + "))";
-                }
-                SearchResult résultats = ouSearch.FindOne();
-                DataRow row = liste.NewRow();
+                var résultats = ouSearch.FindOne();
+                var row = liste.NewRow();
                 if (résultats != null)
                 {
                     row["Chemin"] = résultats.Path;
@@ -819,7 +765,7 @@ namespace Fiche_nouveau_prof
                 liste.Rows.Add(row);
             }
 
-            DialogResult dialogResult =
+            var dialogResult =
                 MessageBox.Show(@"Etes vous certain de vouloir supprimer " + liste.Rows.Count + @" enregistrement(s) ?",
                     @"Suppression de compte(s)", MessageBoxButtons.YesNo);
 
@@ -827,11 +773,11 @@ namespace Fiche_nouveau_prof
             {
                 foreach (DataRow rang in liste.Rows)
                 {
-                    DirectoryEntry ad = new DirectoryEntry(
+                    var ad = new DirectoryEntry(
                         @"LDAP://" + txtAdresseIp.Text + "/OU=" + cboxOu.SelectedItem + ",OU=college,DC=" +
                         txtDomaine1.Text + ",DC=" + txtDomaine2.Text, @"stj\administrateur", "Lothlu85");
-                    DirectoryEntries toutsLesRésultats = ad.Children;
-                    DirectoryEntry compteASupprimer = toutsLesRésultats.Find("CN=" + rang["Compte"]);
+                    var toutsLesRésultats = ad.Children;
+                    var compteASupprimer = toutsLesRésultats.Find("CN=" + rang["Compte"]);
                     SuppressionDossier(@"\\Serveur2008\" + OuChoisie() + @"\" + rang["Compte"]);
                     SuppressionDossier(@"\\Serveur2008\Desktop$\" + rang["Compte"]);
                     SuppressionDossier(@"\\Serveur2008\DesktopProfs$\" + rang["Compte"]);
@@ -850,7 +796,7 @@ namespace Fiche_nouveau_prof
 
         private void SuppressionDossier(string chemin)
         {
-            DirectoryInfo dir = new DirectoryInfo(chemin);
+            var dir = new DirectoryInfo(chemin);
 
             if (dir.Exists)
             {
@@ -858,28 +804,26 @@ namespace Fiche_nouveau_prof
                 foreach (var subDir in dir.GetDirectories())
                     subDir.Attributes = FileAttributes.Normal;
                 foreach (var file in dir.GetFiles())
-                {
                     file.Attributes = FileAttributes.Normal;
-                }
                 dir.Delete(true);
             }
         }
 
         private void SupprimerPermissions(string utilisateur, string cheminDossier)
         {
-            DirectoryEntry deOu =
+            var deOu =
                 new DirectoryEntry(
                     "LDAP://" + txtAdresseIp.Text + "/DC=" + txtDomaine1.Text + ",DC=" + txtDomaine2.Text,
                     @"stj\administrateur", "Lothlu85", AuthenticationTypes.Secure);
-            DirectorySearcher rechercher = new DirectorySearcher(deOu, "(sAMAccountName=" + utilisateur + ")");
-            SearchResult compteAd = rechercher.FindOne();
-            SecurityIdentifier sid = new SecurityIdentifier(compteAd.Properties["objectSid"][0] as byte[], 0);
+            var rechercher = new DirectorySearcher(deOu, "(sAMAccountName=" + utilisateur + ")");
+            var compteAd = rechercher.FindOne();
+            var sid = new SecurityIdentifier(compteAd.Properties["objectSid"][0] as byte[], 0);
 
             var directoryInfo = new DirectoryInfo(cheminDossier);
             var directorySecurity = directoryInfo.GetAccessControl();
 
-            DirectorySecurity objSecObj = directoryInfo.GetAccessControl();
-            AuthorizationRuleCollection acl = directorySecurity.GetAccessRules(true, true, typeof(NTAccount));
+            var objSecObj = directoryInfo.GetAccessControl();
+            var acl = directorySecurity.GetAccessRules(true, true, typeof(NTAccount));
             objSecObj.SetAccessRuleProtection(true, false); //to remove inherited permissions
 
             objSecObj.PurgeAccessRules(sid); //same as use objSecObj.RemoveAccessRuleSpecific(ace);
@@ -890,14 +834,12 @@ namespace Fiche_nouveau_prof
         private void SupprimerToutesPermissions(string cheminDossier)
         {
             var directoryInfo = new DirectoryInfo(cheminDossier);
-            DirectorySecurity objSecObj = directoryInfo.GetAccessControl();
-            AuthorizationRuleCollection acl = objSecObj.GetAccessRules(true, true, typeof(NTAccount));
+            var objSecObj = directoryInfo.GetAccessControl();
+            var acl = objSecObj.GetAccessRules(true, true, typeof(NTAccount));
             objSecObj.SetAccessRuleProtection(true, false); //to remove inherited permissions
             foreach (FileSystemAccessRule ace in acl) //to remove any other permission
-            {
                 objSecObj.PurgeAccessRules(ace
                     .IdentityReference); //same as use objSecObj.RemoveAccessRuleSpecific(ace);
-            }
 
             directoryInfo.SetAccessControl(objSecObj);
         }
@@ -905,13 +847,13 @@ namespace Fiche_nouveau_prof
         private void ModifierPermissions(string utilisateur, string cheminDossier, FileSystemRights accès,
             AccessControlType accèsType)
         {
-            DirectoryEntry deOu =
+            var deOu =
                 new DirectoryEntry(
                     "LDAP://" + txtAdresseIp.Text + "/DC=" + txtDomaine1.Text + ",DC=" + txtDomaine2.Text,
                     @"stj\administrateur", "Lothlu85", AuthenticationTypes.Secure);
-            DirectorySearcher rechercher = new DirectorySearcher(deOu, "(sAMAccountName=" + utilisateur + ")");
-            SearchResult compteAd = rechercher.FindOne();
-            SecurityIdentifier sid = new SecurityIdentifier(compteAd.Properties["objectSid"][0] as byte[], 0);
+            var rechercher = new DirectorySearcher(deOu, "(sAMAccountName=" + utilisateur + ")");
+            var compteAd = rechercher.FindOne();
+            var sid = new SecurityIdentifier(compteAd.Properties["objectSid"][0] as byte[], 0);
 
             var directoryInfo = new DirectoryInfo(cheminDossier);
             var directorySecurity = directoryInfo.GetAccessControl();
@@ -926,19 +868,19 @@ namespace Fiche_nouveau_prof
 
         private void RazMotDePasse()
         {
-            DataTable liste = new DataTable();
+            var liste = new DataTable();
             liste.Columns.Add("Chemin");
             liste.Columns.Add("Compte");
             foreach (var item in ListeRésultats.CheckedItems)
             {
-                DirectoryEntry rootDse =
+                var rootDse =
                     new DirectoryEntry(
                         @"LDAP://" + txtAdresseIp.Text + "/OU=" + cboxOu.SelectedItem + ",OU=college,DC=" +
                         txtDomaine1.Text + ",DC=" + txtDomaine2.Text, @"stj\administrateur", "Lothlu85");
-                DirectorySearcher ouSearch = new DirectorySearcher(rootDse);
+                var ouSearch = new DirectorySearcher(rootDse);
                 ouSearch.Filter = "(&(objectCategory=Person)(objectClass=user)(displayName=" + item + "))";
-                SearchResult résultats = ouSearch.FindOne();
-                DataRow row = liste.NewRow();
+                var résultats = ouSearch.FindOne();
+                var row = liste.NewRow();
                 if (résultats != null)
                 {
                     row["Chemin"] = résultats.Path;
@@ -947,7 +889,7 @@ namespace Fiche_nouveau_prof
                 liste.Rows.Add(row);
             }
 
-            DialogResult dialogResult =
+            var dialogResult =
                 MessageBox.Show(
                     @"Etes vous certain de vouloir réinitialiser le mot de passe pour " + liste.Rows.Count +
                     @" enregistrement(s) ?", @"Réinitialisation de mot de passe)", MessageBoxButtons.YesNo);
@@ -956,7 +898,7 @@ namespace Fiche_nouveau_prof
             {
                 foreach (DataRow rang in liste.Rows)
                 {
-                    DirectoryEntry user =
+                    var user =
                         new DirectoryEntry(rang["Chemin"].ToString(), @"stj\administrateur", "Lothlu85");
                     user.Invoke("SetPassword", "Toto1234");
                     user.Properties["pwdLastSet"].Value = 0;
@@ -973,27 +915,23 @@ namespace Fiche_nouveau_prof
 
         private void AjouterPhoto()
         {
-            DataTable liste = new DataTable();
+            var liste = new DataTable();
             liste.Columns.Add("Chemin");
             liste.Columns.Add("Compte");
             liste.Columns.Add("NomComplet");
             foreach (var item in ListeRésultats.CheckedItems)
             {
-                DirectoryEntry rootDse =
+                var rootDse =
                     new DirectoryEntry(
                         @"LDAP://" + txtAdresseIp.Text + "/OU=" + cboxOu.SelectedItem + ",OU=college,DC=" +
                         txtDomaine1.Text + ",DC=" + txtDomaine2.Text, @"stj\administrateur", "Lothlu85");
-                DirectorySearcher ouSearch = new DirectorySearcher(rootDse);
+                var ouSearch = new DirectorySearcher(rootDse);
                 if (rdBtnUtilisateurs.Checked)
-                {
                     ouSearch.Filter = "(&(objectCategory=Person)(objectClass=user)(displayName=" + item + "))";
-                }
                 if (rdBtnGroupes.Checked)
-                {
                     ouSearch.Filter = "(&(objectCategory=Group)(Name=" + item + "))";
-                }
-                SearchResult résultats = ouSearch.FindOne();
-                DataRow row = liste.NewRow();
+                var résultats = ouSearch.FindOne();
+                var row = liste.NewRow();
                 if (résultats != null)
                 {
                     row["Chemin"] = résultats.Path;
@@ -1003,19 +941,19 @@ namespace Fiche_nouveau_prof
                 liste.Rows.Add(row);
             }
 
-            DialogResult dialogResult =
-               MessageBox.Show(@"Etes vous certain de vouloir ajouter " + liste.Rows.Count + @" photo(s) ?",
-                   @"Ajout de photoe(s)", MessageBoxButtons.YesNo);
+            var dialogResult =
+                MessageBox.Show(@"Etes vous certain de vouloir ajouter " + liste.Rows.Count + @" photo(s) ?",
+                    @"Ajout de photoe(s)", MessageBoxButtons.YesNo);
 
             if (dialogResult == DialogResult.Yes)
             {
                 foreach (DataRow rang in liste.Rows)
                 {
-                    DirectoryEntry ad = new DirectoryEntry(
+                    var ad = new DirectoryEntry(
                         @"LDAP://" + txtAdresseIp.Text + "/OU=" + cboxOu.SelectedItem + ",OU=college,DC=" +
                         txtDomaine1.Text + ",DC=" + txtDomaine2.Text, @"stj\administrateur", "Lothlu85");
-                    DirectoryEntries toutsLesRésultats = ad.Children;
-                    DirectoryEntry compteAvecPhoto = toutsLesRésultats.Find("CN=" + rang["Compte"]);
+                    var toutsLesRésultats = ad.Children;
+                    var compteAvecPhoto = toutsLesRésultats.Find("CN=" + rang["Compte"]);
                     var fs = new FileStream(lblCheminPhotos.Text + @"\" + rang["NomComplet"] + @".jpg", FileMode.Open);
                     var br = new BinaryReader(fs);
                     br.BaseStream.Seek(0, SeekOrigin.Begin);
@@ -1035,30 +973,34 @@ namespace Fiche_nouveau_prof
 
         private void AfficherPhotoElève()
         {
-            DirectoryEntry deOu =
+            var deOu =
                 new DirectoryEntry(
                     "LDAP://" + txtAdresseIp.Text + "/DC=" + txtDomaine1.Text + ",DC=" + txtDomaine2.Text,
                     @"stj\administrateur", "Lothlu85");
-            DirectorySearcher rechercher = new DirectorySearcher(deOu, "(DisplayName=" + ListeRésultats.SelectedItem + ")");
-            SearchResult compteAd = rechercher.FindOne();
-            DirectoryEntry directoryEntry = compteAd.GetDirectoryEntry();
-
-            string displayName = directoryEntry.Properties["displayName"][0].ToString();
-            string firstName = directoryEntry.Properties["givenName"][0].ToString();
-            string lastName = directoryEntry.Properties["sn"][0].ToString();
-            string email = directoryEntry.Properties["mail"][0].ToString();
-            string description = directoryEntry.Properties["Description"][0].ToString();
-            string compte = directoryEntry.Properties["SamAccountName"][0].ToString();
-
-            SupprimerInfosPhoto();
-
-            if (directoryEntry.Properties.Contains("thumbnailPhoto") == true)
+            var rechercher = new DirectorySearcher(deOu, "(DisplayName=" + ListeRésultats.SelectedItem + ")");
+            var compteAd = rechercher.FindOne();
+            if (compteAd != null)
             {
-                byte[] pic = (byte[])directoryEntry.Properties["thumbnailPhoto"][0];
-                MemoryStream ms = new MemoryStream(pic);
-                PhotoElève.Image = Image.FromStream(ms);
-                lblClasseElève.Text = description;
-                lblCompteUtilisateur.Text = @"Compte : " + compte;
+                var directoryEntry = compteAd.GetDirectoryEntry();
+
+                //var displayName = directoryEntry.Properties["displayName"][0].ToString();
+                //var firstName = directoryEntry.Properties["givenName"][0].ToString();
+                //var lastName = directoryEntry.Properties["sn"][0].ToString();
+                //var email = directoryEntry.Properties["mail"][0].ToString();
+                var compte = directoryEntry.Properties["SamAccountName"][0].ToString();
+
+                SupprimerInfosPhoto();
+
+                if ((directoryEntry.Properties.Contains("thumbnailPhoto")) && ((byte[])directoryEntry.Properties["thumbnailPhoto"][0] != null))
+                {
+                    var description = directoryEntry.Properties["Description"][0].ToString();
+                    var pic = (byte[])directoryEntry.Properties["thumbnailPhoto"][0];
+                    var ms = new MemoryStream(pic);
+                    PhotoElève.Image = Image.FromStream(ms);
+                    if (directoryEntry.Properties["Description"][0] != null)
+                    lblClasseElève.Text = description;
+                    lblCompteUtilisateur.Text = @"Compte : " + compte;
+                }
             }
         }
 
@@ -1072,14 +1014,11 @@ namespace Fiche_nouveau_prof
 
         private void SynthèseComptesAd()
         {
-            var microsoftWord = new Application();
-            var chemin = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\FichesEleves.docx";
-            var fichierWord = microsoftWord.Documents.Add(chemin);
-            microsoftWord.Visible = false;
-            // **Query all of the users within the AD**
-            DirectoryEntry de =
+            #region Création tableau des comptes AD
+
+            var de =
                 new DirectoryEntry(
-                    @"LDAP://" + txtAdresseIp.Text + "/OU=Eleves,OU=college,DC=" + txtDomaine1.Text + ",DC=" +
+                    @"LDAP://" + txtAdresseIp.Text + "/OU=" + cboxOu.SelectedItem + ",OU=college,DC=" + txtDomaine1.Text + ",DC=" +
                     txtDomaine2.Text, @"stj\administrateur", "Lothlu85");
             SearchResultCollection results;
 
@@ -1089,81 +1028,214 @@ namespace Fiche_nouveau_prof
             ds.PropertiesToLoad.Add("Description");
             ds.PropertiesToLoad.Add("mail");
 
-            //filters out inactive or invalid employee user accounts
             ds.Filter = "(&(objectCategory=person)(objectClass=user))";
             results = ds.FindAll();
 
             //header columns for Data Table
-            DataTable dt = new DataTable();
+            var dt = new DataTable();
             dt.Columns.Add("Nom complet", typeof(string));
             dt.Columns.Add("Nom d'utilisateur", typeof(string));
+            dt.Columns.Add("Mot de passe", typeof(string));
             dt.Columns.Add("Description", typeof(string));
             dt.Columns.Add("Adresse eMail", typeof(string));
 
             foreach (SearchResult sr in results)
             {
-                DataRow dr = dt.NewRow();
-                DirectoryEntry entry = sr.GetDirectoryEntry();
+                var dr = dt.NewRow();
+                var entry = sr.GetDirectoryEntry();
                 if (entry.Properties["sAMAccountName"].Count > 0)
+                {
                     dr["Nom d'utilisateur"] = entry.Properties["sAMAccountName"].Value.ToString();
+                    dr["Mot de passe"] = "Toto1234";
+                }
                 if (entry.Properties["DisplayName"].Count > 0)
                     dr["Nom complet"] = entry.Properties["DisplayName"].Value.ToString();
-                if (entry.Properties["Description"].Count > 0)
+                if ((entry.Properties["Description"].Count > 0) && (entry.Properties["Description"].Value.ToString().Contains("Eleve")))
+                    dr["Description"] = entry.Properties["Description"].Value.ToString()
+                        .Substring(entry.Properties["Description"].Value.ToString().Length - 2, 2);
+                if ((entry.Properties["Description"].Count > 0) && (!entry.Properties["Description"].Value.ToString().Contains("Eleve")))
                     dr["Description"] = entry.Properties["Description"].Value.ToString();
                 if (entry.Properties["mail"].Count > 0)
                     dr["Adresse eMail"] = entry.Properties["mail"].Value.ToString();
                 dt.Rows.Add(dr);
+            }
 
-                foreach (Field champs in fichierWord.Fields)
+            #endregion Création tableau des comptes AD
+
+            #region Création du fichier CSV
+
+            var fullFilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"X:\Comptes AD\Comptes " + cboxOu.SelectedItem + ".csv");
+            CréerFichierCsv(dt, fullFilePath);
+
+            #endregion Création du fichier CSV
+
+            #region Conversion du fichier CSV en XLSX
+
+            var csvFileName = @"X:\Comptes AD\Comptes " + cboxOu.SelectedItem + ".csv";
+            var excelFileName = @"X:\Comptes AD\Comptes " + cboxOu.SelectedItem + ".xlsx";
+
+            var worksheetsName = "Comptes " + cboxOu.SelectedItem;
+
+            var format = new ExcelTextFormat();
+            format.Delimiter = ',';
+            format.EOL = @"\r\n"; // DEFAULT IS "\r\n";
+            // format.TextQualifier = '"';
+
+            File.Delete(@"X:\Comptes AD\Comptes " + cboxOu.SelectedItem + ".xlsx");
+
+            using (var package = new ExcelPackage(new FileInfo(excelFileName)))
+            {
+                var worksheet = package.Workbook.Worksheets.Add(worksheetsName);
+                worksheet.Cells["A1"].LoadFromText(new FileInfo(csvFileName), format, TableStyles.Medium27, true);
+                package.Save();
+                package.Dispose();
+                GC.Collect();
+            }
+
+            #endregion Conversion du fichier CSV en XLSX
+
+            #region Mise en forme du fichier XLSX
+
+            var xlApp = new Microsoft.Office.Interop.Excel.Application();
+            var xlWorkBook = xlApp.Workbooks.Open(@"X:\Comptes AD\Comptes " + cboxOu.SelectedItem + ".xlsx");
+            Worksheet worksheet1 = xlWorkBook.Worksheets[1];
+            worksheet1.Columns.AutoFit();
+            var sortBy = worksheet1.Range["D2", "D1000"];
+            var sortBy1 = worksheet1.Range["A2", "A1000"];
+            var sortRange = worksheet1.Range["A2", "E1000"];
+            worksheet1.Sort.SortFields.Clear();
+            worksheet1.Sort.SetRange(sortRange);
+            worksheet1.Sort.SortFields.Add(sortBy, 0, SortOrder.Ascending);
+            worksheet1.Sort.SortFields.Add(sortBy1, 0, SortOrder.Ascending);
+            worksheet1.Sort.Header = XlYesNoGuess.xlYes;
+            worksheet1.Sort.MatchCase = false;
+            worksheet1.Sort.Orientation = XlSortOrientation.xlSortColumns;
+            worksheet1.Sort.SortMethod = XlSortMethod.xlPinYin;
+            worksheet1.Sort.Apply();
+            xlWorkBook.Save();
+            xlWorkBook.Close();
+            xlApp.Quit();
+            GC.Collect();
+
+            #endregion Mise en forme du fichier XLSX
+
+            #region Publipostage du fichier XLSX
+
+            var wordApp = new Application();
+            var chemin = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\FichesEleves.docx";
+            var oDoc = wordApp.Documents.Add(chemin);
+            wordApp.Visible = false;
+            object qry = "select *from [Comptes " + cboxOu.SelectedItem + "$]";
+            object nullobject = Missing.Value;
+            oDoc.MailMerge.MainDocumentType = WdMailMergeMainDocType.wdFormLetters;
+            oDoc.MailMerge.OpenDataSource(@"X:\Comptes AD\Comptes " + cboxOu.SelectedItem + ".xlsx", ref nullobject, ref nullobject, ref nullobject,
+                ref nullobject, ref nullobject, ref nullobject, ref nullobject, ref nullobject, ref nullobject,
+                ref nullobject, ref nullobject, ref qry, ref nullobject, ref nullobject, ref nullobject);
+            oDoc.MailMerge.Destination = WdMailMergeDestination.wdSendToNewDocument;
+            oDoc.MailMerge.Execute(false);
+
+            var oLetters = wordApp.ActiveDocument;
+            oLetters.SaveAs2(@"X:\Comptes AD\Fiches " + cboxOu.SelectedItem + ".docx", WdSaveFormat.wdFormatDocumentDefault);
+            oLetters.ExportAsFixedFormat(@"X:\Comptes AD\Fiches " + cboxOu.SelectedItem + ".pdf", WdExportFormat.wdExportFormatPDF);
+            oLetters.Close(WdSaveOptions.wdDoNotSaveChanges);
+            oDoc.Close(WdSaveOptions.wdDoNotSaveChanges);
+            //fichierWord.Close(WdSaveOptions.wdDoNotSaveChanges);
+            wordApp.Quit();
+            //microsoftWord.Quit();
+            GC.Collect();
+
+            #endregion Publipostage du fichier XLSX
+
+            #region Ordonner fichier XLSX par classe
+
+            var excelApp = new Microsoft.Office.Interop.Excel.Application();
+
+            excelApp.Visible = true;
+
+            var workbook = excelApp.Workbooks.Add(@"X:\Comptes AD\Comptes " + cboxOu.SelectedItem + ".xlsx");
+
+            var ws = excelApp.Worksheets[1] as Worksheet;
+
+            if (ws != null)
+            {
+                var usedRange = ws.UsedRange;
+                var startRow = usedRange.Row;
+                var endRow = startRow + usedRange.Rows.Count - 1;
+                var ligne = 0;
+
+                for (var row = 2; row <= endRow; row++)
                 {
-                    if (champs.Code.Text.Contains("NomComplet"))
+                    var count = excelApp.Worksheets.Count;
+                    if (usedRange.Cells[row, 4].Value != usedRange.Cells[row + 1, 4].Value && ligne == 0)
                     {
-                        champs.Select();
-                        microsoftWord.Selection.TypeText(
-                            EnleverAccents(entry.Properties["DisplayName"].Value.ToString()));
+                        count++;
+                        workbook.Sheets.Add(After: workbook.Sheets[workbook.Sheets.Count]);
+
+                        workbook.Worksheets[count].Name = usedRange.Cells[row, 4].Value.ToString();
+                        ligne = 2;
+                    }
+                    if (usedRange.Cells[row, 4].Value != usedRange.Cells[row + 1, 4].Value && ligne > 0)
+                    {
+                        workbook.Sheets.Add(After: workbook.Sheets[workbook.Sheets.Count]);
+                        workbook.Worksheets[count].Name = usedRange.Cells[row, 4].Value.ToString();
+                        workbook.Worksheets[count].Columns.AutoFit();
+                        var from = workbook.Worksheets[1].Range("A" + row + ":F" + row);
+                        var to = workbook.Worksheets[count].Range("A" + ligne + ":F" + ligne);
+                        @from.copy(to);
+                        ligne = 2;
+                    }
+                    if (usedRange.Cells[row, 4].Value == usedRange.Cells[row + 1, 4].Value)
+                    {
+                        var from = workbook.Worksheets[1].Range("A" + row + ":F" + row);
+                        var to = workbook.Worksheets[count].Range("A" + ligne + ":F" + ligne);
+                        @from.copy(to);
+                        ligne++;
+                        workbook.Worksheets[count].Cells[1, 1].Value = "Nom (" + (ligne - 1) + " élèves)";
+                        workbook.Worksheets[count].Cells[1, 2].Value = "Nom d'utilisateur";
+                        workbook.Worksheets[count].Cells[1, 3].Value = "Mot de passe";
+                        workbook.Worksheets[count].Cells[1, 4].Value = "Classe";
+                        workbook.Worksheets[count].Cells[1, 5].Value = "Adresse e-Mail";
+                        workbook.Worksheets[count].Rows(1).RowHeight = 30;
+                        workbook.Worksheets[count].Rows(1).HorizontalAlignment = Microsoft.Office.Interop.Excel.XlHAlign.xlHAlignCenter;
+                        workbook.Worksheets[count].Rows(1).VerticalAlignment = Microsoft.Office.Interop.Excel.XlVAlign.xlVAlignCenter;
+                        workbook.Worksheets[count].Cells[1, 1].EntireRow.Font.Bold = true;
+                        Microsoft.Office.Interop.Excel.Range range1 = workbook.Worksheets[count].Range["A1", "E1"];
+                        range1.Interior.Color = Color.LightGray;
+                        workbook.Worksheets[count].PageSetup.LeftMargin = 1;
+                        workbook.Worksheets[count].PageSetup.RightMargin = 1;
                     }
                 }
             }
+            File.Delete(@"X:\Comptes AD\Comptes AD " + cboxOu.SelectedItem + " par classe.xlsx");
 
-            fichierWord.SaveAs(@"X:\Année 2017-2018\Nouveaux profs 2017-2018\Identifiants.docx");
-            fichierWord.ExportAsFixedFormat(@"X:\Année 2017-2018\Nouveaux profs 2017-2018\Identifiants.pdf",
-                WdExportFormat.wdExportFormatPDF);
-
-            fichierWord.Close();
-            microsoftWord.Quit();
+            workbook.SaveAs(@"X:\Comptes AD\Comptes AD " + cboxOu.SelectedItem + " par classe.xlsx", XlFileFormat.xlWorkbookDefault);
+            workbook.Close();
+            excelApp.Quit();
             GC.Collect();
-            string fullFilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"c:\ADWorkEmailPhone.csv");
-            //move datatable into CSV
-            CréerFichierCsv(dt, fullFilePath);
+
+            #endregion Ordonner fichier XLSX par classe
         }
 
-        //creating the CSV file with the AD user info
         private void CréerFichierCsv(DataTable dt, string strPath)
         {
-            StreamWriter sw = new StreamWriter(strPath, false);
-            int columnCount = dt.Columns.Count;
-            for (int i = 0; i < columnCount; i++)
+            var sw = new StreamWriter(strPath, false);
+            var columnCount = dt.Columns.Count;
+            for (var i = 0; i < columnCount; i++)
             {
                 sw.Write(dt.Columns[i]);
                 if (i < columnCount - 1)
-                {
                     sw.Write(",");
-                }
             }
             sw.Write(sw.NewLine);
 
             foreach (DataRow dr in dt.Rows)
             {
-                for (int i = 0; i < columnCount; i++)
+                for (var i = 0; i < columnCount; i++)
                 {
                     if (!Convert.IsDBNull(dr[i]))
-                    {
                         sw.Write(dr[i].ToString());
-                    }
                     if (i < columnCount - 1)
-                    {
                         sw.Write(",");
-                    }
                 }
                 sw.Write(sw.NewLine);
             }
