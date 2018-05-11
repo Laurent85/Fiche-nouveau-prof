@@ -103,6 +103,7 @@
             this.ListeRésultats.Sorted = true;
             this.ListeRésultats.TabIndex = 0;
             this.ListeRésultats.SelectedIndexChanged += new System.EventHandler(this.ListeRésultats_SelectedIndexChanged);
+            this.ListeRésultats.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.OuvrirFichierListeRésultats);
             // 
             // txbNom
             // 
@@ -200,9 +201,9 @@
             this.txtMotDePasse.BackColor = System.Drawing.Color.LightYellow;
             this.txtMotDePasse.Location = new System.Drawing.Point(157, 229);
             this.txtMotDePasse.Name = "txtMotDePasse";
-            this.txtMotDePasse.PasswordChar = '*';
             this.txtMotDePasse.Size = new System.Drawing.Size(153, 20);
             this.txtMotDePasse.TabIndex = 23;
+            this.txtMotDePasse.UseSystemPasswordChar = true;
             // 
             // lblMotDePasse
             // 
@@ -623,6 +624,7 @@
             this.PhotoElève.Size = new System.Drawing.Size(148, 182);
             this.PhotoElève.TabIndex = 52;
             this.PhotoElève.TabStop = false;
+            this.PhotoElève.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.CréerFicheElève);
             // 
             // BtnLancerImportPhotos
             // 
