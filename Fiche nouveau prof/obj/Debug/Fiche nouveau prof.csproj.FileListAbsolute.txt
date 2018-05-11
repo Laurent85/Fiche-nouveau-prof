@@ -16,7 +16,6 @@ C:\Users\User\documents\visual studio 2015\Projects\Fiche nouveau prof\Fiche nou
 C:\Users\User\documents\visual studio 2015\Projects\Fiche nouveau prof\Fiche nouveau prof\obj\Debug\Fiche_nouveau_prof.Principal.resources
 C:\Users\User\documents\visual studio 2015\Projects\Fiche nouveau prof\Fiche nouveau prof\obj\Debug\Fiche_nouveau_prof.Properties.Resources.resources
 C:\Users\User\documents\visual studio 2015\Projects\Fiche nouveau prof\Fiche nouveau prof\obj\Debug\Fiche nouveau prof.csproj.GenerateResource.Cache
-C:\Users\User\documents\visual studio 2015\Projects\Fiche nouveau prof\Fiche nouveau prof\obj\Debug\Interop.ActiveDs.dll
 C:\Users\User\documents\visual studio 2015\Projects\Fiche nouveau prof\Fiche nouveau prof\obj\Debug\Fiche nouveau prof.csproj.ResolveComReference.cache
 C:\Users\User\documents\visual studio 2015\Projects\Fiche nouveau prof\Fiche nouveau prof\bin\Debug\Resources\FichesEleves.docx
 C:\Users\User\documents\visual studio 2015\Projects\Fiche nouveau prof\Fiche nouveau prof\bin\Debug\EPPlus.dll

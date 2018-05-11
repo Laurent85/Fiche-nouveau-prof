@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">All</Configuration>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>0502ef9f-9fb0-41e0-a663-a002b5399752</ProjectGuid>
+    <ProjectGuid>6b1fb751-3d83-4269-ac02-4299663e443a</ProjectGuid>
     <OutputType>msi</OutputType>
     <ProjectHome>.</ProjectHome>
     <StartupFile>Installation du logiciel.aip</StartupFile>
@@ -26,7 +26,7 @@
       <Name>Fiche nouveau prof</Name>
       <Project>{cedf500e-0b3c-4d88-9334-a102e2cb3ae4}</Project>
       <Private>True</Private>
-      <OutputsToImport>PrimaryOutput;References;ContentOutput</OutputsToImport>
+      <OutputsToImport>PrimaryOutput;ContentOutput</OutputsToImport>
     </ProjectReference>
   </ItemGroup>
   <Import Condition="'$(AdvancedInstallerMSBuildTargets)' != ''" Project="$(AdvancedInstallerMSBuildTargets)\AdvInstExtTasks.Targets" />
