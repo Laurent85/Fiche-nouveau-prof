@@ -85,6 +85,7 @@
             this.lblClasseElève = new System.Windows.Forms.Label();
             this.lblCompteUtilisateur = new System.Windows.Forms.Label();
             this.PbxLogoAd = new System.Windows.Forms.PictureBox();
+            this.BtnSuppressionPhoto = new System.Windows.Forms.Button();
             this.grpBxConnexionAd.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.grpboxChoixFiltre.SuspendLayout();
@@ -480,9 +481,9 @@
             this.lblNombreListeProfs.ForeColor = System.Drawing.Color.OrangeRed;
             this.lblNombreListeProfs.Location = new System.Drawing.Point(906, 748);
             this.lblNombreListeProfs.Name = "lblNombreListeProfs";
-            this.lblNombreListeProfs.Size = new System.Drawing.Size(52, 17);
+            this.lblNombreListeProfs.Size = new System.Drawing.Size(126, 17);
             this.lblNombreListeProfs.TabIndex = 44;
-            this.lblNombreListeProfs.Text = "label6";
+            this.lblNombreListeProfs.Text = "Enregistrements";
             // 
             // BtnMotDePasse
             // 
@@ -643,9 +644,9 @@
             this.lblClasseElève.ForeColor = System.Drawing.SystemColors.HotTrack;
             this.lblClasseElève.Location = new System.Drawing.Point(1196, 746);
             this.lblClasseElève.Name = "lblClasseElève";
-            this.lblClasseElève.Size = new System.Drawing.Size(52, 17);
+            this.lblClasseElève.Size = new System.Drawing.Size(56, 17);
             this.lblClasseElève.TabIndex = 54;
-            this.lblClasseElève.Text = "label1";
+            this.lblClasseElève.Text = "Classe";
             // 
             // lblCompteUtilisateur
             // 
@@ -654,9 +655,9 @@
             this.lblCompteUtilisateur.ForeColor = System.Drawing.SystemColors.HotTrack;
             this.lblCompteUtilisateur.Location = new System.Drawing.Point(1172, 521);
             this.lblCompteUtilisateur.Name = "lblCompteUtilisateur";
-            this.lblCompteUtilisateur.Size = new System.Drawing.Size(52, 17);
+            this.lblCompteUtilisateur.Size = new System.Drawing.Size(88, 17);
             this.lblCompteUtilisateur.TabIndex = 55;
-            this.lblCompteUtilisateur.Text = "label1";
+            this.lblCompteUtilisateur.Text = "Compte AD";
             // 
             // PbxLogoAd
             // 
@@ -668,12 +669,23 @@
             this.PbxLogoAd.TabIndex = 56;
             this.PbxLogoAd.TabStop = false;
             // 
+            // BtnSuppressionPhoto
+            // 
+            this.BtnSuppressionPhoto.Location = new System.Drawing.Point(1332, 553);
+            this.BtnSuppressionPhoto.Name = "BtnSuppressionPhoto";
+            this.BtnSuppressionPhoto.Size = new System.Drawing.Size(99, 23);
+            this.BtnSuppressionPhoto.TabIndex = 57;
+            this.BtnSuppressionPhoto.Text = "Supprimer photo";
+            this.BtnSuppressionPhoto.UseVisualStyleBackColor = true;
+            this.BtnSuppressionPhoto.Click += new System.EventHandler(this.BtnSuppressionPhoto_Click);
+            // 
             // Principal
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Cornsilk;
-            this.ClientSize = new System.Drawing.Size(1472, 791);
+            this.ClientSize = new System.Drawing.Size(1472, 780);
+            this.Controls.Add(this.BtnSuppressionPhoto);
             this.Controls.Add(this.PbxLogoAd);
             this.Controls.Add(this.lblCompteUtilisateur);
             this.Controls.Add(this.lblClasseElève);
@@ -773,6 +785,7 @@
         private System.Windows.Forms.Label lblClasseElève;
         private System.Windows.Forms.Label lblCompteUtilisateur;
         private System.Windows.Forms.PictureBox PbxLogoAd;
+        private System.Windows.Forms.Button BtnSuppressionPhoto;
     }
 }
 

@@ -7,6 +7,7 @@ using System.Diagnostics;
 using System.DirectoryServices;
 using System.DirectoryServices.AccountManagement;
 using System.Drawing;
+using System.Drawing.Imaging;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -30,7 +31,7 @@ namespace Fiche_nouveau_prof
     public partial class Principal : Form
     {
         public string OuCollege = "OU=College,DC=stj,DC=lan";
-       
+
         public Principal()
         {
             InitializeComponent();
@@ -38,14 +39,14 @@ namespace Fiche_nouveau_prof
 
         private string ConnectionAd()
         {
-            var connectionAd =  "LDAP://" + txtAdresseIp.Text + "/DC=" + txtDomaine1.Text + ",DC=" + txtDomaine2.Text;
+            var connectionAd = "LDAP://" + txtAdresseIp.Text + "/DC=" + txtDomaine1.Text + ",DC=" + txtDomaine2.Text;
             return connectionAd;
         }
 
         private DirectoryEntry ConnexionRacineAd()
         {
             var connexionRacineAd = new DirectoryEntry("LDAP://" + txtAdresseIp.Text + "/DC=" + txtDomaine1.Text + ",DC=" + txtDomaine2.Text,
-                     txtDomaine1.Text + @"\" + txtUtilisateur.Text , txtMotDePasse.Text);
+                     txtDomaine1.Text + @"\" + txtUtilisateur.Text, txtMotDePasse.Text);
             return connexionRacineAd;
         }
 
@@ -65,6 +66,7 @@ namespace Fiche_nouveau_prof
             cboxOu.SelectedIndex = 1;
             rdBtnUtilisateurs.Checked = true;
             rdBtnCréationFicheProf.Checked = true;
+            BtnSuppressionPhoto.Visible = false;
         }
 
         private void BtnValider_Click(object sender, EventArgs e)
@@ -154,7 +156,7 @@ namespace Fiche_nouveau_prof
 
         private void BtnConnexionAD_Click(object sender, EventArgs e)
         {
-            var entry = new DirectoryEntry(ConnectionAd(), txtDomaine1.Text + "\\" + txtUtilisateur.Text,
+            var entry = new DirectoryEntry(ConnectionAd(), txtDomaine1.Text + @"\" + txtUtilisateur.Text,
                 txtMotDePasse.Text);
             var ds = new DirectorySearcher(entry);
             ds.Filter = "(&(&(objectClass=user)(memberOf=CN=Administrateurs,CN=Builtin,DC=" + txtDomaine1.Text +
@@ -223,6 +225,59 @@ namespace Fiche_nouveau_prof
         private void BtnLancerImportPhotos_Click(object sender, EventArgs e)
         {
             AjouterPhoto();
+        }
+
+        private void BtnSuppressionPhoto_Click(object sender, EventArgs e)
+        {
+            var liste = new DataTable();
+            liste.Columns.Add("Chemin");
+            liste.Columns.Add("Compte");
+            liste.Columns.Add("NomComplet");
+            foreach (var item in ListeRésultats.CheckedItems)
+            {
+                var rootDse =
+                    new DirectoryEntry(
+                        @"LDAP://" + txtAdresseIp.Text + "/OU=" + cboxOu.SelectedItem + ",OU=college,DC=" +
+                        txtDomaine1.Text + ",DC=" + txtDomaine2.Text, @"stj\administrateur", "Lothlu85");
+                var ouSearch = new DirectorySearcher(rootDse);
+                if (rdBtnUtilisateurs.Checked)
+                    ouSearch.Filter = "(&(objectCategory=Person)(objectClass=user)(displayName=" + item + "))";
+                if (rdBtnGroupes.Checked)
+                    ouSearch.Filter = "(&(objectCategory=Group)(Name=" + item + "))";
+                var résultats = ouSearch.FindOne();
+                var row = liste.NewRow();
+                if (résultats != null)
+                {
+                    row["Chemin"] = résultats.Path;
+                    row["Compte"] = résultats.Properties["samAccountName"][0].ToString();
+                }
+                row["NomComplet"] = item;
+                liste.Rows.Add(row);
+            }
+
+            var dialogResult =
+                MessageBox.Show(@"Etes vous certain de vouloir supprimer " + liste.Rows.Count + @" photo(s) ?",
+                    @"Ajout de photoe(s)", MessageBoxButtons.YesNo);
+
+            if (dialogResult == DialogResult.Yes)
+            {
+                foreach (DataRow rang in liste.Rows)
+                {
+                    var ad = new DirectoryEntry(
+                        @"LDAP://" + txtAdresseIp.Text + "/OU=" + cboxOu.SelectedItem + ",OU=college,DC=" +
+                        txtDomaine1.Text + ",DC=" + txtDomaine2.Text, @"stj\administrateur", "Lothlu85");
+                    var toutsLesRésultats = ad.Children;
+                    var compteAvecPhoto = toutsLesRésultats.Find("CN=" + rang["Compte"]);
+
+                    compteAvecPhoto.Properties["thumbnailPhoto"].Clear();
+                    compteAvecPhoto.CommitChanges();
+                }
+                AfficherPhotoElève();
+            }
+            else if (dialogResult == DialogResult.No)
+            {
+                //do something else
+            }
         }
 
         private void BtnSynthèseDesComptesAd(object sender, EventArgs e)
@@ -1065,6 +1120,23 @@ namespace Fiche_nouveau_prof
             }
         }
 
+        public static Image RedimensionnerPhoto(Image image, int maxWidth, int maxHeight)
+        {
+            var ratioX = (double)maxWidth / image.Width;
+            var ratioY = (double)maxHeight / image.Height;
+            var ratio = Math.Min(ratioX, ratioY);
+
+            var newWidth = (int)(image.Width * ratio);
+            var newHeight = (int)(image.Height * ratio);
+
+            var newImage = new Bitmap(newWidth, newHeight);
+
+            using (var graphics = Graphics.FromImage(newImage))
+                graphics.DrawImage(image, 0, 0, newWidth, newHeight);
+
+            return newImage;
+        }
+
         private void AjouterPhoto()
         {
             var liste = new DataTable();
@@ -1106,7 +1178,15 @@ namespace Fiche_nouveau_prof
                         txtDomaine1.Text + ",DC=" + txtDomaine2.Text, @"stj\administrateur", "Lothlu85");
                     var toutsLesRésultats = ad.Children;
                     var compteAvecPhoto = toutsLesRésultats.Find("CN=" + rang["Compte"]);
-                    var fs = new FileStream(lblCheminPhotos.Text + @"\" + rang["NomComplet"] + @".jpg", FileMode.Open);
+
+                    Directory.CreateDirectory(lblCheminPhotos.Text + @"\" + "PicResize");
+                    using (var image = Image.FromFile(lblCheminPhotos.Text + @"\" + rang["NomComplet"] + @".jpg"))
+                    using (var newImage = RedimensionnerPhoto(image, 157, 203))
+                    {
+                        newImage.Save(lblCheminPhotos.Text + @"\PicResize\" + rang["NomComplet"] + @".jpg", ImageFormat.Jpeg);
+                    }
+
+                    var fs = new FileStream(lblCheminPhotos.Text + @"\PicResize\" + rang["NomComplet"] + @".jpg", FileMode.Open);
                     var br = new BinaryReader(fs);
                     br.BaseStream.Seek(0, SeekOrigin.Begin);
                     byte[] ba;
@@ -1115,7 +1195,16 @@ namespace Fiche_nouveau_prof
                     compteAvecPhoto.Properties["thumbnailPhoto"].Clear();
                     compteAvecPhoto.Properties["thumbnailPhoto"].Insert(0, ba);
                     compteAvecPhoto.CommitChanges();
+
+                    string[] files = Directory.GetFiles(lblCheminPhotos.Text + @"\" + "PicResize");
+                    foreach (string file in files)
+                    {
+                        File.SetAttributes(file, FileAttributes.Normal);
+                        File.Delete(file);
+                    }
+                    Directory.Delete(lblCheminPhotos.Text + @"\" + "PicResize");
                 }
+                AfficherPhotoElève();
             }
             else if (dialogResult == DialogResult.No)
             {
@@ -1145,7 +1234,9 @@ namespace Fiche_nouveau_prof
                     if (directoryEntry.Properties["Description"][0] != null)
                         lblClasseElève.Text = description;
                     lblCompteUtilisateur.Text = @"Compte : " + compte;
+                    BtnSuppressionPhoto.Visible = true;
                 }
+                else BtnSuppressionPhoto.Visible = false;
             }
         }
 
@@ -1155,6 +1246,7 @@ namespace Fiche_nouveau_prof
             PhotoElève.Refresh();
             lblClasseElève.Text = "";
             lblCompteUtilisateur.Text = "";
+            BtnSuppressionPhoto.Visible = false;
         }
 
         private void SynthèseComptesAd()
