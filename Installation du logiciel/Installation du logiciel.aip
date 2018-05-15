@@ -19,10 +19,10 @@
     <ROW Property="ARPCOMMENTS" Value="This installer database contains the logic and data required to install [|ProductName]." ValueLocId="*"/>
     <ROW Property="ARPPRODUCTICON" Value="DesktopFolder.exe" Type="8"/>
     <ROW Property="Manufacturer" Value="Collège Saint Jacques"/>
-    <ROW Property="ProductCode" Value="1033:{90D886C8-FCB1-4653-91ED-F53AA13CA06F} 1036:{5296A0AA-4814-4EF0-A05C-5AF5E3DD9FDB} " Type="16"/>
+    <ROW Property="ProductCode" Value="1033:{1652DEB8-0524-4652-A7A7-0BF8EEFB2641} 1036:{D27FCB1D-C9FD-4F6E-B664-79634D79CA23} " Type="16"/>
     <ROW Property="ProductLanguage" Value="1033"/>
     <ROW Property="ProductName" Value="Gestion Active Directory"/>
-    <ROW Property="ProductVersion" Value="1.0.2" Type="32"/>
+    <ROW Property="ProductVersion" Value="1.0.3" Type="32"/>
     <ROW Property="SecureCustomProperties" Value="OLDPRODUCTS;AI_NEWERPRODUCTFOUND"/>
     <ROW Property="UpgradeCode" Value="{64C82E0A-A0CC-4FF1-AF3A-7879C3CDD17B}"/>
     <ROW Property="WindowsType9X" MultiBuildValue="DefaultBuild:Windows 9x/ME" ValueLocId="-"/>

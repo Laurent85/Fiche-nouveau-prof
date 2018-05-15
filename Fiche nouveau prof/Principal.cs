@@ -37,17 +37,23 @@ namespace Fiche_nouveau_prof
             InitializeComponent();
         }
 
-        private string ConnectionAd()
+        private string DomainesDc()
         {
-            var connectionAd = "LDAP://" + txtAdresseIp.Text + "/DC=" + txtDomaine1.Text + ",DC=" + txtDomaine2.Text;
-            return connectionAd;
+            string domaines;
+            if (txtDomaine3.Text == "") { domaines = "DC=" + txtDomaine1.Text + ",DC=" + txtDomaine2.Text; }
+            else { domaines = "DC=" + txtDomaine1.Text + ",DC=" + txtDomaine2.Text + ",DC=" + txtDomaine3.Text; }
+            return domaines;
         }
 
-        private DirectoryEntry ConnexionRacineAd()
+        private string Authentification()
         {
-            var connexionRacineAd = new DirectoryEntry("LDAP://" + txtAdresseIp.Text + "/DC=" + txtDomaine1.Text + ",DC=" + txtDomaine2.Text,
-                     txtDomaine1.Text + @"\" + txtUtilisateur.Text, txtMotDePasse.Text);
-            return connexionRacineAd;
+            string authentification;
+            if (txtDomaine3.Text == "")
+            {
+                authentification = txtDomaine1.Text + @"\" + txtUtilisateur.Text;
+            }
+            else { authentification = @"dirstj\" + txtUtilisateur.Text; }
+            return authentification;
         }
 
         private void OuvertureLogiciel(object sender, EventArgs e)
@@ -62,6 +68,7 @@ namespace Fiche_nouveau_prof
             txtDomaine2.Text = @"lan";
             txtUtilisateur.Text = @"administrateur";
             txtMotDePasse.Text = @"Lothlu85";
+            RdBtnServeurPeda.Checked = true;
             RemplirComboboxOu();
             cboxOu.SelectedIndex = 1;
             rdBtnUtilisateurs.Checked = true;
@@ -156,11 +163,10 @@ namespace Fiche_nouveau_prof
 
         private void BtnConnexionAD_Click(object sender, EventArgs e)
         {
-            var entry = new DirectoryEntry(ConnectionAd(), txtDomaine1.Text + @"\" + txtUtilisateur.Text,
+            var entry = new DirectoryEntry("LDAP://" + txtAdresseIp.Text + "/" + DomainesDc(), Authentification(),
                 txtMotDePasse.Text);
             var ds = new DirectorySearcher(entry);
-            ds.Filter = "(&(&(objectClass=user)(memberOf=CN=Administrateurs,CN=Builtin,DC=" + txtDomaine1.Text +
-                        ",DC=" + txtDomaine2.Text + "))(samAccountName=" + txtUtilisateur.Text + "))";
+            ds.Filter = "(&(&(objectClass=user)(memberOf=CN=Administrateurs,CN=Builtin," + DomainesDc() + "))(samAccountName=" + txtUtilisateur.Text + "))";
             var result = ds.FindOne();
 
             if (result != null)
@@ -168,6 +174,9 @@ namespace Fiche_nouveau_prof
             else
                 lblEtatConnexionAd.Text = @"Echec de la connexion";
             entry.Close();
+            RemplirComboboxOu();
+            cboxOu.SelectedIndex = 1;
+            TxbRechercherCompte_TextChanged(sender, e);
         }
 
         private void BtnCréationUtilisateurAdClick(object sender, EventArgs e)
@@ -237,8 +246,8 @@ namespace Fiche_nouveau_prof
             {
                 var rootDse =
                     new DirectoryEntry(
-                        @"LDAP://" + txtAdresseIp.Text + "/OU=" + cboxOu.SelectedItem + ",OU=college,DC=" +
-                        txtDomaine1.Text + ",DC=" + txtDomaine2.Text, @"stj\administrateur", "Lothlu85");
+                        @"LDAP://" + txtAdresseIp.Text + "/OU=" + cboxOu.SelectedItem + ",OU=college," +
+                        DomainesDc(), Authentification(), txtMotDePasse.Text);
                 var ouSearch = new DirectorySearcher(rootDse);
                 if (rdBtnUtilisateurs.Checked)
                     ouSearch.Filter = "(&(objectCategory=Person)(objectClass=user)(displayName=" + item + "))";
@@ -264,8 +273,8 @@ namespace Fiche_nouveau_prof
                 foreach (DataRow rang in liste.Rows)
                 {
                     var ad = new DirectoryEntry(
-                        @"LDAP://" + txtAdresseIp.Text + "/OU=" + cboxOu.SelectedItem + ",OU=college,DC=" +
-                        txtDomaine1.Text + ",DC=" + txtDomaine2.Text, @"stj\administrateur", "Lothlu85");
+                         @"LDAP://" + txtAdresseIp.Text + "/OU=" + cboxOu.SelectedItem + ",OU=college," +
+                        DomainesDc(), Authentification(), txtMotDePasse.Text);
                     var toutsLesRésultats = ad.Children;
                     var compteAvecPhoto = toutsLesRésultats.Find("CN=" + rang["Compte"]);
 
@@ -421,8 +430,8 @@ namespace Fiche_nouveau_prof
 
             var de =
                 new DirectoryEntry(
-                    @"LDAP://" + txtAdresseIp.Text + "/OU=" + cboxOu.SelectedItem + ",OU=college,DC=" + txtDomaine1.Text + ",DC=" +
-                    txtDomaine2.Text, @"stj\administrateur", "Lothlu85");
+                     @"LDAP://" + txtAdresseIp.Text + "/OU=" + cboxOu.SelectedItem + ",OU=college," +
+                        DomainesDc(), Authentification(), txtMotDePasse.Text);
             SearchResultCollection results;
 
             var ds = new DirectorySearcher(de);
@@ -643,10 +652,11 @@ namespace Fiche_nouveau_prof
 
         private void RemplirComboboxOu()
         {
+            cboxOu.Items.Clear();
             var rootDse =
                 new DirectoryEntry(
-                    @"LDAP://" + txtAdresseIp.Text + "/OU=college,DC=" + txtDomaine1.Text + ",DC=" + txtDomaine2.Text,
-                    @"stj\administrateur", "Lothlu85");
+                    @"LDAP://" + txtAdresseIp.Text + "/OU=college," + DomainesDc(),
+                    Authentification(), txtMotDePasse.Text);
 
             var ouSearch = new DirectorySearcher(rootDse);
             ouSearch.Filter = "(objectCategory=OrganizationalUnit)";
@@ -674,8 +684,8 @@ namespace Fiche_nouveau_prof
             ListeRésultats.Items.Clear();
             var rootDse =
                 new DirectoryEntry(
-                    @"LDAP://" + txtAdresseIp.Text + "/OU=" + cboxOu.SelectedItem + ",OU=college,DC=" +
-                    txtDomaine1.Text + ",DC=" + txtDomaine2.Text, @"stj\administrateur", "Lothlu85");
+                    @"LDAP://" + txtAdresseIp.Text + "/OU=" + cboxOu.SelectedItem + ",OU=college," +
+                    DomainesDc(), Authentification(), txtMotDePasse.Text);
 
             var ouSearch = new DirectorySearcher(rootDse);
             if (TxbRechercherCompte.Text != "")
@@ -693,8 +703,8 @@ namespace Fiche_nouveau_prof
 
         private bool UtilisateurExiste(string utilisateur)
         {
-            using (var domainContext = new PrincipalContext(ContextType.Domain, txtAdresseIp.Text, "DC=stj,DC=lan",
-                @"stj\administrateur", "Lothlu85"))
+            using (var domainContext = new PrincipalContext(ContextType.Domain, txtAdresseIp.Text, DomainesDc(),
+                Authentification(), txtMotDePasse.Text))
             {
                 using (var foundUser =
                     UserPrincipal.FindByIdentity(domainContext, IdentityType.SamAccountName, utilisateur))
@@ -708,8 +718,8 @@ namespace Fiche_nouveau_prof
 
         private bool GroupeExiste(string groupe)
         {
-            using (var domainContext = new PrincipalContext(ContextType.Domain, txtAdresseIp.Text, "DC=stj,DC=lan",
-                @"stj\administrateur", "Lothlu85"))
+            using (var domainContext = new PrincipalContext(ContextType.Domain, txtAdresseIp.Text, DomainesDc(),
+                Authentification(), txtMotDePasse.Text))
             {
                 using (var foundUser = GroupPrincipal.FindByIdentity(domainContext, IdentityType.Name, groupe))
                 {
@@ -754,9 +764,8 @@ namespace Fiche_nouveau_prof
                 i++;
             }
 
-            var adPath1 = "LDAP://" + txtAdresseIp.Text + "/OU=" + ou + ", OU=college, DC=" + txtDomaine1.Text +
-                          ",DC=" + txtDomaine2.Text;
-            var entry = new DirectoryEntry(adPath1, txtDomaine1.Text + "\\" + txtUtilisateur.Text,
+            var adPath1 = "LDAP://" + txtAdresseIp.Text + "/OU=" + ou + ", OU=college, " + DomainesDc();
+            var entry = new DirectoryEntry(adPath1, Authentification(),
                 txtMotDePasse.Text);
             var users = entry.Children;
             var newuser = users.Add("CN=" + nouveauNom, "user");
@@ -837,8 +846,7 @@ namespace Fiche_nouveau_prof
             {
                 var entry =
                     new DirectoryEntry(
-                        "LDAP://" + txtAdresseIp.Text + "/OU=" + ou + ", OU=college, DC=" + txtDomaine1.Text + ",DC=" +
-                        txtDomaine2.Text, @"stj\administrateur", "Lothlu85");
+                        "LDAP://" + txtAdresseIp.Text + "/OU=" + ou + ", OU=college, " + DomainesDc(), Authentification(), txtMotDePasse.Text);
                 var group = entry.Children.Add("CN=" + groupe, "group");
                 group.Properties["sAmAccountName"].Value = groupe;
                 if (groupe == "Eleves")
@@ -856,8 +864,7 @@ namespace Fiche_nouveau_prof
         {
             var entry =
                 new DirectoryEntry(
-                    "LDAP://" + txtAdresseIp.Text + "/OU=" + ou + ", OU=college, DC=" + txtDomaine1.Text + ",DC=" +
-                    txtDomaine2.Text, @"stj\administrateur", "Lothlu85");
+                        "LDAP://" + txtAdresseIp.Text + "/OU=" + ou + ", OU=college, " + DomainesDc(), Authentification(), txtMotDePasse.Text);
             var group = entry.Children.Add("CN=distri-" + groupe, "group");
             group.Properties["sAmAccountName"].Value = "distri-" + groupe;
             group.Properties["groupType"].Value = 0x2;
@@ -870,10 +877,10 @@ namespace Fiche_nouveau_prof
         {
             var dirEntry =
                 new DirectoryEntry(
-                    "LDAP://" + txtAdresseIp.Text + "/CN=" + groupName + ", OU=" + ou + ", OU=college, DC=" +
-                    txtDomaine1.Text + ",DC=" + txtDomaine2.Text, @"stj\administrateur", "Lothlu85",
+                    "LDAP://" + txtAdresseIp.Text + "/CN=" + groupName + ", OU=" + ou + ", OU=college, " +
+                    DomainesDc(), Authentification(), txtMotDePasse.Text,
                     AuthenticationTypes.Secure);
-            dirEntry.Properties["member"].Add("CN=" + userId + ",OU=" + ou + ",OU=college,DC=stj,DC=lan");
+            dirEntry.Properties["member"].Add("CN=" + userId + ",OU=" + ou + ",OU=college," + DomainesDc());
             dirEntry.CommitChanges();
             dirEntry.Close();
         }
@@ -883,8 +890,8 @@ namespace Fiche_nouveau_prof
         {
             var deOu =
                 new DirectoryEntry(
-                    "LDAP://" + txtAdresseIp.Text + "/DC=" + txtDomaine1.Text + ",DC=" + txtDomaine2.Text,
-                    @"stj\administrateur", "Lothlu85", AuthenticationTypes.Secure);
+                    "LDAP://" + txtAdresseIp.Text + "/" + DomainesDc(),
+                   Authentification(), txtMotDePasse.Text, AuthenticationTypes.Secure);
             var rechercher = new DirectorySearcher(deOu, "(sAMAccountName=" + utilisateur + ")");
             var compteAd = rechercher.FindOne();
             var sid = new SecurityIdentifier(compteAd.Properties["objectSid"][0] as byte[], 0);
@@ -903,8 +910,8 @@ namespace Fiche_nouveau_prof
         {
             var deOu =
                 new DirectoryEntry(
-                    "LDAP://" + txtAdresseIp.Text + "/DC=" + txtDomaine1.Text + ",DC=" + txtDomaine2.Text,
-                    @"stj\administrateur", "Lothlu85", AuthenticationTypes.Secure);
+                    "LDAP://" + txtAdresseIp.Text + "/" + DomainesDc(),
+                   Authentification(), txtMotDePasse.Text, AuthenticationTypes.Secure);
             var rechercher = new DirectorySearcher(deOu, "(sAMAccountName=" + utilisateur + ")");
             var compteAd = rechercher.FindOne();
             var sid = new SecurityIdentifier(compteAd.Properties["objectSid"][0] as byte[], 0);
@@ -929,8 +936,8 @@ namespace Fiche_nouveau_prof
             oGrpSecurityDescriptor["DACL"] = new object[] { oGrpAce };
             //for creating share on remote computer use:
             var options = new ConnectionOptions();
-            options.Username = "administrateur";
-            options.Password = "Lothlu85";
+            options.Username = txtUtilisateur.Text;
+            options.Password = txtMotDePasse.Text;
             var wmiScope = new ManagementScope(@"\\serveur2008\root\cimv2", options);
             wmiScope.Connect();
             var wmiShare = new ManagementClass(wmiScope, new ManagementPath("Win32_Share"), null);
@@ -955,8 +962,8 @@ namespace Fiche_nouveau_prof
             {
                 var rootDse =
                     new DirectoryEntry(
-                        @"LDAP://" + txtAdresseIp.Text + "/OU=" + cboxOu.SelectedItem + ",OU=college,DC=" +
-                        txtDomaine1.Text + ",DC=" + txtDomaine2.Text, @"stj\administrateur", "Lothlu85");
+                        @"LDAP://" + txtAdresseIp.Text + "/OU=" + cboxOu.SelectedItem + ",OU=college," +
+                       DomainesDc(), Authentification(), txtMotDePasse.Text);
                 var ouSearch = new DirectorySearcher(rootDse);
                 if (rdBtnUtilisateurs.Checked)
                     ouSearch.Filter = "(&(objectCategory=Person)(objectClass=user)(displayName=" + item + "))";
@@ -981,8 +988,8 @@ namespace Fiche_nouveau_prof
                 foreach (DataRow rang in liste.Rows)
                 {
                     var ad = new DirectoryEntry(
-                        @"LDAP://" + txtAdresseIp.Text + "/OU=" + cboxOu.SelectedItem + ",OU=college,DC=" +
-                        txtDomaine1.Text + ",DC=" + txtDomaine2.Text, @"stj\administrateur", "Lothlu85");
+                        @"LDAP://" + txtAdresseIp.Text + "/OU=" + cboxOu.SelectedItem + ",OU=college," +
+                       DomainesDc(), Authentification(), txtMotDePasse.Text);
                     var toutsLesRésultats = ad.Children;
                     var compteASupprimer = toutsLesRésultats.Find("CN=" + rang["Compte"]);
                     SuppressionDossier(@"\\Serveur2008\" + OuChoisie() + @"\" + rang["Compte"]);
@@ -1020,8 +1027,8 @@ namespace Fiche_nouveau_prof
         {
             var deOu =
                 new DirectoryEntry(
-                    "LDAP://" + txtAdresseIp.Text + "/DC=" + txtDomaine1.Text + ",DC=" + txtDomaine2.Text,
-                    @"stj\administrateur", "Lothlu85", AuthenticationTypes.Secure);
+                    "LDAP://" + txtAdresseIp.Text + "/" + DomainesDc(),
+                    Authentification(), txtMotDePasse.Text, AuthenticationTypes.Secure);
             var rechercher = new DirectorySearcher(deOu, "(sAMAccountName=" + utilisateur + ")");
             var compteAd = rechercher.FindOne();
             var sid = new SecurityIdentifier(compteAd.Properties["objectSid"][0] as byte[], 0);
@@ -1056,8 +1063,8 @@ namespace Fiche_nouveau_prof
         {
             var deOu =
                 new DirectoryEntry(
-                    "LDAP://" + txtAdresseIp.Text + "/DC=" + txtDomaine1.Text + ",DC=" + txtDomaine2.Text,
-                    @"stj\administrateur", "Lothlu85", AuthenticationTypes.Secure);
+                    "LDAP://" + txtAdresseIp.Text + "/" + DomainesDc(),
+                   Authentification(), txtMotDePasse.Text, AuthenticationTypes.Secure);
             var rechercher = new DirectorySearcher(deOu, "(sAMAccountName=" + utilisateur + ")");
             var compteAd = rechercher.FindOne();
             var sid = new SecurityIdentifier(compteAd.Properties["objectSid"][0] as byte[], 0);
@@ -1082,8 +1089,8 @@ namespace Fiche_nouveau_prof
             {
                 var rootDse =
                     new DirectoryEntry(
-                        @"LDAP://" + txtAdresseIp.Text + "/OU=" + cboxOu.SelectedItem + ",OU=college,DC=" +
-                        txtDomaine1.Text + ",DC=" + txtDomaine2.Text, @"stj\administrateur", "Lothlu85");
+                        @"LDAP://" + txtAdresseIp.Text + "/OU=" + cboxOu.SelectedItem + ",OU=college," +
+                        DomainesDc(), Authentification(), txtMotDePasse.Text);
                 var ouSearch = new DirectorySearcher(rootDse);
                 ouSearch.Filter = "(&(objectCategory=Person)(objectClass=user)(displayName=" + item + "))";
                 var résultats = ouSearch.FindOne();
@@ -1106,7 +1113,7 @@ namespace Fiche_nouveau_prof
                 foreach (DataRow rang in liste.Rows)
                 {
                     var user =
-                        new DirectoryEntry(rang["Chemin"].ToString(), @"stj\administrateur", "Lothlu85");
+                        new DirectoryEntry(rang["Chemin"].ToString(), Authentification(), txtMotDePasse.Text);
                     user.Invoke("SetPassword", "Toto1234");
                     user.Properties["pwdLastSet"].Value = 0;
                     user.Properties["userAccountControl"].Value = 0x0200;
@@ -1147,8 +1154,8 @@ namespace Fiche_nouveau_prof
             {
                 var rootDse =
                     new DirectoryEntry(
-                        @"LDAP://" + txtAdresseIp.Text + "/OU=" + cboxOu.SelectedItem + ",OU=college,DC=" +
-                        txtDomaine1.Text + ",DC=" + txtDomaine2.Text, @"stj\administrateur", "Lothlu85");
+                        @"LDAP://" + txtAdresseIp.Text + "/OU=" + cboxOu.SelectedItem + ",OU=college," +
+                        DomainesDc(), Authentification(), txtMotDePasse.Text);
                 var ouSearch = new DirectorySearcher(rootDse);
                 if (rdBtnUtilisateurs.Checked)
                     ouSearch.Filter = "(&(objectCategory=Person)(objectClass=user)(displayName=" + item + "))";
@@ -1174,8 +1181,8 @@ namespace Fiche_nouveau_prof
                 foreach (DataRow rang in liste.Rows)
                 {
                     var ad = new DirectoryEntry(
-                        @"LDAP://" + txtAdresseIp.Text + "/OU=" + cboxOu.SelectedItem + ",OU=college,DC=" +
-                        txtDomaine1.Text + ",DC=" + txtDomaine2.Text, @"stj\administrateur", "Lothlu85");
+                       @"LDAP://" + txtAdresseIp.Text + "/OU=" + cboxOu.SelectedItem + ",OU=college," +
+                        DomainesDc(), Authentification(), txtMotDePasse.Text);
                     var toutsLesRésultats = ad.Children;
                     var compteAvecPhoto = toutsLesRésultats.Find("CN=" + rang["Compte"]);
 
@@ -1214,7 +1221,8 @@ namespace Fiche_nouveau_prof
 
         private void AfficherPhotoElève()
         {
-            var deOu = ConnexionRacineAd();
+            //var deOu = ConnexionRacineAd();
+            var deOu = new DirectoryEntry("LDAP://" + txtAdresseIp.Text + "/" + DomainesDc(), Authentification(), txtMotDePasse.Text);
             var rechercher = new DirectorySearcher(deOu, "(DisplayName=" + ListeRésultats.SelectedItem + ")");
             var compteAd = rechercher.FindOne();
             if (compteAd != null)
@@ -1237,6 +1245,7 @@ namespace Fiche_nouveau_prof
                     BtnSuppressionPhoto.Visible = true;
                 }
                 else BtnSuppressionPhoto.Visible = false;
+                lblCompteUtilisateur.Text = @"Compte : " + compte;
             }
         }
 
@@ -1255,8 +1264,7 @@ namespace Fiche_nouveau_prof
 
             var de =
                 new DirectoryEntry(
-                    @"LDAP://" + txtAdresseIp.Text + "/OU=" + cboxOu.SelectedItem + ",OU=college,DC=" + txtDomaine1.Text + ",DC=" +
-                    txtDomaine2.Text, @"stj\administrateur", "Lothlu85");
+                    @"LDAP://" + txtAdresseIp.Text + "/OU=" + cboxOu.SelectedItem + ",OU=college," + DomainesDc(), Authentification(), txtMotDePasse.Text);
             SearchResultCollection results;
 
             var ds = new DirectorySearcher(de);
@@ -1482,6 +1490,30 @@ namespace Fiche_nouveau_prof
                 sw.Write(sw.NewLine);
             }
             sw.Close();
+        }
+
+        private void RdBtnChoixServeur(object sender, EventArgs e)
+        {
+            if (RdBtnServeurPeda.Checked)
+            {
+                txtAdresseIp.Text = @"172.16.0.1";
+                txtDomaine1.Text = @"stj";
+                txtDomaine2.Text = @"lan";
+                txtDomaine3.Text = @"";
+                txtUtilisateur.Text = @"administrateur";
+                txtMotDePasse.Text = @"Lothlu85";
+                BtnConnexionAD_Click(sender, e);
+            }
+            if (RdBtnServeurAdmin.Checked)
+            {
+                txtAdresseIp.Text = @"172.16.9.199";
+                txtDomaine1.Text = @"dir";
+                txtDomaine2.Text = @"collegesaintjacques";
+                txtDomaine3.Text = @"fr";
+                txtUtilisateur.Text = @"administrateur";
+                txtMotDePasse.Text = @"Lothlu85$$";
+                BtnConnexionAD_Click(sender, e);
+            }
         }
     }
 }
