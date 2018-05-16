@@ -282,10 +282,20 @@ namespace Fiche_nouveau_prof
                          @"LDAP://" + txtAdresseIp.Text + "/OU=" + cboxOu.SelectedItem + ",OU=college," +
                         DomainesDc(), Authentification(), txtMotDePasse.Text);
                     var toutsLesRésultats = ad.Children;
-                    var compteAvecPhoto = toutsLesRésultats.Find("CN=" + rang["Compte"]);
+                    if (RdBtnServeurAdmin.Checked)
+                    {
+                        var compteAvecPhoto = toutsLesRésultats.Find("CN=" + rang["NomComplet"]);
 
-                    compteAvecPhoto.Properties["thumbnailPhoto"].Clear();
-                    compteAvecPhoto.CommitChanges();
+                        compteAvecPhoto.Properties["thumbnailPhoto"].Clear();
+                        compteAvecPhoto.CommitChanges();
+                    }
+                    if (RdBtnServeurPeda.Checked)
+                    {
+                        var compteAvecPhoto = toutsLesRésultats.Find("CN=" + rang["Compte"]);
+
+                        compteAvecPhoto.Properties["thumbnailPhoto"].Clear();
+                        compteAvecPhoto.CommitChanges();
+                    }
                 }
                 AfficherPhotoElève();
             }
@@ -1335,12 +1345,12 @@ namespace Fiche_nouveau_prof
 
                 if ((directoryEntry.Properties.Contains("thumbnailPhoto")) && ((byte[])directoryEntry.Properties["thumbnailPhoto"][0] != null))
                 {
-                    var description = directoryEntry.Properties["Description"][0].ToString();
+                    //var description = directoryEntry.Properties["Description"][0].ToString();
                     var pic = (byte[])directoryEntry.Properties["thumbnailPhoto"][0];
                     var ms = new MemoryStream(pic);
                     PhotoElève.Image = Image.FromStream(ms);
-                    if (directoryEntry.Properties["Description"][0] != null)
-                        lblClasseElève.Text = description;
+                    if (directoryEntry.Properties.Contains("Description"))
+                        lblClasseElève.Text = directoryEntry.Properties["Description"][0].ToString();
                     lblCompteUtilisateur.Text = @"Compte : " + compte;
                     BtnSuppressionPhoto.Visible = true;
                 }
