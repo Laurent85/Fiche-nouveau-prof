@@ -72,7 +72,7 @@ namespace Fiche_nouveau_prof
             RemplirComboboxOu();
             cboxOu.SelectedIndex = 1;
             rdBtnUtilisateurs.Checked = true;
-            rdBtnCréationFicheProf.Checked = true;
+            rdBtnTravaillerSurAd.Checked = true;
             BtnSuppressionPhoto.Visible = false;
         }
 

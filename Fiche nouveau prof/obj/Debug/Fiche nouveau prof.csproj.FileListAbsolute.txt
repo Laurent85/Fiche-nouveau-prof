@@ -29,4 +29,3 @@ C:\Users\User\documents\visual studio 2015\Projects\Fiche nouveau prof\Fiche nou
 C:\Users\User\documents\visual studio 2015\Projects\Fiche nouveau prof\Fiche nouveau prof\bin\Debug\Spire.Pdf.xml
 C:\Users\User\documents\visual studio 2015\Projects\Fiche nouveau prof\Fiche nouveau prof\bin\Debug\Spire.XLS.xml
 C:\Users\User\documents\visual studio 2015\Projects\Fiche nouveau prof\Fiche nouveau prof\bin\Debug\Resources\AD.png
-C:\Users\User\documents\visual studio 2015\Projects\Fiche nouveau prof\Fiche nouveau prof\obj\Debug\Fiche nouveau prof.csprojResolveAssemblyReference.cache
