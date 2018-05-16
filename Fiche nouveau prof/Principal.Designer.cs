@@ -58,6 +58,10 @@
             this.BtnConnexionAD = new System.Windows.Forms.Button();
             this.lblEtatConnexionAd = new System.Windows.Forms.Label();
             this.grpBxConnexionAd = new System.Windows.Forms.GroupBox();
+            this.RdBtnServeurAdmin = new System.Windows.Forms.RadioButton();
+            this.RdBtnServeurPeda = new System.Windows.Forms.RadioButton();
+            this.lblDomaine3 = new System.Windows.Forms.Label();
+            this.txtDomaine3 = new System.Windows.Forms.TextBox();
             this.btnImportUtilisateurs = new System.Windows.Forms.Button();
             this.lblCheminFichierExcel = new System.Windows.Forms.Label();
             this.BtnSynthèse = new System.Windows.Forms.Button();
@@ -86,10 +90,7 @@
             this.lblCompteUtilisateur = new System.Windows.Forms.Label();
             this.PbxLogoAd = new System.Windows.Forms.PictureBox();
             this.BtnSuppressionPhoto = new System.Windows.Forms.Button();
-            this.txtDomaine3 = new System.Windows.Forms.TextBox();
-            this.lblDomaine3 = new System.Windows.Forms.Label();
-            this.RdBtnServeurPeda = new System.Windows.Forms.RadioButton();
-            this.RdBtnServeurAdmin = new System.Windows.Forms.RadioButton();
+            this.BtnAjoutPhoto = new System.Windows.Forms.Button();
             this.grpBxConnexionAd.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.grpboxChoixFiltre.SuspendLayout();
@@ -375,6 +376,47 @@
             this.grpBxConnexionAd.TabIndex = 33;
             this.grpBxConnexionAd.TabStop = false;
             this.grpBxConnexionAd.Text = "Connexion AD";
+            // 
+            // RdBtnServeurAdmin
+            // 
+            this.RdBtnServeurAdmin.AutoSize = true;
+            this.RdBtnServeurAdmin.Location = new System.Drawing.Point(17, 468);
+            this.RdBtnServeurAdmin.Name = "RdBtnServeurAdmin";
+            this.RdBtnServeurAdmin.Size = new System.Drawing.Size(120, 17);
+            this.RdBtnServeurAdmin.TabIndex = 34;
+            this.RdBtnServeurAdmin.TabStop = true;
+            this.RdBtnServeurAdmin.Text = "Serveur administratif";
+            this.RdBtnServeurAdmin.UseVisualStyleBackColor = true;
+            this.RdBtnServeurAdmin.CheckedChanged += new System.EventHandler(this.RdBtnChoixServeur);
+            // 
+            // RdBtnServeurPeda
+            // 
+            this.RdBtnServeurPeda.AutoSize = true;
+            this.RdBtnServeurPeda.Location = new System.Drawing.Point(17, 445);
+            this.RdBtnServeurPeda.Name = "RdBtnServeurPeda";
+            this.RdBtnServeurPeda.Size = new System.Drawing.Size(127, 17);
+            this.RdBtnServeurPeda.TabIndex = 33;
+            this.RdBtnServeurPeda.TabStop = true;
+            this.RdBtnServeurPeda.Text = "Serveur pédagogique";
+            this.RdBtnServeurPeda.UseVisualStyleBackColor = true;
+            this.RdBtnServeurPeda.CheckedChanged += new System.EventHandler(this.RdBtnChoixServeur);
+            // 
+            // lblDomaine3
+            // 
+            this.lblDomaine3.AutoSize = true;
+            this.lblDomaine3.Location = new System.Drawing.Point(14, 184);
+            this.lblDomaine3.Name = "lblDomaine3";
+            this.lblDomaine3.Size = new System.Drawing.Size(64, 13);
+            this.lblDomaine3.TabIndex = 32;
+            this.lblDomaine3.Text = "Domaine 3 :";
+            // 
+            // txtDomaine3
+            // 
+            this.txtDomaine3.BackColor = System.Drawing.Color.LightYellow;
+            this.txtDomaine3.Location = new System.Drawing.Point(157, 181);
+            this.txtDomaine3.Name = "txtDomaine3";
+            this.txtDomaine3.Size = new System.Drawing.Size(153, 20);
+            this.txtDomaine3.TabIndex = 31;
             // 
             // btnImportUtilisateurs
             // 
@@ -679,7 +721,7 @@
             // 
             // BtnSuppressionPhoto
             // 
-            this.BtnSuppressionPhoto.Location = new System.Drawing.Point(1332, 553);
+            this.BtnSuppressionPhoto.Location = new System.Drawing.Point(1332, 595);
             this.BtnSuppressionPhoto.Name = "BtnSuppressionPhoto";
             this.BtnSuppressionPhoto.Size = new System.Drawing.Size(99, 23);
             this.BtnSuppressionPhoto.TabIndex = 57;
@@ -687,46 +729,15 @@
             this.BtnSuppressionPhoto.UseVisualStyleBackColor = true;
             this.BtnSuppressionPhoto.Click += new System.EventHandler(this.BtnSuppressionPhoto_Click);
             // 
-            // txtDomaine3
+            // BtnAjoutPhoto
             // 
-            this.txtDomaine3.BackColor = System.Drawing.Color.LightYellow;
-            this.txtDomaine3.Location = new System.Drawing.Point(157, 181);
-            this.txtDomaine3.Name = "txtDomaine3";
-            this.txtDomaine3.Size = new System.Drawing.Size(153, 20);
-            this.txtDomaine3.TabIndex = 31;
-            // 
-            // lblDomaine3
-            // 
-            this.lblDomaine3.AutoSize = true;
-            this.lblDomaine3.Location = new System.Drawing.Point(14, 184);
-            this.lblDomaine3.Name = "lblDomaine3";
-            this.lblDomaine3.Size = new System.Drawing.Size(64, 13);
-            this.lblDomaine3.TabIndex = 32;
-            this.lblDomaine3.Text = "Domaine 3 :";
-            // 
-            // RdBtnServeurPeda
-            // 
-            this.RdBtnServeurPeda.AutoSize = true;
-            this.RdBtnServeurPeda.Location = new System.Drawing.Point(17, 445);
-            this.RdBtnServeurPeda.Name = "RdBtnServeurPeda";
-            this.RdBtnServeurPeda.Size = new System.Drawing.Size(127, 17);
-            this.RdBtnServeurPeda.TabIndex = 33;
-            this.RdBtnServeurPeda.TabStop = true;
-            this.RdBtnServeurPeda.Text = "Serveur pédagogique";
-            this.RdBtnServeurPeda.UseVisualStyleBackColor = true;
-            this.RdBtnServeurPeda.CheckedChanged += new System.EventHandler(this.RdBtnChoixServeur);
-            // 
-            // RdBtnServeurAdmin
-            // 
-            this.RdBtnServeurAdmin.AutoSize = true;
-            this.RdBtnServeurAdmin.Location = new System.Drawing.Point(17, 468);
-            this.RdBtnServeurAdmin.Name = "RdBtnServeurAdmin";
-            this.RdBtnServeurAdmin.Size = new System.Drawing.Size(120, 17);
-            this.RdBtnServeurAdmin.TabIndex = 34;
-            this.RdBtnServeurAdmin.TabStop = true;
-            this.RdBtnServeurAdmin.Text = "Serveur administratif";
-            this.RdBtnServeurAdmin.UseVisualStyleBackColor = true;
-            this.RdBtnServeurAdmin.CheckedChanged += new System.EventHandler(this.RdBtnChoixServeur);
+            this.BtnAjoutPhoto.Location = new System.Drawing.Point(1332, 553);
+            this.BtnAjoutPhoto.Name = "BtnAjoutPhoto";
+            this.BtnAjoutPhoto.Size = new System.Drawing.Size(99, 23);
+            this.BtnAjoutPhoto.TabIndex = 58;
+            this.BtnAjoutPhoto.Text = "Ajouter photo";
+            this.BtnAjoutPhoto.UseVisualStyleBackColor = true;
+            this.BtnAjoutPhoto.Click += new System.EventHandler(this.BtnAjoutPhoto_Click);
             // 
             // Principal
             // 
@@ -734,6 +745,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Cornsilk;
             this.ClientSize = new System.Drawing.Size(1472, 780);
+            this.Controls.Add(this.BtnAjoutPhoto);
             this.Controls.Add(this.BtnSuppressionPhoto);
             this.Controls.Add(this.PbxLogoAd);
             this.Controls.Add(this.lblCompteUtilisateur);
@@ -839,6 +851,7 @@
         private System.Windows.Forms.TextBox txtDomaine3;
         private System.Windows.Forms.RadioButton RdBtnServeurAdmin;
         private System.Windows.Forms.RadioButton RdBtnServeurPeda;
+        private System.Windows.Forms.Button BtnAjoutPhoto;
     }
 }
 

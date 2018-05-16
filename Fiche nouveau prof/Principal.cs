@@ -237,6 +237,11 @@ namespace Fiche_nouveau_prof
             AjouterPhoto();
         }
 
+        private void BtnAjoutPhoto_Click(object sender, EventArgs e)
+        {
+            AjouterPhotoIndividuelle();
+        }
+
         private void BtnSuppressionPhoto_Click(object sender, EventArgs e)
         {
             var liste = new DataTable();
@@ -422,6 +427,30 @@ namespace Fiche_nouveau_prof
                 case "Groupes":
                     RemplirListBoxAd("Group", "Name");
                     break;
+            }
+        }
+
+        private void RdBtnChoixServeur(object sender, EventArgs e)
+        {
+            if (RdBtnServeurPeda.Checked)
+            {
+                txtAdresseIp.Text = @"172.16.0.1";
+                txtDomaine1.Text = @"stj";
+                txtDomaine2.Text = @"lan";
+                txtDomaine3.Text = @"";
+                txtUtilisateur.Text = @"administrateur";
+                txtMotDePasse.Text = @"Lothlu85";
+                BtnConnexionAD_Click(sender, e);
+            }
+            if (RdBtnServeurAdmin.Checked)
+            {
+                txtAdresseIp.Text = @"172.16.9.199";
+                txtDomaine1.Text = @"dir";
+                txtDomaine2.Text = @"collegesaintjacques";
+                txtDomaine3.Text = @"fr";
+                txtUtilisateur.Text = @"administrateur";
+                txtMotDePasse.Text = @"Lothlu85$$";
+                BtnConnexionAD_Click(sender, e);
             }
         }
 
@@ -1183,25 +1212,30 @@ namespace Fiche_nouveau_prof
                     var ad = new DirectoryEntry(
                        @"LDAP://" + txtAdresseIp.Text + "/OU=" + cboxOu.SelectedItem + ",OU=college," +
                         DomainesDc(), Authentification(), txtMotDePasse.Text);
-                    var toutsLesRésultats = ad.Children;
-                    var compteAvecPhoto = toutsLesRésultats.Find("CN=" + rang["Compte"]);
+                    var tousLesRésultats = ad.Children;
+                    var compteAvecPhoto = tousLesRésultats.Find("CN=" + rang["Compte"]);
 
                     Directory.CreateDirectory(lblCheminPhotos.Text + @"\" + "PicResize");
-                    using (var image = Image.FromFile(lblCheminPhotos.Text + @"\" + rang["NomComplet"] + @".jpg"))
-                    using (var newImage = RedimensionnerPhoto(image, 157, 203))
+                    if (File.Exists(lblCheminPhotos.Text + @"\" + rang["NomComplet"] + @".jpg"))
                     {
-                        newImage.Save(lblCheminPhotos.Text + @"\PicResize\" + rang["NomComplet"] + @".jpg", ImageFormat.Jpeg);
-                    }
+                        using (var image = Image.FromFile(lblCheminPhotos.Text + @"\" + rang["NomComplet"] + @".jpg"))
+                        using (var newImage = RedimensionnerPhoto(image, 157, 203))
+                        {
+                            newImage.Save(lblCheminPhotos.Text + @"\PicResize\" + rang["NomComplet"] + @".jpg",
+                                ImageFormat.Jpeg);
+                        }
 
-                    var fs = new FileStream(lblCheminPhotos.Text + @"\PicResize\" + rang["NomComplet"] + @".jpg", FileMode.Open);
-                    var br = new BinaryReader(fs);
-                    br.BaseStream.Seek(0, SeekOrigin.Begin);
-                    byte[] ba;
-                    ba = br.ReadBytes((int)br.BaseStream.Length);
-                    fs.Close();
-                    compteAvecPhoto.Properties["thumbnailPhoto"].Clear();
-                    compteAvecPhoto.Properties["thumbnailPhoto"].Insert(0, ba);
-                    compteAvecPhoto.CommitChanges();
+                        var fs = new FileStream(lblCheminPhotos.Text + @"\PicResize\" + rang["NomComplet"] + @".jpg",
+                            FileMode.Open);
+                        var br = new BinaryReader(fs);
+                        br.BaseStream.Seek(0, SeekOrigin.Begin);
+                        byte[] ba;
+                        ba = br.ReadBytes((int) br.BaseStream.Length);
+                        fs.Close();
+                        compteAvecPhoto.Properties["thumbnailPhoto"].Clear();
+                        compteAvecPhoto.Properties["thumbnailPhoto"].Insert(0, ba);
+                        compteAvecPhoto.CommitChanges();
+                    }
 
                     string[] files = Directory.GetFiles(lblCheminPhotos.Text + @"\" + "PicResize");
                     foreach (string file in files)
@@ -1211,12 +1245,78 @@ namespace Fiche_nouveau_prof
                     }
                     Directory.Delete(lblCheminPhotos.Text + @"\" + "PicResize");
                 }
-                AfficherPhotoElève();
+                //AfficherPhotoElève();
             }
             else if (dialogResult == DialogResult.No)
             {
                 //do something else
             }
+        }
+
+        private void AjouterPhotoIndividuelle()
+        {
+            OpenFileDialog openFileDialog1 = new OpenFileDialog();
+            openFileDialog1.InitialDirectory = @"P:\ALCUIN\Photos\Eleves\SAINT JACQUES\";
+            openFileDialog1.Title = @"Choisir une photo...";
+            openFileDialog1.CheckFileExists = true;
+            openFileDialog1.CheckPathExists = true;
+            openFileDialog1.DefaultExt = "jpg";
+            openFileDialog1.Filter = @"Text files (*.txt)|*.txt|All files (*.*)|*.*";
+            openFileDialog1.FilterIndex = 2;
+            openFileDialog1.RestoreDirectory = true;
+            openFileDialog1.ReadOnlyChecked = true;
+            openFileDialog1.ShowReadOnly = true;
+
+            if (openFileDialog1.ShowDialog() == DialogResult.OK)
+
+            {
+
+                string cheminComplet = openFileDialog1.FileName;
+                string fileName = openFileDialog1.SafeFileName;
+                string chemin = openFileDialog1.FileName.Replace(fileName, "");
+
+                var deOu = new DirectoryEntry("LDAP://" + txtAdresseIp.Text + "/" + DomainesDc(), Authentification(), txtMotDePasse.Text);
+                var rechercher = new DirectorySearcher(deOu, "(DisplayName=" + ListeRésultats.SelectedItem + ")");
+                var compteAd = rechercher.FindOne();
+
+                if (compteAd != null)
+                {
+                    Directory.CreateDirectory(chemin + @"\" + "PicResize");
+                    var directoryEntry = compteAd.GetDirectoryEntry();
+
+                    var compte = directoryEntry.Properties["SamAccountName"][0].ToString();
+
+                    using (var image = Image.FromFile(cheminComplet))
+                    using (var newImage = RedimensionnerPhoto(image, 157, 203))
+                    {
+                        newImage.Save(chemin + @"\PicResize\" + fileName, ImageFormat.Jpeg);
+                    }
+
+                    var fs = new FileStream(chemin + @"\PicResize\" + fileName,
+                        FileMode.Open);
+                    var br = new BinaryReader(fs);
+                    br.BaseStream.Seek(0, SeekOrigin.Begin);
+                    byte[] ba;
+                    ba = br.ReadBytes((int)br.BaseStream.Length);
+                    fs.Close();
+                    directoryEntry.Properties["thumbnailPhoto"].Clear();
+                    directoryEntry.Properties["thumbnailPhoto"].Insert(0, ba);
+                    directoryEntry.CommitChanges();
+
+
+                    string[] files = Directory.GetFiles(chemin + @"\" + "PicResize");
+                    foreach (string file in files)
+                    {
+                        File.SetAttributes(file, FileAttributes.Normal);
+                        File.Delete(file);
+                    }
+                    Directory.Delete(chemin + @"\" + "PicResize");
+                }
+
+            }
+
+            
+            
         }
 
         private void AfficherPhotoElève()
@@ -1490,30 +1590,6 @@ namespace Fiche_nouveau_prof
                 sw.Write(sw.NewLine);
             }
             sw.Close();
-        }
-
-        private void RdBtnChoixServeur(object sender, EventArgs e)
-        {
-            if (RdBtnServeurPeda.Checked)
-            {
-                txtAdresseIp.Text = @"172.16.0.1";
-                txtDomaine1.Text = @"stj";
-                txtDomaine2.Text = @"lan";
-                txtDomaine3.Text = @"";
-                txtUtilisateur.Text = @"administrateur";
-                txtMotDePasse.Text = @"Lothlu85";
-                BtnConnexionAD_Click(sender, e);
-            }
-            if (RdBtnServeurAdmin.Checked)
-            {
-                txtAdresseIp.Text = @"172.16.9.199";
-                txtDomaine1.Text = @"dir";
-                txtDomaine2.Text = @"collegesaintjacques";
-                txtDomaine3.Text = @"fr";
-                txtUtilisateur.Text = @"administrateur";
-                txtMotDePasse.Text = @"Lothlu85$$";
-                BtnConnexionAD_Click(sender, e);
-            }
         }
     }
 }
