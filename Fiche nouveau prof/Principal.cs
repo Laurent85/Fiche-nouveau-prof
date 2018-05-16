@@ -141,6 +141,7 @@ namespace Fiche_nouveau_prof
             var smtpServer = new SmtpClient("smtp.orange.fr");
             mail.From = new MailAddress("admin@clg-stjacques.fr");
             mail.To.Add("secretariat@collegesaintjacques.fr");
+            //mail.To.Add("laurent.manceau@collegesaintjacques.fr");
             mail.Subject = "Identifiants profs";
             mail.Body = "Ci-joint les identifiants nécessaires";
 
@@ -157,7 +158,7 @@ namespace Fiche_nouveau_prof
             smtpServer.Port = 25;
             smtpServer.Credentials = new NetworkCredential("laurent_manceau@orange.fr", "Lothlu85");
             smtpServer.EnableSsl = false;
-
+            smtpServer.Send(mail);
             MessageBox.Show(@"Mail envoyé");
         }
 
@@ -765,8 +766,7 @@ namespace Fiche_nouveau_prof
             }
 
             var adPath1 = "LDAP://" + txtAdresseIp.Text + "/OU=" + ou + ", OU=college, " + DomainesDc();
-            var entry = new DirectoryEntry(adPath1, Authentification(),
-                txtMotDePasse.Text);
+            var entry = new DirectoryEntry(adPath1, Authentification(), txtMotDePasse.Text);
             var users = entry.Children;
             var newuser = users.Add("CN=" + nouveauNom, "user");
             newuser.Properties["samAccountName"].Value = nouveauNom;
