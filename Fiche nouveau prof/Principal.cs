@@ -71,6 +71,7 @@ namespace Fiche_nouveau_prof
             RdBtnServeurPeda.Checked = true;
             RemplirComboboxOu();
             cboxOu.SelectedIndex = 1;
+            RemplirComboboxDescription();
             rdBtnUtilisateurs.Checked = true;
             rdBtnTravaillerSurAd.Checked = true;
             BtnSuppressionPhoto.Visible = false;
@@ -337,6 +338,7 @@ namespace Fiche_nouveau_prof
             switch (FiltreChoisi())
             {
                 case "Utilisateurs":
+                    RemplirComboboxDescription();
                     RemplirListBoxAd("Person", "DisplayName");
                     break;
 
@@ -709,6 +711,31 @@ namespace Fiche_nouveau_prof
             cboxOu.Refresh();
         }
 
+        private void RemplirComboboxDescription()
+        {
+            cbxDescription.Items.Clear();
+            var rootDse =
+                new DirectoryEntry(
+                    @"LDAP://" + txtAdresseIp.Text + "/OU=" + cboxOu.SelectedItem + ",OU=college," + DomainesDc(),
+                    Authentification(), txtMotDePasse.Text);
+
+            var ouSearch = new DirectorySearcher(rootDse);
+            ouSearch.Filter = "(objectCategory=user)";
+            var résultats = ouSearch.FindAll();
+
+            foreach (SearchResult résultat in résultats)
+                if (résultat.Properties.Contains("Description"))
+                {
+                    if ((!cbxDescription.Items.Contains(résultat.Properties["Description"][0].ToString()) &&
+                         (!résultat.Properties["Description"][0].ToString().Contains("1B"))))
+                        cbxDescription.Items.Add(résultat.Properties["Description"][0].ToString());
+                }
+
+            cbxDescription.Items.Add("-Tout le monde-");
+            cbxDescription.Refresh();
+            cbxDescription.SelectedIndex = 0;
+        }
+
         private void RemplirListeBox(CheckedListBox lsb, string folder, string fileType)
         {
             lsb.Items.Clear();
@@ -728,15 +755,29 @@ namespace Fiche_nouveau_prof
                     DomainesDc(), Authentification(), txtMotDePasse.Text);
 
             var ouSearch = new DirectorySearcher(rootDse);
-            if (TxbRechercherCompte.Text != "")
-                ouSearch.Filter = "(&(objectCategory=" + catégorie + ") (name=*" + TxbRechercherCompte.Text + "*))";
-            else ouSearch.Filter = "(objectCategory=" + catégorie + ")";
+            if (!cbxDescription.SelectedItem.ToString().Contains("Tout le monde"))
+            {
+                if (TxbRechercherCompte.Text != "")
+                    ouSearch.Filter = "(&(objectCategory=" + catégorie + ") (name=*" + TxbRechercherCompte.Text + "*)(description=" +
+                                      cbxDescription.SelectedItem + "))";
+                else
+                    ouSearch.Filter = "(&(objectCategory=" + catégorie + ")(description=" +
+                                      cbxDescription.SelectedItem + "))";
+            }
+            if (cbxDescription.SelectedItem.ToString().Contains("Tout le monde"))
+            {
+                if (TxbRechercherCompte.Text != "")
+                    ouSearch.Filter = "(&(objectCategory=" + catégorie + ") (name=*" + TxbRechercherCompte.Text + "*))";
+                else
+                    ouSearch.Filter = "(objectCategory=" + catégorie + ")";
+            }
 
             SearchResultCollection résultats;
             résultats = ouSearch.FindAll();
 
             foreach (SearchResult résultat in résultats)
-                ListeRésultats.Items.Add(résultat.Properties[propriété][0].ToString());
+                if (!résultat.Properties[propriété][0].ToString().Contains("Eleve"))
+                    ListeRésultats.Items.Add(résultat.Properties[propriété][0].ToString());
 
             lblNombreListeProfs.Text = ListeRésultats.Items.Count + @" enregistrements";
         }
@@ -1240,7 +1281,7 @@ namespace Fiche_nouveau_prof
                         var br = new BinaryReader(fs);
                         br.BaseStream.Seek(0, SeekOrigin.Begin);
                         byte[] ba;
-                        ba = br.ReadBytes((int) br.BaseStream.Length);
+                        ba = br.ReadBytes((int)br.BaseStream.Length);
                         fs.Close();
                         compteAvecPhoto.Properties["thumbnailPhoto"].Clear();
                         compteAvecPhoto.Properties["thumbnailPhoto"].Insert(0, ba);
@@ -1280,7 +1321,6 @@ namespace Fiche_nouveau_prof
             if (openFileDialog1.ShowDialog() == DialogResult.OK)
 
             {
-
                 string cheminComplet = openFileDialog1.FileName;
                 string fileName = openFileDialog1.SafeFileName;
                 string chemin = openFileDialog1.FileName.Replace(fileName, "");
@@ -1313,7 +1353,6 @@ namespace Fiche_nouveau_prof
                     directoryEntry.Properties["thumbnailPhoto"].Insert(0, ba);
                     directoryEntry.CommitChanges();
 
-
                     string[] files = Directory.GetFiles(chemin + @"\" + "PicResize");
                     foreach (string file in files)
                     {
@@ -1322,16 +1361,11 @@ namespace Fiche_nouveau_prof
                     }
                     Directory.Delete(chemin + @"\" + "PicResize");
                 }
-
             }
-
-            
-            
         }
 
         private void AfficherPhotoElève()
         {
-            //var deOu = ConnexionRacineAd();
             var deOu = new DirectoryEntry("LDAP://" + txtAdresseIp.Text + "/" + DomainesDc(), Authentification(), txtMotDePasse.Text);
             var rechercher = new DirectorySearcher(deOu, "(DisplayName=" + ListeRésultats.SelectedItem + ")");
             var compteAd = rechercher.FindOne();
@@ -1345,10 +1379,10 @@ namespace Fiche_nouveau_prof
 
                 if ((directoryEntry.Properties.Contains("thumbnailPhoto")) && ((byte[])directoryEntry.Properties["thumbnailPhoto"][0] != null))
                 {
-                    //var description = directoryEntry.Properties["Description"][0].ToString();
                     var pic = (byte[])directoryEntry.Properties["thumbnailPhoto"][0];
                     var ms = new MemoryStream(pic);
                     PhotoElève.Image = Image.FromStream(ms);
+                    //PhotoElève.LoadAsync();
                     if (directoryEntry.Properties.Contains("Description"))
                         lblClasseElève.Text = directoryEntry.Properties["Description"][0].ToString();
                     lblCompteUtilisateur.Text = @"Compte : " + compte;
@@ -1600,6 +1634,11 @@ namespace Fiche_nouveau_prof
                 sw.Write(sw.NewLine);
             }
             sw.Close();
+        }
+
+        private void cbxDescription_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            RdBtnFiltre_CheckedChanged(sender, e);
         }
     }
 }

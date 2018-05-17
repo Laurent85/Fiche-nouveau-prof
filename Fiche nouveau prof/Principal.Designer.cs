@@ -91,6 +91,7 @@
             this.PbxLogoAd = new System.Windows.Forms.PictureBox();
             this.BtnSuppressionPhoto = new System.Windows.Forms.Button();
             this.BtnAjoutPhoto = new System.Windows.Forms.Button();
+            this.cbxDescription = new System.Windows.Forms.ComboBox();
             this.grpBxConnexionAd.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.grpboxChoixFiltre.SuspendLayout();
@@ -547,6 +548,7 @@
             // 
             // TxbRechercherCompte
             // 
+            this.TxbRechercherCompte.BackColor = System.Drawing.Color.LightYellow;
             this.TxbRechercherCompte.Location = new System.Drawing.Point(1175, 184);
             this.TxbRechercherCompte.Name = "TxbRechercherCompte";
             this.TxbRechercherCompte.Size = new System.Drawing.Size(141, 20);
@@ -739,12 +741,24 @@
             this.BtnAjoutPhoto.UseVisualStyleBackColor = true;
             this.BtnAjoutPhoto.Click += new System.EventHandler(this.BtnAjoutPhoto_Click);
             // 
+            // cbxDescription
+            // 
+            this.cbxDescription.BackColor = System.Drawing.Color.LightYellow;
+            this.cbxDescription.FormattingEnabled = true;
+            this.cbxDescription.Location = new System.Drawing.Point(973, 239);
+            this.cbxDescription.Name = "cbxDescription";
+            this.cbxDescription.Size = new System.Drawing.Size(141, 21);
+            this.cbxDescription.Sorted = true;
+            this.cbxDescription.TabIndex = 59;
+            this.cbxDescription.SelectedIndexChanged += new System.EventHandler(this.cbxDescription_SelectedIndexChanged);
+            // 
             // Principal
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Cornsilk;
             this.ClientSize = new System.Drawing.Size(1472, 780);
+            this.Controls.Add(this.cbxDescription);
             this.Controls.Add(this.BtnAjoutPhoto);
             this.Controls.Add(this.BtnSuppressionPhoto);
             this.Controls.Add(this.PbxLogoAd);
@@ -852,6 +866,7 @@
         private System.Windows.Forms.RadioButton RdBtnServeurAdmin;
         private System.Windows.Forms.RadioButton RdBtnServeurPeda;
         private System.Windows.Forms.Button BtnAjoutPhoto;
+        private System.Windows.Forms.ComboBox cbxDescription;
     }
 }
 
