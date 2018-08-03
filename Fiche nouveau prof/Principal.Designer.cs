@@ -70,6 +70,10 @@
             this.lblOu = new System.Windows.Forms.Label();
             this.BtnSuppressionFiche = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.txbMdpED = new System.Windows.Forms.TextBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.txbIdED = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
             this.BtnSuppressionCompte = new System.Windows.Forms.Button();
             this.lblNombreListeProfs = new System.Windows.Forms.Label();
             this.BtnMotDePasse = new System.Windows.Forms.Button();
@@ -92,6 +96,8 @@
             this.BtnSuppressionPhoto = new System.Windows.Forms.Button();
             this.BtnAjoutPhoto = new System.Windows.Forms.Button();
             this.cbxDescription = new System.Windows.Forms.ComboBox();
+            this.btnInformations = new System.Windows.Forms.Button();
+            this.button1 = new System.Windows.Forms.Button();
             this.grpBxConnexionAd.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.grpboxChoixFiltre.SuspendLayout();
@@ -102,11 +108,12 @@
             // 
             // ListeRésultats
             // 
-            this.ListeRésultats.BackColor = System.Drawing.Color.LemonChiffon;
+            this.ListeRésultats.BackColor = System.Drawing.Color.Azure;
+            this.ListeRésultats.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ListeRésultats.FormattingEnabled = true;
             this.ListeRésultats.Location = new System.Drawing.Point(835, 266);
             this.ListeRésultats.Name = "ListeRésultats";
-            this.ListeRésultats.Size = new System.Drawing.Size(279, 469);
+            this.ListeRésultats.Size = new System.Drawing.Size(302, 468);
             this.ListeRésultats.Sorted = true;
             this.ListeRésultats.TabIndex = 0;
             this.ListeRésultats.SelectedIndexChanged += new System.EventHandler(this.ListeRésultats_SelectedIndexChanged);
@@ -116,7 +123,8 @@
             // 
             this.txbNom.BackColor = System.Drawing.Color.LightYellow;
             this.txbNom.CharacterCasing = System.Windows.Forms.CharacterCasing.Lower;
-            this.txbNom.Location = new System.Drawing.Point(132, 90);
+            this.txbNom.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txbNom.Location = new System.Drawing.Point(180, 92);
             this.txbNom.Name = "txbNom";
             this.txbNom.Size = new System.Drawing.Size(158, 20);
             this.txbNom.TabIndex = 1;
@@ -125,17 +133,19 @@
             // 
             this.txbPrénom.BackColor = System.Drawing.Color.LightYellow;
             this.txbPrénom.CharacterCasing = System.Windows.Forms.CharacterCasing.Lower;
-            this.txbPrénom.Location = new System.Drawing.Point(132, 129);
+            this.txbPrénom.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txbPrénom.Location = new System.Drawing.Point(180, 131);
             this.txbPrénom.Name = "txbPrénom";
             this.txbPrénom.Size = new System.Drawing.Size(158, 20);
             this.txbPrénom.TabIndex = 2;
             // 
             // BtnCréerFiche
             // 
-            this.BtnCréerFiche.Location = new System.Drawing.Point(189, 355);
+            this.BtnCréerFiche.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.BtnCréerFiche.Location = new System.Drawing.Point(217, 416);
             this.BtnCréerFiche.Name = "BtnCréerFiche";
             this.BtnCréerFiche.Size = new System.Drawing.Size(121, 23);
-            this.BtnCréerFiche.TabIndex = 7;
+            this.BtnCréerFiche.TabIndex = 9;
             this.BtnCréerFiche.Text = "Créer la fiche";
             this.BtnCréerFiche.UseVisualStyleBackColor = true;
             this.BtnCréerFiche.Click += new System.EventHandler(this.BtnValider_Click);
@@ -144,7 +154,8 @@
             // 
             this.txbEmail.BackColor = System.Drawing.Color.LightYellow;
             this.txbEmail.CharacterCasing = System.Windows.Forms.CharacterCasing.Lower;
-            this.txbEmail.Location = new System.Drawing.Point(132, 172);
+            this.txbEmail.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txbEmail.Location = new System.Drawing.Point(180, 174);
             this.txbEmail.Name = "txbEmail";
             this.txbEmail.Size = new System.Drawing.Size(158, 20);
             this.txbEmail.TabIndex = 3;
@@ -152,7 +163,8 @@
             // txbCopieur
             // 
             this.txbCopieur.BackColor = System.Drawing.Color.LightYellow;
-            this.txbCopieur.Location = new System.Drawing.Point(132, 213);
+            this.txbCopieur.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txbCopieur.Location = new System.Drawing.Point(180, 215);
             this.txbCopieur.Name = "txbCopieur";
             this.txbCopieur.Size = new System.Drawing.Size(158, 20);
             this.txbCopieur.TabIndex = 4;
@@ -170,43 +182,48 @@
             // lblNom
             // 
             this.lblNom.AutoSize = true;
+            this.lblNom.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblNom.Location = new System.Drawing.Point(90, 93);
             this.lblNom.Name = "lblNom";
-            this.lblNom.Size = new System.Drawing.Size(29, 13);
+            this.lblNom.Size = new System.Drawing.Size(37, 15);
             this.lblNom.TabIndex = 7;
             this.lblNom.Text = "Nom";
             // 
             // lblPrénom
             // 
             this.lblPrénom.AutoSize = true;
+            this.lblPrénom.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblPrénom.Location = new System.Drawing.Point(76, 132);
             this.lblPrénom.Name = "lblPrénom";
-            this.lblPrénom.Size = new System.Drawing.Size(43, 13);
+            this.lblPrénom.Size = new System.Drawing.Size(57, 15);
             this.lblPrénom.TabIndex = 8;
             this.lblPrénom.Text = "Prénom";
             // 
             // lblMail
             // 
             this.lblMail.AutoSize = true;
+            this.lblMail.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblMail.Location = new System.Drawing.Point(39, 175);
             this.lblMail.Name = "lblMail";
-            this.lblMail.Size = new System.Drawing.Size(81, 13);
+            this.lblMail.Size = new System.Drawing.Size(111, 15);
             this.lblMail.TabIndex = 9;
             this.lblMail.Text = "eMail personnel";
             // 
             // lblCodeCopieur
             // 
             this.lblCodeCopieur.AutoSize = true;
+            this.lblCodeCopieur.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblCodeCopieur.Location = new System.Drawing.Point(49, 216);
             this.lblCodeCopieur.Name = "lblCodeCopieur";
-            this.lblCodeCopieur.Size = new System.Drawing.Size(70, 13);
+            this.lblCodeCopieur.Size = new System.Drawing.Size(92, 15);
             this.lblCodeCopieur.TabIndex = 10;
             this.lblCodeCopieur.Text = "Code copieur";
             // 
             // txtMotDePasse
             // 
             this.txtMotDePasse.BackColor = System.Drawing.Color.LightYellow;
-            this.txtMotDePasse.Location = new System.Drawing.Point(157, 284);
+            this.txtMotDePasse.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtMotDePasse.Location = new System.Drawing.Point(183, 286);
             this.txtMotDePasse.Name = "txtMotDePasse";
             this.txtMotDePasse.Size = new System.Drawing.Size(153, 20);
             this.txtMotDePasse.TabIndex = 23;
@@ -215,16 +232,19 @@
             // lblMotDePasse
             // 
             this.lblMotDePasse.AutoSize = true;
+            this.lblMotDePasse.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblMotDePasse.ForeColor = System.Drawing.Color.Black;
             this.lblMotDePasse.Location = new System.Drawing.Point(14, 287);
             this.lblMotDePasse.Name = "lblMotDePasse";
-            this.lblMotDePasse.Size = new System.Drawing.Size(77, 13);
+            this.lblMotDePasse.Size = new System.Drawing.Size(101, 15);
             this.lblMotDePasse.TabIndex = 22;
             this.lblMotDePasse.Text = "Mot de passe :";
             // 
             // txtUtilisateur
             // 
             this.txtUtilisateur.BackColor = System.Drawing.Color.LightYellow;
-            this.txtUtilisateur.Location = new System.Drawing.Point(157, 234);
+            this.txtUtilisateur.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtUtilisateur.Location = new System.Drawing.Point(183, 236);
             this.txtUtilisateur.Name = "txtUtilisateur";
             this.txtUtilisateur.Size = new System.Drawing.Size(153, 20);
             this.txtUtilisateur.TabIndex = 21;
@@ -232,16 +252,19 @@
             // lblNomUtilisateur
             // 
             this.lblNomUtilisateur.AutoSize = true;
+            this.lblNomUtilisateur.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblNomUtilisateur.ForeColor = System.Drawing.Color.Black;
             this.lblNomUtilisateur.Location = new System.Drawing.Point(14, 237);
             this.lblNomUtilisateur.Name = "lblNomUtilisateur";
-            this.lblNomUtilisateur.Size = new System.Drawing.Size(90, 13);
+            this.lblNomUtilisateur.Size = new System.Drawing.Size(125, 15);
             this.lblNomUtilisateur.TabIndex = 20;
             this.lblNomUtilisateur.Text = "Nom d\'utilisateur :";
             // 
             // txtDomaine2
             // 
             this.txtDomaine2.BackColor = System.Drawing.Color.LightYellow;
-            this.txtDomaine2.Location = new System.Drawing.Point(157, 129);
+            this.txtDomaine2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtDomaine2.Location = new System.Drawing.Point(183, 131);
             this.txtDomaine2.Name = "txtDomaine2";
             this.txtDomaine2.Size = new System.Drawing.Size(153, 20);
             this.txtDomaine2.TabIndex = 19;
@@ -249,16 +272,19 @@
             // lblDomaine2
             // 
             this.lblDomaine2.AutoSize = true;
+            this.lblDomaine2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblDomaine2.ForeColor = System.Drawing.Color.Black;
             this.lblDomaine2.Location = new System.Drawing.Point(14, 132);
             this.lblDomaine2.Name = "lblDomaine2";
-            this.lblDomaine2.Size = new System.Drawing.Size(64, 13);
+            this.lblDomaine2.Size = new System.Drawing.Size(85, 15);
             this.lblDomaine2.TabIndex = 18;
             this.lblDomaine2.Text = "Domaine 2 :";
             // 
             // txtDomaine1
             // 
             this.txtDomaine1.BackColor = System.Drawing.Color.LightYellow;
-            this.txtDomaine1.Location = new System.Drawing.Point(157, 80);
+            this.txtDomaine1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtDomaine1.Location = new System.Drawing.Point(183, 82);
             this.txtDomaine1.Name = "txtDomaine1";
             this.txtDomaine1.Size = new System.Drawing.Size(153, 20);
             this.txtDomaine1.TabIndex = 17;
@@ -266,16 +292,19 @@
             // lblDomaine1
             // 
             this.lblDomaine1.AutoSize = true;
+            this.lblDomaine1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblDomaine1.ForeColor = System.Drawing.Color.Black;
             this.lblDomaine1.Location = new System.Drawing.Point(14, 83);
             this.lblDomaine1.Name = "lblDomaine1";
-            this.lblDomaine1.Size = new System.Drawing.Size(64, 13);
+            this.lblDomaine1.Size = new System.Drawing.Size(85, 15);
             this.lblDomaine1.TabIndex = 16;
             this.lblDomaine1.Text = "Domaine 1 :";
             // 
             // txtAdresseIp
             // 
             this.txtAdresseIp.BackColor = System.Drawing.Color.LightYellow;
-            this.txtAdresseIp.Location = new System.Drawing.Point(157, 30);
+            this.txtAdresseIp.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtAdresseIp.Location = new System.Drawing.Point(183, 32);
             this.txtAdresseIp.Name = "txtAdresseIp";
             this.txtAdresseIp.Size = new System.Drawing.Size(153, 20);
             this.txtAdresseIp.TabIndex = 15;
@@ -283,18 +312,21 @@
             // lblAdresseIp
             // 
             this.lblAdresseIp.AutoSize = true;
+            this.lblAdresseIp.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblAdresseIp.ForeColor = System.Drawing.Color.Black;
             this.lblAdresseIp.Location = new System.Drawing.Point(14, 33);
             this.lblAdresseIp.Name = "lblAdresseIp";
-            this.lblAdresseIp.Size = new System.Drawing.Size(115, 13);
+            this.lblAdresseIp.Size = new System.Drawing.Size(153, 15);
             this.lblAdresseIp.TabIndex = 14;
             this.lblAdresseIp.Text = "Adresse ip du serveur :";
             // 
             // BtnCréationUtilisateurAd
             // 
-            this.BtnCréationUtilisateurAd.Location = new System.Drawing.Point(23, 355);
+            this.BtnCréationUtilisateurAd.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.BtnCréationUtilisateurAd.Location = new System.Drawing.Point(42, 416);
             this.BtnCréationUtilisateurAd.Name = "BtnCréationUtilisateurAd";
             this.BtnCréationUtilisateurAd.Size = new System.Drawing.Size(121, 23);
-            this.BtnCréationUtilisateurAd.TabIndex = 8;
+            this.BtnCréationUtilisateurAd.TabIndex = 9;
             this.BtnCréationUtilisateurAd.Text = "Créer compte AD";
             this.BtnCréationUtilisateurAd.UseVisualStyleBackColor = true;
             this.BtnCréationUtilisateurAd.Click += new System.EventHandler(this.BtnCréationUtilisateurAdClick);
@@ -302,16 +334,18 @@
             // lblGroupe
             // 
             this.lblGroupe.AutoSize = true;
+            this.lblGroupe.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblGroupe.Location = new System.Drawing.Point(76, 259);
             this.lblGroupe.Name = "lblGroupe";
-            this.lblGroupe.Size = new System.Drawing.Size(42, 13);
+            this.lblGroupe.Size = new System.Drawing.Size(54, 15);
             this.lblGroupe.TabIndex = 26;
             this.lblGroupe.Text = "Groupe";
             // 
             // txbGroupe
             // 
             this.txbGroupe.BackColor = System.Drawing.Color.LightYellow;
-            this.txbGroupe.Location = new System.Drawing.Point(132, 256);
+            this.txbGroupe.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txbGroupe.Location = new System.Drawing.Point(180, 258);
             this.txbGroupe.Name = "txbGroupe";
             this.txbGroupe.Size = new System.Drawing.Size(158, 20);
             this.txbGroupe.TabIndex = 5;
@@ -319,23 +353,27 @@
             // lblMdp
             // 
             this.lblMdp.AutoSize = true;
+            this.lblMdp.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblMdp.Location = new System.Drawing.Point(49, 301);
             this.lblMdp.Name = "lblMdp";
-            this.lblMdp.Size = new System.Drawing.Size(71, 13);
+            this.lblMdp.Size = new System.Drawing.Size(93, 15);
             this.lblMdp.TabIndex = 28;
             this.lblMdp.Text = "Mot de passe";
             // 
             // txbMdp
             // 
             this.txbMdp.BackColor = System.Drawing.Color.LightYellow;
-            this.txbMdp.Location = new System.Drawing.Point(132, 298);
+            this.txbMdp.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txbMdp.Location = new System.Drawing.Point(180, 300);
             this.txbMdp.Name = "txbMdp";
             this.txbMdp.Size = new System.Drawing.Size(158, 20);
             this.txbMdp.TabIndex = 6;
             // 
             // BtnConnexionAD
             // 
-            this.BtnConnexionAD.Location = new System.Drawing.Point(157, 341);
+            this.BtnConnexionAD.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.BtnConnexionAD.ForeColor = System.Drawing.Color.Black;
+            this.BtnConnexionAD.Location = new System.Drawing.Point(183, 341);
             this.BtnConnexionAD.Name = "BtnConnexionAD";
             this.BtnConnexionAD.Size = new System.Drawing.Size(153, 23);
             this.BtnConnexionAD.TabIndex = 29;
@@ -346,15 +384,17 @@
             // lblEtatConnexionAd
             // 
             this.lblEtatConnexionAd.AutoSize = true;
+            this.lblEtatConnexionAd.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblEtatConnexionAd.ForeColor = System.Drawing.Color.Black;
             this.lblEtatConnexionAd.Location = new System.Drawing.Point(154, 391);
             this.lblEtatConnexionAd.Name = "lblEtatConnexionAd";
-            this.lblEtatConnexionAd.Size = new System.Drawing.Size(66, 13);
+            this.lblEtatConnexionAd.Size = new System.Drawing.Size(83, 15);
             this.lblEtatConnexionAd.TabIndex = 30;
             this.lblEtatConnexionAd.Text = "Déconnecté";
             // 
             // grpBxConnexionAd
             // 
-            this.grpBxConnexionAd.BackColor = System.Drawing.Color.LemonChiffon;
+            this.grpBxConnexionAd.BackColor = System.Drawing.Color.Transparent;
             this.grpBxConnexionAd.Controls.Add(this.RdBtnServeurAdmin);
             this.grpBxConnexionAd.Controls.Add(this.RdBtnServeurPeda);
             this.grpBxConnexionAd.Controls.Add(this.lblDomaine3);
@@ -371,9 +411,11 @@
             this.grpBxConnexionAd.Controls.Add(this.txtUtilisateur);
             this.grpBxConnexionAd.Controls.Add(this.lblMotDePasse);
             this.grpBxConnexionAd.Controls.Add(this.txtMotDePasse);
+            this.grpBxConnexionAd.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.grpBxConnexionAd.ForeColor = System.Drawing.Color.Crimson;
             this.grpBxConnexionAd.Location = new System.Drawing.Point(18, 174);
             this.grpBxConnexionAd.Name = "grpBxConnexionAd";
-            this.grpBxConnexionAd.Size = new System.Drawing.Size(336, 537);
+            this.grpBxConnexionAd.Size = new System.Drawing.Size(363, 561);
             this.grpBxConnexionAd.TabIndex = 33;
             this.grpBxConnexionAd.TabStop = false;
             this.grpBxConnexionAd.Text = "Connexion AD";
@@ -381,9 +423,11 @@
             // RdBtnServeurAdmin
             // 
             this.RdBtnServeurAdmin.AutoSize = true;
+            this.RdBtnServeurAdmin.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.RdBtnServeurAdmin.ForeColor = System.Drawing.Color.Black;
             this.RdBtnServeurAdmin.Location = new System.Drawing.Point(17, 468);
             this.RdBtnServeurAdmin.Name = "RdBtnServeurAdmin";
-            this.RdBtnServeurAdmin.Size = new System.Drawing.Size(120, 17);
+            this.RdBtnServeurAdmin.Size = new System.Drawing.Size(158, 19);
             this.RdBtnServeurAdmin.TabIndex = 34;
             this.RdBtnServeurAdmin.TabStop = true;
             this.RdBtnServeurAdmin.Text = "Serveur administratif";
@@ -393,9 +437,11 @@
             // RdBtnServeurPeda
             // 
             this.RdBtnServeurPeda.AutoSize = true;
+            this.RdBtnServeurPeda.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.RdBtnServeurPeda.ForeColor = System.Drawing.Color.Black;
             this.RdBtnServeurPeda.Location = new System.Drawing.Point(17, 445);
             this.RdBtnServeurPeda.Name = "RdBtnServeurPeda";
-            this.RdBtnServeurPeda.Size = new System.Drawing.Size(127, 17);
+            this.RdBtnServeurPeda.Size = new System.Drawing.Size(162, 19);
             this.RdBtnServeurPeda.TabIndex = 33;
             this.RdBtnServeurPeda.TabStop = true;
             this.RdBtnServeurPeda.Text = "Serveur pédagogique";
@@ -405,23 +451,27 @@
             // lblDomaine3
             // 
             this.lblDomaine3.AutoSize = true;
+            this.lblDomaine3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblDomaine3.ForeColor = System.Drawing.Color.Black;
             this.lblDomaine3.Location = new System.Drawing.Point(14, 184);
             this.lblDomaine3.Name = "lblDomaine3";
-            this.lblDomaine3.Size = new System.Drawing.Size(64, 13);
+            this.lblDomaine3.Size = new System.Drawing.Size(85, 15);
             this.lblDomaine3.TabIndex = 32;
             this.lblDomaine3.Text = "Domaine 3 :";
             // 
             // txtDomaine3
             // 
             this.txtDomaine3.BackColor = System.Drawing.Color.LightYellow;
-            this.txtDomaine3.Location = new System.Drawing.Point(157, 181);
+            this.txtDomaine3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtDomaine3.Location = new System.Drawing.Point(183, 183);
             this.txtDomaine3.Name = "txtDomaine3";
             this.txtDomaine3.Size = new System.Drawing.Size(153, 20);
             this.txtDomaine3.TabIndex = 31;
             // 
             // btnImportUtilisateurs
             // 
-            this.btnImportUtilisateurs.Location = new System.Drawing.Point(23, 395);
+            this.btnImportUtilisateurs.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnImportUtilisateurs.Location = new System.Drawing.Point(42, 456);
             this.btnImportUtilisateurs.Name = "btnImportUtilisateurs";
             this.btnImportUtilisateurs.Size = new System.Drawing.Size(121, 23);
             this.btnImportUtilisateurs.TabIndex = 9;
@@ -432,7 +482,7 @@
             // lblCheminFichierExcel
             // 
             this.lblCheminFichierExcel.AutoSize = true;
-            this.lblCheminFichierExcel.Location = new System.Drawing.Point(20, 440);
+            this.lblCheminFichierExcel.Location = new System.Drawing.Point(431, 746);
             this.lblCheminFichierExcel.Name = "lblCheminFichierExcel";
             this.lblCheminFichierExcel.Size = new System.Drawing.Size(0, 13);
             this.lblCheminFichierExcel.TabIndex = 35;
@@ -450,6 +500,7 @@
             // lblTitre
             // 
             this.lblTitre.AutoSize = true;
+            this.lblTitre.BackColor = System.Drawing.Color.Transparent;
             this.lblTitre.Font = new System.Drawing.Font("Script MT Bold", 45F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblTitre.ForeColor = System.Drawing.Color.DarkCyan;
             this.lblTitre.Location = new System.Drawing.Point(446, 9);
@@ -461,8 +512,9 @@
             // cboxOu
             // 
             this.cboxOu.BackColor = System.Drawing.Color.LightYellow;
+            this.cboxOu.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cboxOu.FormattingEnabled = true;
-            this.cboxOu.Location = new System.Drawing.Point(132, 45);
+            this.cboxOu.Location = new System.Drawing.Point(180, 47);
             this.cboxOu.Name = "cboxOu";
             this.cboxOu.Size = new System.Drawing.Size(158, 21);
             this.cboxOu.TabIndex = 39;
@@ -471,9 +523,10 @@
             // lblOu
             // 
             this.lblOu.AutoSize = true;
+            this.lblOu.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblOu.Location = new System.Drawing.Point(20, 48);
             this.lblOu.Name = "lblOu";
-            this.lblOu.Size = new System.Drawing.Size(100, 13);
+            this.lblOu.Size = new System.Drawing.Size(137, 15);
             this.lblOu.TabIndex = 40;
             this.lblOu.Text = "Unité d\'organisation";
             // 
@@ -489,7 +542,11 @@
             // 
             // groupBox2
             // 
-            this.groupBox2.BackColor = System.Drawing.Color.LemonChiffon;
+            this.groupBox2.BackColor = System.Drawing.Color.Transparent;
+            this.groupBox2.Controls.Add(this.txbMdpED);
+            this.groupBox2.Controls.Add(this.label2);
+            this.groupBox2.Controls.Add(this.txbIdED);
+            this.groupBox2.Controls.Add(this.label1);
             this.groupBox2.Controls.Add(this.txbCopieur);
             this.groupBox2.Controls.Add(this.txbNom);
             this.groupBox2.Controls.Add(this.lblOu);
@@ -498,7 +555,6 @@
             this.groupBox2.Controls.Add(this.BtnCréerFiche);
             this.groupBox2.Controls.Add(this.txbEmail);
             this.groupBox2.Controls.Add(this.lblNom);
-            this.groupBox2.Controls.Add(this.lblCheminFichierExcel);
             this.groupBox2.Controls.Add(this.lblPrénom);
             this.groupBox2.Controls.Add(this.btnImportUtilisateurs);
             this.groupBox2.Controls.Add(this.lblMail);
@@ -508,12 +564,51 @@
             this.groupBox2.Controls.Add(this.txbMdp);
             this.groupBox2.Controls.Add(this.txbGroupe);
             this.groupBox2.Controls.Add(this.lblGroupe);
-            this.groupBox2.Location = new System.Drawing.Point(429, 240);
+            this.groupBox2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.groupBox2.Location = new System.Drawing.Point(411, 240);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(339, 471);
+            this.groupBox2.Size = new System.Drawing.Size(386, 494);
             this.groupBox2.TabIndex = 42;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Création compte ou fiche";
+            // 
+            // txbMdpED
+            // 
+            this.txbMdpED.BackColor = System.Drawing.Color.LightYellow;
+            this.txbMdpED.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txbMdpED.Location = new System.Drawing.Point(180, 378);
+            this.txbMdpED.Name = "txbMdpED";
+            this.txbMdpED.Size = new System.Drawing.Size(158, 20);
+            this.txbMdpED.TabIndex = 8;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.Location = new System.Drawing.Point(32, 379);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(125, 15);
+            this.label2.TabIndex = 44;
+            this.label2.Text = "mdp Ecole Directe";
+            // 
+            // txbIdED
+            // 
+            this.txbIdED.BackColor = System.Drawing.Color.LightYellow;
+            this.txbIdED.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txbIdED.Location = new System.Drawing.Point(180, 341);
+            this.txbIdED.Name = "txbIdED";
+            this.txbIdED.Size = new System.Drawing.Size(158, 20);
+            this.txbIdED.TabIndex = 7;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Location = new System.Drawing.Point(39, 342);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(109, 15);
+            this.label1.TabIndex = 42;
+            this.label1.Text = "id Ecole Directe";
             // 
             // BtnSuppressionCompte
             // 
@@ -528,6 +623,7 @@
             // lblNombreListeProfs
             // 
             this.lblNombreListeProfs.AutoSize = true;
+            this.lblNombreListeProfs.BackColor = System.Drawing.Color.Transparent;
             this.lblNombreListeProfs.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblNombreListeProfs.ForeColor = System.Drawing.Color.OrangeRed;
             this.lblNombreListeProfs.Location = new System.Drawing.Point(906, 748);
@@ -557,13 +653,15 @@
             // 
             // grpboxChoixFiltre
             // 
-            this.grpboxChoixFiltre.BackColor = System.Drawing.Color.LemonChiffon;
+            this.grpboxChoixFiltre.BackColor = System.Drawing.Color.Transparent;
             this.grpboxChoixFiltre.Controls.Add(this.rdBtnOrdinateurs);
             this.grpboxChoixFiltre.Controls.Add(this.rdBtnGroupes);
             this.grpboxChoixFiltre.Controls.Add(this.rdBtnUtilisateurs);
+            this.grpboxChoixFiltre.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.grpboxChoixFiltre.ForeColor = System.Drawing.Color.Crimson;
             this.grpboxChoixFiltre.Location = new System.Drawing.Point(835, 174);
             this.grpboxChoixFiltre.Name = "grpboxChoixFiltre";
-            this.grpboxChoixFiltre.Size = new System.Drawing.Size(279, 60);
+            this.grpboxChoixFiltre.Size = new System.Drawing.Size(302, 60);
             this.grpboxChoixFiltre.TabIndex = 47;
             this.grpboxChoixFiltre.TabStop = false;
             this.grpboxChoixFiltre.Text = "Choix du filtre";
@@ -571,9 +669,10 @@
             // rdBtnOrdinateurs
             // 
             this.rdBtnOrdinateurs.AutoSize = true;
+            this.rdBtnOrdinateurs.ForeColor = System.Drawing.Color.Black;
             this.rdBtnOrdinateurs.Location = new System.Drawing.Point(194, 29);
             this.rdBtnOrdinateurs.Name = "rdBtnOrdinateurs";
-            this.rdBtnOrdinateurs.Size = new System.Drawing.Size(79, 17);
+            this.rdBtnOrdinateurs.Size = new System.Drawing.Size(100, 19);
             this.rdBtnOrdinateurs.TabIndex = 2;
             this.rdBtnOrdinateurs.TabStop = true;
             this.rdBtnOrdinateurs.Text = "Ordinateurs";
@@ -583,9 +682,10 @@
             // rdBtnGroupes
             // 
             this.rdBtnGroupes.AutoSize = true;
+            this.rdBtnGroupes.ForeColor = System.Drawing.Color.Black;
             this.rdBtnGroupes.Location = new System.Drawing.Point(105, 29);
             this.rdBtnGroupes.Name = "rdBtnGroupes";
-            this.rdBtnGroupes.Size = new System.Drawing.Size(65, 17);
+            this.rdBtnGroupes.Size = new System.Drawing.Size(79, 19);
             this.rdBtnGroupes.TabIndex = 1;
             this.rdBtnGroupes.TabStop = true;
             this.rdBtnGroupes.Text = "Groupes";
@@ -595,9 +695,10 @@
             // rdBtnUtilisateurs
             // 
             this.rdBtnUtilisateurs.AutoSize = true;
+            this.rdBtnUtilisateurs.ForeColor = System.Drawing.Color.Black;
             this.rdBtnUtilisateurs.Location = new System.Drawing.Point(6, 29);
             this.rdBtnUtilisateurs.Name = "rdBtnUtilisateurs";
-            this.rdBtnUtilisateurs.Size = new System.Drawing.Size(76, 17);
+            this.rdBtnUtilisateurs.Size = new System.Drawing.Size(98, 19);
             this.rdBtnUtilisateurs.TabIndex = 0;
             this.rdBtnUtilisateurs.TabStop = true;
             this.rdBtnUtilisateurs.Text = "Utilisateurs";
@@ -606,12 +707,14 @@
             // 
             // grpbxChoixContexte
             // 
-            this.grpbxChoixContexte.BackColor = System.Drawing.Color.LemonChiffon;
+            this.grpbxChoixContexte.BackColor = System.Drawing.Color.Transparent;
             this.grpbxChoixContexte.Controls.Add(this.rdBtnTravaillerSurAd);
             this.grpbxChoixContexte.Controls.Add(this.rdBtnCréationFicheProf);
-            this.grpbxChoixContexte.Location = new System.Drawing.Point(429, 174);
+            this.grpbxChoixContexte.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.grpbxChoixContexte.ForeColor = System.Drawing.Color.Crimson;
+            this.grpbxChoixContexte.Location = new System.Drawing.Point(411, 174);
             this.grpbxChoixContexte.Name = "grpbxChoixContexte";
-            this.grpbxChoixContexte.Size = new System.Drawing.Size(339, 60);
+            this.grpbxChoixContexte.Size = new System.Drawing.Size(386, 60);
             this.grpbxChoixContexte.TabIndex = 48;
             this.grpbxChoixContexte.TabStop = false;
             this.grpbxChoixContexte.Text = "Choix du contexte";
@@ -619,9 +722,11 @@
             // rdBtnTravaillerSurAd
             // 
             this.rdBtnTravaillerSurAd.AutoSize = true;
+            this.rdBtnTravaillerSurAd.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.rdBtnTravaillerSurAd.ForeColor = System.Drawing.Color.Black;
             this.rdBtnTravaillerSurAd.Location = new System.Drawing.Point(170, 31);
             this.rdBtnTravaillerSurAd.Name = "rdBtnTravaillerSurAd";
-            this.rdBtnTravaillerSurAd.Size = new System.Drawing.Size(163, 17);
+            this.rdBtnTravaillerSurAd.Size = new System.Drawing.Size(211, 19);
             this.rdBtnTravaillerSurAd.TabIndex = 1;
             this.rdBtnTravaillerSurAd.TabStop = true;
             this.rdBtnTravaillerSurAd.Text = "Travailler sur Active Directory";
@@ -631,9 +736,11 @@
             // rdBtnCréationFicheProf
             // 
             this.rdBtnCréationFicheProf.AutoSize = true;
+            this.rdBtnCréationFicheProf.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.rdBtnCréationFicheProf.ForeColor = System.Drawing.Color.Black;
             this.rdBtnCréationFicheProf.Location = new System.Drawing.Point(6, 29);
             this.rdBtnCréationFicheProf.Name = "rdBtnCréationFicheProf";
-            this.rdBtnCréationFicheProf.Size = new System.Drawing.Size(118, 17);
+            this.rdBtnCréationFicheProf.Size = new System.Drawing.Size(152, 19);
             this.rdBtnCréationFicheProf.TabIndex = 0;
             this.rdBtnCréationFicheProf.TabStop = true;
             this.rdBtnCréationFicheProf.Text = "Créer une fiche prof";
@@ -643,12 +750,14 @@
             // ChkBxSéléctionnerTout
             // 
             this.ChkBxSéléctionnerTout.AutoSize = true;
+            this.ChkBxSéléctionnerTout.BackColor = System.Drawing.Color.Transparent;
+            this.ChkBxSéléctionnerTout.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ChkBxSéléctionnerTout.Location = new System.Drawing.Point(837, 244);
             this.ChkBxSéléctionnerTout.Name = "ChkBxSéléctionnerTout";
-            this.ChkBxSéléctionnerTout.Size = new System.Drawing.Size(106, 17);
+            this.ChkBxSéléctionnerTout.Size = new System.Drawing.Size(135, 19);
             this.ChkBxSéléctionnerTout.TabIndex = 49;
             this.ChkBxSéléctionnerTout.Text = "Sélectionner tout";
-            this.ChkBxSéléctionnerTout.UseVisualStyleBackColor = true;
+            this.ChkBxSéléctionnerTout.UseVisualStyleBackColor = false;
             this.ChkBxSéléctionnerTout.CheckedChanged += new System.EventHandler(this.ChkBxSéléctionnerTout_CheckedChanged);
             // 
             // BtnImportPhotos
@@ -664,6 +773,7 @@
             // lblCheminPhotos
             // 
             this.lblCheminPhotos.AutoSize = true;
+            this.lblCheminPhotos.BackColor = System.Drawing.Color.Transparent;
             this.lblCheminPhotos.Location = new System.Drawing.Point(1175, 452);
             this.lblCheminPhotos.Name = "lblCheminPhotos";
             this.lblCheminPhotos.Size = new System.Drawing.Size(179, 13);
@@ -672,6 +782,7 @@
             // 
             // PhotoElève
             // 
+            this.PhotoElève.BackColor = System.Drawing.Color.Transparent;
             this.PhotoElève.Location = new System.Drawing.Point(1175, 553);
             this.PhotoElève.Name = "PhotoElève";
             this.PhotoElève.Size = new System.Drawing.Size(148, 182);
@@ -692,6 +803,7 @@
             // lblClasseElève
             // 
             this.lblClasseElève.AutoSize = true;
+            this.lblClasseElève.BackColor = System.Drawing.Color.Transparent;
             this.lblClasseElève.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblClasseElève.ForeColor = System.Drawing.SystemColors.HotTrack;
             this.lblClasseElève.Location = new System.Drawing.Point(1196, 746);
@@ -703,6 +815,7 @@
             // lblCompteUtilisateur
             // 
             this.lblCompteUtilisateur.AutoSize = true;
+            this.lblCompteUtilisateur.BackColor = System.Drawing.Color.Transparent;
             this.lblCompteUtilisateur.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblCompteUtilisateur.ForeColor = System.Drawing.SystemColors.HotTrack;
             this.lblCompteUtilisateur.Location = new System.Drawing.Point(1172, 521);
@@ -713,6 +826,7 @@
             // 
             // PbxLogoAd
             // 
+            this.PbxLogoAd.BackColor = System.Drawing.Color.Transparent;
             this.PbxLogoAd.Image = global::Fiche_nouveau_prof.Properties.Resources.AD;
             this.PbxLogoAd.Location = new System.Drawing.Point(18, 12);
             this.PbxLogoAd.Name = "PbxLogoAd";
@@ -747,17 +861,41 @@
             this.cbxDescription.FormattingEnabled = true;
             this.cbxDescription.Location = new System.Drawing.Point(973, 239);
             this.cbxDescription.Name = "cbxDescription";
-            this.cbxDescription.Size = new System.Drawing.Size(141, 21);
+            this.cbxDescription.Size = new System.Drawing.Size(164, 21);
             this.cbxDescription.Sorted = true;
             this.cbxDescription.TabIndex = 59;
-            this.cbxDescription.SelectedIndexChanged += new System.EventHandler(this.cbxDescription_SelectedIndexChanged);
+            this.cbxDescription.SelectedIndexChanged += new System.EventHandler(this.CboxDescription_SelectedIndexChanged);
+            // 
+            // btnInformations
+            // 
+            this.btnInformations.Location = new System.Drawing.Point(1332, 635);
+            this.btnInformations.Name = "btnInformations";
+            this.btnInformations.Size = new System.Drawing.Size(99, 23);
+            this.btnInformations.TabIndex = 60;
+            this.btnInformations.Text = "Informations";
+            this.btnInformations.UseVisualStyleBackColor = true;
+            this.btnInformations.Click += new System.EventHandler(this.BtnInformations_Click);
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(1332, 680);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(99, 23);
+            this.button1.TabIndex = 61;
+            this.button1.Text = "Supprimer le profil";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.BtnSuppressionProfils);
             // 
             // Principal
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.Cornsilk;
+            this.BackColor = System.Drawing.SystemColors.Window;
+            this.BackgroundImage = global::Fiche_nouveau_prof.Properties.Resources.Fond_ecran;
+            this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ClientSize = new System.Drawing.Size(1472, 780);
+            this.Controls.Add(this.button1);
+            this.Controls.Add(this.btnInformations);
             this.Controls.Add(this.cbxDescription);
             this.Controls.Add(this.BtnAjoutPhoto);
             this.Controls.Add(this.BtnSuppressionPhoto);
@@ -768,6 +906,7 @@
             this.Controls.Add(this.PhotoElève);
             this.Controls.Add(this.lblCheminPhotos);
             this.Controls.Add(this.BtnImportPhotos);
+            this.Controls.Add(this.lblCheminFichierExcel);
             this.Controls.Add(this.ChkBxSéléctionnerTout);
             this.Controls.Add(this.grpbxChoixContexte);
             this.Controls.Add(this.grpboxChoixFiltre);
@@ -782,6 +921,7 @@
             this.Controls.Add(this.grpBxConnexionAd);
             this.Controls.Add(this.BtnEnvoyerMail);
             this.Controls.Add(this.ListeRésultats);
+            this.DoubleBuffered = true;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Principal";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
@@ -867,6 +1007,12 @@
         private System.Windows.Forms.RadioButton RdBtnServeurPeda;
         private System.Windows.Forms.Button BtnAjoutPhoto;
         private System.Windows.Forms.ComboBox cbxDescription;
+        private System.Windows.Forms.Button btnInformations;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.TextBox txbMdpED;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.TextBox txbIdED;
+        private System.Windows.Forms.Label label1;
     }
 }
 

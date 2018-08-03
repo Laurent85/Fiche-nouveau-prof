@@ -6,23 +6,27 @@
   <COMPONENT cid="caphyon.advinst.msicomp.MsiPropsComponent">
     <ROW Property="AI_BITMAP_DISPLAY_MODE" Value="0"/>
     <ROW Property="AI_PROPPATH_DIR_PERBUILD_AD.png" Value="..\Fiche nouveau prof\bin\Debug\Resources"/>
+    <ROW Property="AI_PROPPATH_DIR_PERBUILD_DelProf2.exe" Value="..\Fiche nouveau prof\bin\Debug\Resources"/>
     <ROW Property="AI_PROPPATH_DIR_PERBUILD_Fichenouveauprof.exe" Value="..\Fiche nouveau prof\bin\Debug"/>
     <ROW Property="AI_PROPPATH_DIR_PERBUILD_Fichenouveauprof.exe.config" Value="..\Fiche nouveau prof\bin\Debug"/>
     <ROW Property="AI_PROPPATH_DIR_PERBUILD_FichesEleves.docx" Value="..\Fiche nouveau prof\bin\Debug\Resources"/>
+    <ROW Property="AI_PROPPATH_DIR_PERBUILD_Fond_ecran.jpg" Value="..\Fiche nouveau prof\bin\Debug\Resources"/>
     <ROW Property="AI_PROPPATH_DIR_PERBUILD_NouveauProf.docx" Value="..\Fiche nouveau prof\bin\Debug\Resources"/>
     <ROW Property="AI_PROPPATH_FILENAME_PERBUILD_AD.png" Value="AD.png"/>
+    <ROW Property="AI_PROPPATH_FILENAME_PERBUILD_DelProf2.exe" Value="DelProf2.exe"/>
     <ROW Property="AI_PROPPATH_FILENAME_PERBUILD_Fichenouveauprof.exe" Value="Fiche nouveau prof.exe"/>
     <ROW Property="AI_PROPPATH_FILENAME_PERBUILD_Fichenouveauprof.exe.config" Value="Fiche nouveau prof.exe.config"/>
     <ROW Property="AI_PROPPATH_FILENAME_PERBUILD_FichesEleves.docx" Value="FichesEleves.docx"/>
+    <ROW Property="AI_PROPPATH_FILENAME_PERBUILD_Fond_ecran.jpg" Value="Fond_ecran.jpg"/>
     <ROW Property="AI_PROPPATH_FILENAME_PERBUILD_NouveauProf.docx" Value="NouveauProf.docx"/>
     <ROW Property="ALLUSERS" Value="1"/>
     <ROW Property="ARPCOMMENTS" Value="This installer database contains the logic and data required to install [|ProductName]." ValueLocId="*"/>
     <ROW Property="ARPPRODUCTICON" Value="DesktopFolder.exe" Type="8"/>
     <ROW Property="Manufacturer" Value="Collège Saint Jacques"/>
-    <ROW Property="ProductCode" Value="1033:{D9721B67-D719-4090-A50F-4D8D3F56A5D3} 1036:{4DCF5D39-7EA7-412B-AD04-763968022AEF} " Type="16"/>
+    <ROW Property="ProductCode" Value="1033:{9FC831FC-7F07-4802-9013-7AC840942BA4} 1036:{812ACB7C-F7CB-430B-9DB4-792FC0093210} " Type="16"/>
     <ROW Property="ProductLanguage" Value="1033"/>
     <ROW Property="ProductName" Value="Gestion Active Directory"/>
-    <ROW Property="ProductVersion" Value="1.0.8" Type="32"/>
+    <ROW Property="ProductVersion" Value="1.0.17" Type="32"/>
     <ROW Property="SecureCustomProperties" Value="OLDPRODUCTS;AI_NEWERPRODUCTFOUND"/>
     <ROW Property="UpgradeCode" Value="{64C82E0A-A0CC-4FF1-AF3A-7879C3CDD17B}"/>
     <ROW Property="WindowsType9X" MultiBuildValue="DefaultBuild:Windows 9x/ME" ValueLocId="-"/>
@@ -53,17 +57,21 @@
     <ATTRIBUTE name="CurrentFeature" value="MainFeature"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiFilesComponent">
-    <ROW File="AD.png" Component_="Fichenouveauprof_ContentOutput_Resources" FileName="[|AI_PROPPATH_FILENAME_PERBUILD_AD.png]" Attributes="0" SourcePath="&lt;AI_APPPATH_PERBUILD_AD.png&gt;" SelfReg="false"/>
+    <ROW File="AD.png" Component_="Fichenouveauprof_ContentOutput_Resources" FileName="[|AI_PROPPATH_FILENAME_PERBUILD_AD.png]" Attributes="0" SourcePath="&lt;AI_APPPATH_PERBUILD_AD.png&gt;" SelfReg="false" NextFile="Fond_ecran.jpg"/>
+    <ROW File="DelProf2.exe" Component_="Fichenouveauprof_ContentOutput_Resources" FileName="[|AI_PROPPATH_FILENAME_PERBUILD_DelProf2.exe]" Attributes="0" SourcePath="&lt;AI_APPPATH_PERBUILD_DelProf2.exe&gt;" SelfReg="false" DigSign="true"/>
     <ROW File="Fichenouveauprof.exe" Component_="Fichenouveauprof_PrimaryOutput" FileName="FICHEN~2.EXE|[|AI_PROPPATH_FILENAME_PERBUILD_Fichenouveauprof.exe]" Attributes="0" SourcePath="&lt;AI_APPPATH_PERBUILD_Fichenouveauprof.exe&gt;" SelfReg="false" NextFile="Fichenouveauprof.exe.config" DigSign="true"/>
     <ROW File="Fichenouveauprof.exe.config" Component_="Fichenouveauprof_PrimaryOutput" FileName="FICHEN~2.CON|[|AI_PROPPATH_FILENAME_PERBUILD_Fichenouveauprof.exe.config]" Attributes="0" SourcePath="&lt;AI_APPPATH_PERBUILD_Fichenouveauprof.exe.config&gt;" SelfReg="false" NextFile="NouveauProf.docx"/>
     <ROW File="FichesEleves.docx" Component_="Fichenouveauprof_ContentOutput_Resources" FileName="FICHES~2.DOC|[|AI_PROPPATH_FILENAME_PERBUILD_FichesEleves.docx]" Attributes="0" SourcePath="&lt;AI_APPPATH_PERBUILD_FichesEleves.docx&gt;" SelfReg="false" NextFile="AD.png"/>
+    <ROW File="Fond_ecran.jpg" Component_="Fichenouveauprof_ContentOutput_Resources" FileName="FOND_E~2.JPG|[|AI_PROPPATH_FILENAME_PERBUILD_Fond_ecran.jpg]" Attributes="0" SourcePath="&lt;AI_APPPATH_PERBUILD_Fond_ecran.jpg&gt;" SelfReg="false" NextFile="DelProf2.exe"/>
     <ROW File="NouveauProf.docx" Component_="Fichenouveauprof_ContentOutput_Resources" FileName="NOUVEA~2.DOC|[|AI_PROPPATH_FILENAME_PERBUILD_NouveauProf.docx]" Attributes="0" SourcePath="&lt;AI_APPPATH_PERBUILD_NouveauProf.docx&gt;" SelfReg="false" NextFile="FichesEleves.docx"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.AppPathsComponent">
     <ROW Name="AI_APPPATH_PERBUILD_AD.png" Path="[|AI_PROPPATH_DIR_PERBUILD_AD.png]\[|AI_PROPPATH_FILENAME_PERBUILD_AD.png]" Type="2" Content="0"/>
+    <ROW Name="AI_APPPATH_PERBUILD_DelProf2.exe" Path="[|AI_PROPPATH_DIR_PERBUILD_DelProf2.exe]\[|AI_PROPPATH_FILENAME_PERBUILD_DelProf2.exe]" Type="2" Content="0"/>
     <ROW Name="AI_APPPATH_PERBUILD_Fichenouveauprof.exe" Path="[|AI_PROPPATH_DIR_PERBUILD_Fichenouveauprof.exe]\[|AI_PROPPATH_FILENAME_PERBUILD_Fichenouveauprof.exe]" Type="2" Content="0"/>
     <ROW Name="AI_APPPATH_PERBUILD_Fichenouveauprof.exe.config" Path="[|AI_PROPPATH_DIR_PERBUILD_Fichenouveauprof.exe.config]\[|AI_PROPPATH_FILENAME_PERBUILD_Fichenouveauprof.exe.config]" Type="2" Content="0"/>
     <ROW Name="AI_APPPATH_PERBUILD_FichesEleves.docx" Path="[|AI_PROPPATH_DIR_PERBUILD_FichesEleves.docx]\[|AI_PROPPATH_FILENAME_PERBUILD_FichesEleves.docx]" Type="2" Content="0"/>
+    <ROW Name="AI_APPPATH_PERBUILD_Fond_ecran.jpg" Path="[|AI_PROPPATH_DIR_PERBUILD_Fond_ecran.jpg]\[|AI_PROPPATH_FILENAME_PERBUILD_Fond_ecran.jpg]" Type="2" Content="0"/>
     <ROW Name="AI_APPPATH_PERBUILD_NouveauProf.docx" Path="[|AI_PROPPATH_DIR_PERBUILD_NouveauProf.docx]\[|AI_PROPPATH_FILENAME_PERBUILD_NouveauProf.docx]" Type="2" Content="0"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.BootstrOptComponent">
@@ -181,5 +189,7 @@
     <ROW ProjectId="{cedf500e-0b3c-4d88-9334-a102e2cb3ae4}" ProjectName="Fiche nouveau prof" OutputGroup="ContentOutput" OutputFile="NouveauProf.docx"/>
     <ROW ProjectId="{cedf500e-0b3c-4d88-9334-a102e2cb3ae4}" ProjectName="Fiche nouveau prof" OutputGroup="ContentOutput" OutputFile="FichesEleves.docx"/>
     <ROW ProjectId="{cedf500e-0b3c-4d88-9334-a102e2cb3ae4}" ProjectName="Fiche nouveau prof" OutputGroup="ContentOutput" OutputFile="AD.png"/>
+    <ROW ProjectId="{cedf500e-0b3c-4d88-9334-a102e2cb3ae4}" ProjectName="Fiche nouveau prof" OutputGroup="ContentOutput" OutputFile="Fond_ecran.jpg"/>
+    <ROW ProjectId="{cedf500e-0b3c-4d88-9334-a102e2cb3ae4}" ProjectName="Fiche nouveau prof" OutputGroup="ContentOutput" OutputFile="DelProf2.exe"/>
   </COMPONENT>
 </DOCUMENT>

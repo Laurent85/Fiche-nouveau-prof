@@ -69,5 +69,15 @@ namespace Fiche_nouveau_prof.Properties {
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
+        
+        /// <summary>
+        ///   Recherche une ressource localisée de type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Fond_ecran {
+            get {
+                object obj = ResourceManager.GetObject("Fond_ecran", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
     }
 }
