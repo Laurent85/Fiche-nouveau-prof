@@ -98,6 +98,8 @@
             this.cbxDescription = new System.Windows.Forms.ComboBox();
             this.btnInformations = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
+            this.btnLancerCopieDossier = new System.Windows.Forms.Button();
+            this.button2 = new System.Windows.Forms.Button();
             this.grpBxConnexionAd.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.grpboxChoixFiltre.SuspendLayout();
@@ -612,9 +614,9 @@
             // 
             // BtnSuppressionCompte
             // 
-            this.BtnSuppressionCompte.Location = new System.Drawing.Point(1175, 323);
+            this.BtnSuppressionCompte.Location = new System.Drawing.Point(1332, 269);
             this.BtnSuppressionCompte.Name = "BtnSuppressionCompte";
-            this.BtnSuppressionCompte.Size = new System.Drawing.Size(141, 23);
+            this.BtnSuppressionCompte.Size = new System.Drawing.Size(111, 23);
             this.BtnSuppressionCompte.TabIndex = 43;
             this.BtnSuppressionCompte.Text = "Supprimer le compte";
             this.BtnSuppressionCompte.UseVisualStyleBackColor = true;
@@ -634,7 +636,7 @@
             // 
             // BtnMotDePasse
             // 
-            this.BtnMotDePasse.Location = new System.Drawing.Point(1175, 367);
+            this.BtnMotDePasse.Location = new System.Drawing.Point(1175, 316);
             this.BtnMotDePasse.Name = "BtnMotDePasse";
             this.BtnMotDePasse.Size = new System.Drawing.Size(141, 23);
             this.BtnMotDePasse.TabIndex = 45;
@@ -794,7 +796,7 @@
             // 
             this.BtnLancerImportPhotos.Location = new System.Drawing.Point(1332, 411);
             this.BtnLancerImportPhotos.Name = "BtnLancerImportPhotos";
-            this.BtnLancerImportPhotos.Size = new System.Drawing.Size(75, 23);
+            this.BtnLancerImportPhotos.Size = new System.Drawing.Size(111, 23);
             this.BtnLancerImportPhotos.TabIndex = 53;
             this.BtnLancerImportPhotos.Text = "Lancer";
             this.BtnLancerImportPhotos.UseVisualStyleBackColor = true;
@@ -839,7 +841,7 @@
             // 
             this.BtnSuppressionPhoto.Location = new System.Drawing.Point(1332, 595);
             this.BtnSuppressionPhoto.Name = "BtnSuppressionPhoto";
-            this.BtnSuppressionPhoto.Size = new System.Drawing.Size(99, 23);
+            this.BtnSuppressionPhoto.Size = new System.Drawing.Size(111, 23);
             this.BtnSuppressionPhoto.TabIndex = 57;
             this.BtnSuppressionPhoto.Text = "Supprimer photo";
             this.BtnSuppressionPhoto.UseVisualStyleBackColor = true;
@@ -849,7 +851,7 @@
             // 
             this.BtnAjoutPhoto.Location = new System.Drawing.Point(1332, 553);
             this.BtnAjoutPhoto.Name = "BtnAjoutPhoto";
-            this.BtnAjoutPhoto.Size = new System.Drawing.Size(99, 23);
+            this.BtnAjoutPhoto.Size = new System.Drawing.Size(111, 23);
             this.BtnAjoutPhoto.TabIndex = 58;
             this.BtnAjoutPhoto.Text = "Ajouter photo";
             this.BtnAjoutPhoto.UseVisualStyleBackColor = true;
@@ -870,7 +872,7 @@
             // 
             this.btnInformations.Location = new System.Drawing.Point(1332, 635);
             this.btnInformations.Name = "btnInformations";
-            this.btnInformations.Size = new System.Drawing.Size(99, 23);
+            this.btnInformations.Size = new System.Drawing.Size(111, 23);
             this.btnInformations.TabIndex = 60;
             this.btnInformations.Text = "Informations";
             this.btnInformations.UseVisualStyleBackColor = true;
@@ -880,11 +882,31 @@
             // 
             this.button1.Location = new System.Drawing.Point(1332, 680);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(99, 23);
+            this.button1.Size = new System.Drawing.Size(111, 23);
             this.button1.TabIndex = 61;
             this.button1.Text = "Supprimer le profil";
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.BtnSuppressionProfils);
+            // 
+            // btnLancerCopieDossier
+            // 
+            this.btnLancerCopieDossier.Location = new System.Drawing.Point(1332, 364);
+            this.btnLancerCopieDossier.Name = "btnLancerCopieDossier";
+            this.btnLancerCopieDossier.Size = new System.Drawing.Size(111, 23);
+            this.btnLancerCopieDossier.TabIndex = 62;
+            this.btnLancerCopieDossier.Text = "Lancer";
+            this.btnLancerCopieDossier.UseVisualStyleBackColor = true;
+            this.btnLancerCopieDossier.Click += new System.EventHandler(this.BtnCopierDossier);
+            // 
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(1175, 364);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(141, 23);
+            this.button2.TabIndex = 63;
+            this.button2.Text = "Copier dossier";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.BtnChoisirDossierACopier);
             // 
             // Principal
             // 
@@ -894,6 +916,8 @@
             this.BackgroundImage = global::Fiche_nouveau_prof.Properties.Resources.Fond_ecran;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ClientSize = new System.Drawing.Size(1472, 780);
+            this.Controls.Add(this.button2);
+            this.Controls.Add(this.btnLancerCopieDossier);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.btnInformations);
             this.Controls.Add(this.cbxDescription);
@@ -1013,6 +1037,8 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox txbIdED;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Button btnLancerCopieDossier;
+        private System.Windows.Forms.Button button2;
     }
 }
 

@@ -108,7 +108,8 @@ namespace Fiche_nouveau_prof
                 else if (champs.Code.Text.Contains("Prénom") && i == 1)
                 {
                     champs.Select();
-                    microsoftWord.Selection.TypeText(EnleverAccents(txbPrénom.Text));
+                    string prenom = EnleverAccents(txbPrénom.Text);
+                    microsoftWord.Selection.TypeText(prenom.ToLower());
                 }
                 else if (champs.Code.Text.Contains("Nom") && j == 0)
                 {
@@ -119,7 +120,8 @@ namespace Fiche_nouveau_prof
                 else if (champs.Code.Text.Contains("Nom") && j == 1)
                 {
                     champs.Select();
-                    microsoftWord.Selection.TypeText(EnleverAccents(txbNom.Text));
+                    string nom = EnleverAccents(txbNom.Text);
+                    microsoftWord.Selection.TypeText(nom.ToLower());
                 }
                 else if (champs.Code.Text.Contains("Email"))
                 {
@@ -171,7 +173,7 @@ namespace Fiche_nouveau_prof
             foreach (var item in ListeRésultats.CheckedItems)
                 try
                 {
-                    var attachment = new Attachment(@"\\Serveur2008\Laurent$\Année 2017-2018\Nouveaux profs 2017-2018\" + item);
+                    var attachment = new Attachment(@"\\Serveur2008\Laurent$\Année 2018-2019\Nouveaux profs 2018-2019\" + item);
                     mail.Attachments.Add(attachment);
                 }
                 catch (Exception ex)
@@ -208,7 +210,7 @@ namespace Fiche_nouveau_prof
             if (lblCheminFichierExcel.Text != "" && cboxOu.SelectedItem.ToString() != "") ImportUtilisateurs();
             if (lblCheminFichierExcel.Text == "" && txbNom.Text != "" && txbGroupe.Text != "" &&
                 txbPrénom.Text != "" && cboxOu.SelectedItem.ToString() != "")
-                CréationUtilisateur(txbNom.Text, txbPrénom.Text, txbGroupe.Text, OuChoisie(), "", "");
+                CréationUtilisateur(txbNom.Text, txbPrénom.Text, txbGroupe.Text, OuChoisie(), txbIdED.Text, txbMdpED.Text);
             TxbRechercherCompte_TextChanged(sender, e);
         }
 
@@ -227,8 +229,8 @@ namespace Fiche_nouveau_prof
         private void BtnSuppressionFiche_Click(object sender, EventArgs e)
         {
             foreach (var item in ListeRésultats.CheckedItems)
-                File.Delete(@"\\Serveur2008\Laurent$\Année 2017-2018\Nouveaux profs 2017-2018\" + (string)item);
-            RemplirListeBox(ListeRésultats, @"\\Serveur2008\Laurent$\Année 2017-2018\Nouveaux profs 2017-2018", "*.*");
+                File.Delete(@"\\Serveur2008\Laurent$\Année 2018-2019\Nouveaux profs 2018-2019\" + (string)item);
+            RemplirListeBox(ListeRésultats, @"\\Serveur2008\Laurent$\Année 2018-2019\Nouveaux profs 2018-2019", "*.*");
         }
 
         private void BtnSuppressionCompteAd_Click(object sender, EventArgs e)
@@ -342,6 +344,24 @@ namespace Fiche_nouveau_prof
         private void BtnSuppressionProfils(object sender, EventArgs e)
         {
             SuppressionProfils();
+        }
+
+        private void BtnChoisirDossierACopier(object sender, EventArgs e)
+        {
+            var folderDlg = new FolderBrowserDialog();
+
+            folderDlg.ShowNewFolderButton = true;
+
+            var result = folderDlg.ShowDialog();
+
+            if (result == DialogResult.OK)
+
+                lblCheminPhotos.Text = folderDlg.SelectedPath;
+        }
+
+        private void BtnCopierDossier(object sender, EventArgs e)
+        {
+            CopieDossier();
         }
 
         private void TxbRechercherCompte_TextChanged(object sender, EventArgs e)
@@ -459,8 +479,8 @@ namespace Fiche_nouveau_prof
                     lblCheminPhotos.Enabled = true;
                     BtnLancerImportPhotos.Enabled = true;
                     BtnSynthèse.Enabled = true;
-                    txbIdED.Enabled = false;
-                    txbMdpED.Enabled = false;
+                    txbIdED.Enabled = true;
+                    txbMdpED.Enabled = true;
                     TxbRechercherCompte_TextChanged(sender, e);
                     break;
             }
@@ -525,6 +545,8 @@ namespace Fiche_nouveau_prof
             ds.PropertiesToLoad.Add("DisplayName");
             ds.PropertiesToLoad.Add("Description");
             ds.PropertiesToLoad.Add("mail");
+            ds.PropertiesToLoad.Add("department");
+            ds.PropertiesToLoad.Add("company");
 
             ds.Filter = "(&(objectCategory=person)(objectClass=user))";
             results = ds.FindAll();
@@ -535,6 +557,8 @@ namespace Fiche_nouveau_prof
             dt.Columns.Add("Mot de passe", typeof(string));
             dt.Columns.Add("Description", typeof(string));
             dt.Columns.Add("Adresse eMail", typeof(string));
+            dt.Columns.Add("id ED", typeof(string));
+            dt.Columns.Add("mdp ED", typeof(string));
 
             foreach (SearchResult sr in results)
             {
@@ -545,7 +569,7 @@ namespace Fiche_nouveau_prof
                 {
                     if (entry.Properties["sAMAccountName"].Count > 0)
                     {
-                        dr["Nom d'utilisateur"] = entry.Properties["sAMAccountName"].Value.ToString();
+                        dr["Nom d'utilisateur"] = entry.Properties["sAMAccountName"].Value.ToString().ToLower();
                         dr["Mot de passe"] = "Toto1234";
                     }
                     if (entry.Properties["DisplayName"].Count > 0)
@@ -558,7 +582,11 @@ namespace Fiche_nouveau_prof
                         (!entry.Properties["Description"].Value.ToString().Contains("Eleve")))
                         dr["Description"] = entry.Properties["Description"].Value.ToString();
                     if (entry.Properties["mail"].Count > 0)
-                        dr["Adresse eMail"] = entry.Properties["mail"].Value.ToString();
+                        dr["Adresse eMail"] = entry.Properties["mail"].Value.ToString().ToLower();
+                    if (entry.Properties["department"].Count > 0)
+                        dr["id ED"] = entry.Properties["department"].Value.ToString();
+                    if (entry.Properties["company"].Count > 0)
+                        dr["mdp ED"] = entry.Properties["company"].Value.ToString();
                     dt.Rows.Add(dr);
                 }
             }
@@ -605,7 +633,7 @@ namespace Fiche_nouveau_prof
             worksheet1.Columns.AutoFit();
             var sortBy = worksheet1.Range["D2", "D1000"];
             var sortBy1 = worksheet1.Range["A2", "A1000"];
-            var sortRange = worksheet1.Range["A2", "E1000"];
+            var sortRange = worksheet1.Range["A2", "G1000"];
             worksheet1.Sort.SortFields.Clear();
             worksheet1.Sort.SetRange(sortRange);
             worksheet1.Sort.SortFields.Add(sortBy, 0, SortOrder.Ascending);
@@ -615,6 +643,7 @@ namespace Fiche_nouveau_prof
             worksheet1.Sort.Orientation = XlSortOrientation.xlSortColumns;
             worksheet1.Sort.SortMethod = XlSortMethod.xlPinYin;
             worksheet1.Sort.Apply();
+            worksheet1.PageSetup.Orientation = XlPageOrientation.xlLandscape;
             xlWorkBook.Save();
             xlWorkBook.Close();
             xlApp.Quit();
@@ -653,7 +682,7 @@ namespace Fiche_nouveau_prof
             if (rdBtnCréationFicheProf.Checked)
             {
                 string file = ListeRésultats.SelectedItem.ToString();
-                string fullFileName = Path.Combine(@"\\Serveur2008\Laurent$\Année 2017-2018\Nouveaux profs 2017-2018", file);
+                string fullFileName = Path.Combine(@"\\Serveur2008\Laurent$\Année 2018-2019\Nouveaux profs 2018-2019", file);
                 Process.Start(fullFileName);
             }
         }
@@ -1262,7 +1291,7 @@ namespace Fiche_nouveau_prof
             var dialogResult =
                 MessageBox.Show(
                     @"Etes vous certain de vouloir réinitialiser le mot de passe pour " + liste.Rows.Count +
-                    @" enregistrement(s) ?", @"Réinitialisation de mot de passe)", MessageBoxButtons.YesNo);
+                    @" enregistrement(s) ?", @"Réinitialisation de mot de passe", MessageBoxButtons.YesNo);
 
             if (dialogResult == DialogResult.Yes)
             {
@@ -1275,6 +1304,57 @@ namespace Fiche_nouveau_prof
                     user.Properties["userAccountControl"].Value = 0x0200;
                     user.CommitChanges();
                     user.Close();
+                }
+            }
+            else if (dialogResult == DialogResult.No)
+            {
+                //do something else
+            }
+        }
+
+        private void CopieDossier()
+        {
+            var liste = new DataTable();
+            liste.Columns.Add("Chemin");
+            liste.Columns.Add("Compte");
+            foreach (var item in ListeRésultats.CheckedItems)
+            {
+                var rootDse =
+                    new DirectoryEntry(
+                        @"LDAP://" + txtAdresseIp.Text + "/OU=" + cboxOu.SelectedItem + ",OU=college," +
+                        DomainesDc(), Authentification(), txtMotDePasse.Text);
+                var ouSearch = new DirectorySearcher(rootDse);
+                ouSearch.Filter = "(&(objectCategory=Person)(objectClass=user)(displayName=" + item + "))";
+                var résultats = ouSearch.FindOne();
+                var row = liste.NewRow();
+                if (résultats != null)
+                {
+                    row["Chemin"] = résultats.Path;
+                    row["Compte"] = résultats.Properties["samAccountName"][0].ToString();
+                }
+                liste.Rows.Add(row);
+            }
+
+            var dialogResult =
+                MessageBox.Show(
+                    @"Etes vous certain de vouloir copier ce dossier pour " + liste.Rows.Count +
+                    @" enregistrement(s) ?", @"Copie d'un dossier", MessageBoxButtons.YesNo);
+
+            if (dialogResult == DialogResult.Yes)
+            {
+                foreach (DataRow rang in liste.Rows)
+                {
+                    //Now Create all of the directories
+                    string SourcePath = lblCheminPhotos.Text;
+                    string DestinationPath = @"\\serveur2008\eleves\" + rang["Compte"].ToString() + @"\";
+                    foreach (string dirPath in Directory.GetDirectories(SourcePath, "*",
+                        SearchOption.AllDirectories))
+                        Directory.CreateDirectory(dirPath.Replace(SourcePath, DestinationPath));
+
+                    //Copy all the files & Replaces any files with the same name
+                    foreach (string newPath in Directory.GetFiles(SourcePath, "*.*",
+                        SearchOption.AllDirectories))
+                        File.Copy(newPath, newPath.Replace(SourcePath, DestinationPath), true);
                 }
             }
             else if (dialogResult == DialogResult.No)
@@ -1533,7 +1613,7 @@ namespace Fiche_nouveau_prof
                 {
                     if (entry.Properties["sAMAccountName"].Count > 0)
                     {
-                        dr["Nom d'utilisateur"] = entry.Properties["DisplayName"].Value.ToString();
+                        dr["Nom d'utilisateur"] = entry.Properties["sAMAccountName"].Value.ToString().ToLower();
                         dr["Mot de passe"] = "Toto1234";
                     }
                     if (entry.Properties["DisplayName"].Count > 0)
@@ -1546,7 +1626,7 @@ namespace Fiche_nouveau_prof
                         (!entry.Properties["Description"].Value.ToString().Contains("Eleve")))
                         dr["Description"] = entry.Properties["Description"].Value.ToString();
                     if (entry.Properties["mail"].Count > 0)
-                        dr["Adresse eMail"] = entry.Properties["mail"].Value.ToString();
+                        dr["Adresse eMail"] = entry.Properties["mail"].Value.ToString().ToLower();
                     if (entry.Properties["department"].Count > 0)
                         dr["id ED"] = entry.Properties["department"].Value.ToString();
                     if (entry.Properties["company"].Count > 0)
@@ -1607,6 +1687,7 @@ namespace Fiche_nouveau_prof
             worksheet1.Sort.Orientation = XlSortOrientation.xlSortColumns;
             worksheet1.Sort.SortMethod = XlSortMethod.xlPinYin;
             worksheet1.Sort.Apply();
+            worksheet1.PageSetup.Orientation = XlPageOrientation.xlLandscape;
             xlWorkBook.Save();
             xlWorkBook.Close();
             xlApp.Quit();
@@ -1680,15 +1761,15 @@ namespace Fiche_nouveau_prof
                         workbook.Sheets.Add(After: workbook.Sheets[workbook.Sheets.Count]);
                         workbook.Worksheets[count].Name = usedRange.Cells[row, 4].Value.ToString();
                         workbook.Worksheets[count].Columns.AutoFit();
-                        var from = workbook.Worksheets[1].Range("A" + row + ":F" + row);
-                        var to = workbook.Worksheets[count].Range("A" + ligne + ":F" + ligne);
+                        var from = workbook.Worksheets[1].Range("A" + row + ":G" + row);
+                        var to = workbook.Worksheets[count].Range("A" + ligne + ":G" + ligne);
                         @from.copy(to);
                         ligne = 2;
                     }
                     if (usedRange.Cells[row, 4].Value == usedRange.Cells[row + 1, 4].Value && ligne > 0)
                     {
-                        var from = workbook.Worksheets[1].Range("A" + row + ":F" + row);
-                        var to = workbook.Worksheets[count].Range("A" + ligne + ":F" + ligne);
+                        var from = workbook.Worksheets[1].Range("A" + row + ":G" + row);
+                        var to = workbook.Worksheets[count].Range("A" + ligne + ":G" + ligne);
                         @from.copy(to);
                         ligne++;
                         workbook.Worksheets[count].Cells[1, 1].Value = "Nom (" + (ligne - 1) + " élèves)";
@@ -1696,11 +1777,13 @@ namespace Fiche_nouveau_prof
                         workbook.Worksheets[count].Cells[1, 3].Value = "Mot de passe";
                         workbook.Worksheets[count].Cells[1, 4].Value = "Classe";
                         workbook.Worksheets[count].Cells[1, 5].Value = "Adresse e-Mail";
+                        workbook.Worksheets[count].Cells[1, 6].Value = "id ED";
+                        workbook.Worksheets[count].Cells[1, 7].Value = "mdp ED";
                         workbook.Worksheets[count].Rows(1).RowHeight = 30;
                         workbook.Worksheets[count].Rows(1).HorizontalAlignment = Microsoft.Office.Interop.Excel.XlHAlign.xlHAlignCenter;
                         workbook.Worksheets[count].Rows(1).VerticalAlignment = Microsoft.Office.Interop.Excel.XlVAlign.xlVAlignCenter;
                         workbook.Worksheets[count].Cells[1, 1].EntireRow.Font.Bold = true;
-                        Microsoft.Office.Interop.Excel.Range range1 = workbook.Worksheets[count].Range["A1", "E1"];
+                        Microsoft.Office.Interop.Excel.Range range1 = workbook.Worksheets[count].Range["A1", "G1"];
                         range1.Interior.Color = Color.LightGray;
                         workbook.Worksheets[count].PageSetup.LeftMargin = 1;
                         workbook.Worksheets[count].PageSetup.RightMargin = 1;
