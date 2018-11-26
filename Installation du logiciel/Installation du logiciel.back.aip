@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<DOCUMENT Type="Advanced Installer" CreateVersion="14.6" version="15.4.1" Modules="architect" RootPath="." Language="en" Id="{FE0D8C53-454A-45DE-97F9-DBEB203A2BD1}">
+<DOCUMENT Type="Advanced Installer" CreateVersion="14.6" version="14.6" Modules="architect" RootPath="." Language="en" Id="{FE0D8C53-454A-45DE-97F9-DBEB203A2BD1}">
   <COMPONENT cid="caphyon.advinst.msicomp.ProjectOptionsComponent">
     <ROW Name="HiddenItems" Value="AppXProductDetailsComponent;AppXDependenciesComponent;AppXAppDetailsComponent;AppXVisualAssetsComponent;AppXCapabilitiesComponent;AppXAppDeclarationsComponent;AppXUriRulesComponent"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiPropsComponent">
     <ROW Property="AI_BITMAP_DISPLAY_MODE" Value="0"/>
-    <ROW Property="AI_PROPPATH_DIR_PERBUILD_AD.png" Value="..\Fiche nouveau prof\bin\Debug\Resources"/>
-    <ROW Property="AI_PROPPATH_DIR_PERBUILD_DelProf2.exe" Value="..\Fiche nouveau prof\bin\Debug\Resources"/>
+    <ROW Property="AI_PROPPATH_DIR_PERBUILD_AD.png" Value="..\Fiche nouveau prof\bin\Release\Resources"/>
+    <ROW Property="AI_PROPPATH_DIR_PERBUILD_DelProf2.exe" Value="..\Fiche nouveau prof\bin\Release\Resources"/>
     <ROW Property="AI_PROPPATH_DIR_PERBUILD_EPPlus.dll" Value="..\packages\EPPlus.4.5.1\lib\net40"/>
-    <ROW Property="AI_PROPPATH_DIR_PERBUILD_Fichenouveauprof.exe" Value="..\Fiche nouveau prof\bin\Debug"/>
-    <ROW Property="AI_PROPPATH_DIR_PERBUILD_Fichenouveauprof.exe.config" Value="..\Fiche nouveau prof\bin\Debug"/>
-    <ROW Property="AI_PROPPATH_DIR_PERBUILD_FichesEleves.docx" Value="..\Fiche nouveau prof\bin\Debug\Resources"/>
-    <ROW Property="AI_PROPPATH_DIR_PERBUILD_Fond_ecran.jpg" Value="..\Fiche nouveau prof\bin\Debug\Resources"/>
-    <ROW Property="AI_PROPPATH_DIR_PERBUILD_NouveauProf.docx" Value="..\Fiche nouveau prof\bin\Debug\Resources"/>
+    <ROW Property="AI_PROPPATH_DIR_PERBUILD_Fichenouveauprof.exe" Value="..\Fiche nouveau prof\bin\Release"/>
+    <ROW Property="AI_PROPPATH_DIR_PERBUILD_Fichenouveauprof.exe.config" Value="..\Fiche nouveau prof\bin\Release"/>
+    <ROW Property="AI_PROPPATH_DIR_PERBUILD_FichesEleves.docx" Value="..\Fiche nouveau prof\bin\Release\Resources"/>
+    <ROW Property="AI_PROPPATH_DIR_PERBUILD_Fond_ecran.jpg" Value="..\Fiche nouveau prof\bin\Release\Resources"/>
+    <ROW Property="AI_PROPPATH_DIR_PERBUILD_NouveauProf.docx" Value="..\Fiche nouveau prof\bin\Release\Resources"/>
     <ROW Property="AI_PROPPATH_DIR_PERBUILD_Spire.Common.dll" Value="..\..\..\..\..\..\..\Program Files (x86)\e-iceblue\Spire.XLS-FE\Bin\NET3.5"/>
     <ROW Property="AI_PROPPATH_DIR_PERBUILD_Spire.License.dll" Value="..\..\..\..\..\..\..\Program Files (x86)\e-iceblue\Spire.XLS-FE\Bin\NET3.5"/>
     <ROW Property="AI_PROPPATH_DIR_PERBUILD_Spire.Pdf.dll" Value="..\..\..\..\..\..\..\Program Files (x86)\e-iceblue\Spire.XLS-FE\Bin\NET3.5"/>
