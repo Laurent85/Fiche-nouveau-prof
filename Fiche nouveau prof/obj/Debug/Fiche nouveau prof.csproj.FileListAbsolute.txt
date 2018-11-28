@@ -51,7 +51,6 @@ C:\Users\User\Documents\Visual Studio 2017\Projects\Fiche nouveau prof\Fiche nou
 C:\Users\User\Documents\Visual Studio 2017\Projects\Fiche nouveau prof\Fiche nouveau prof\bin\Debug\Spire.Common.xml
 C:\Users\User\Documents\Visual Studio 2017\Projects\Fiche nouveau prof\Fiche nouveau prof\bin\Debug\Spire.Pdf.xml
 C:\Users\User\Documents\Visual Studio 2017\Projects\Fiche nouveau prof\Fiche nouveau prof\bin\Debug\Spire.XLS.xml
-C:\Users\User\Documents\Visual Studio 2017\Projects\Fiche nouveau prof\Fiche nouveau prof\obj\Debug\Fiche nouveau prof.csprojAssemblyReference.cache
 C:\Users\User\Documents\Visual Studio 2017\Projects\Fiche nouveau prof\Fiche nouveau prof\obj\Debug\Fiche nouveau prof.csproj.ResolveComReference.cache
 C:\Users\User\Documents\Visual Studio 2017\Projects\Fiche nouveau prof\Fiche nouveau prof\obj\Debug\Fiche_nouveau_prof.Informations.resources
 C:\Users\User\Documents\Visual Studio 2017\Projects\Fiche nouveau prof\Fiche nouveau prof\obj\Debug\Fiche_nouveau_prof.Principal.resources
@@ -61,3 +60,4 @@ C:\Users\User\Documents\Visual Studio 2017\Projects\Fiche nouveau prof\Fiche nou
 C:\Users\User\Documents\Visual Studio 2017\Projects\Fiche nouveau prof\Fiche nouveau prof\obj\Debug\Fiche nouveau prof.csproj.CopyComplete
 C:\Users\User\Documents\Visual Studio 2017\Projects\Fiche nouveau prof\Fiche nouveau prof\obj\Debug\Fiche nouveau prof.exe
 C:\Users\User\Documents\Visual Studio 2017\Projects\Fiche nouveau prof\Fiche nouveau prof\obj\Debug\Fiche nouveau prof.pdb
+C:\Users\User\Documents\Visual Studio 2017\Projects\Fiche nouveau prof\Fiche nouveau prof\obj\Debug\Fiche nouveau prof.csprojAssemblyReference.cache

@@ -100,6 +100,8 @@
             this.button1 = new System.Windows.Forms.Button();
             this.btnLancerCopieDossier = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
+            this.btnDateNaissance = new System.Windows.Forms.Button();
+            this.lblAnniversaire = new System.Windows.Forms.Label();
             this.grpBxConnexionAd.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.grpboxChoixFiltre.SuspendLayout();
@@ -908,6 +910,28 @@
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.BtnChoisirDossierACopier);
             // 
+            // btnDateNaissance
+            // 
+            this.btnDateNaissance.Location = new System.Drawing.Point(1332, 225);
+            this.btnDateNaissance.Name = "btnDateNaissance";
+            this.btnDateNaissance.Size = new System.Drawing.Size(111, 23);
+            this.btnDateNaissance.TabIndex = 64;
+            this.btnDateNaissance.Text = "Date de naissance";
+            this.btnDateNaissance.UseVisualStyleBackColor = true;
+            this.btnDateNaissance.Click += new System.EventHandler(this.btnDateNaissance_Click);
+            // 
+            // lblAnniversaire
+            // 
+            this.lblAnniversaire.AutoSize = true;
+            this.lblAnniversaire.BackColor = System.Drawing.Color.Transparent;
+            this.lblAnniversaire.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblAnniversaire.ForeColor = System.Drawing.Color.Fuchsia;
+            this.lblAnniversaire.Location = new System.Drawing.Point(414, 123);
+            this.lblAnniversaire.Name = "lblAnniversaire";
+            this.lblAnniversaire.Size = new System.Drawing.Size(166, 16);
+            this.lblAnniversaire.TabIndex = 65;
+            this.lblAnniversaire.Text = "Anniversaires du jour : ";
+            // 
             // Principal
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -916,6 +940,8 @@
             this.BackgroundImage = global::Fiche_nouveau_prof.Properties.Resources.Fond_ecran;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ClientSize = new System.Drawing.Size(1472, 780);
+            this.Controls.Add(this.lblAnniversaire);
+            this.Controls.Add(this.btnDateNaissance);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.btnLancerCopieDossier);
             this.Controls.Add(this.button1);
@@ -1039,6 +1065,8 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button btnLancerCopieDossier;
         private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button btnDateNaissance;
+        private System.Windows.Forms.Label lblAnniversaire;
     }
 }
 

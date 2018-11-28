@@ -33,6 +33,7 @@ namespace Fiche_nouveau_prof
     public partial class Principal : Form
     {
         public string OuCollege = "OU=College,DC=stj,DC=lan";
+        public string DateDuJour = DateTime.Now.ToString("dd/MM");
         public static string NomPrénom;
         public static string Compte;
         public static string HomeDirectory;
@@ -49,8 +50,14 @@ namespace Fiche_nouveau_prof
         private string DomainesDc()
         {
             string domaines;
-            if (txtDomaine3.Text == "") { domaines = "DC=" + txtDomaine1.Text + ",DC=" + txtDomaine2.Text; }
-            else { domaines = "DC=" + txtDomaine1.Text + ",DC=" + txtDomaine2.Text + ",DC=" + txtDomaine3.Text; }
+            if (txtDomaine3.Text == "")
+            {
+                domaines = "DC=" + txtDomaine1.Text + ",DC=" + txtDomaine2.Text;
+            }
+            else
+            {
+                domaines = "DC=" + txtDomaine1.Text + ",DC=" + txtDomaine2.Text + ",DC=" + txtDomaine3.Text;
+            }
             return domaines;
         }
 
@@ -61,7 +68,10 @@ namespace Fiche_nouveau_prof
             {
                 authentification = txtDomaine1.Text + @"\" + txtUtilisateur.Text;
             }
-            else { authentification = @"dirstj\" + txtUtilisateur.Text; }
+            else
+            {
+                authentification = @"dirstj\" + txtUtilisateur.Text;
+            }
             return authentification;
         }
 
@@ -87,6 +97,8 @@ namespace Fiche_nouveau_prof
             BtnSuppressionPhoto.Visible = false;
             BtnAjoutPhoto.Visible = false;
             btnInformations.Visible = false;
+            btnDateNaissance.Visible = false;
+            ChercherAnniversaire();
         }
 
         private void BtnValider_Click(object sender, EventArgs e)
@@ -173,7 +185,8 @@ namespace Fiche_nouveau_prof
             foreach (var item in ListeRésultats.CheckedItems)
                 try
                 {
-                    var attachment = new Attachment(@"\\Serveur2008\Laurent$\Année 2018-2019\Nouveaux profs 2018-2019\" + item);
+                    var attachment =
+                        new Attachment(@"\\Serveur2008\Laurent$\Année 2018-2019\Nouveaux profs 2018-2019\" + item);
                     mail.Attachments.Add(attachment);
                 }
                 catch (Exception ex)
@@ -192,7 +205,8 @@ namespace Fiche_nouveau_prof
             var entry = new DirectoryEntry("LDAP://" + txtAdresseIp.Text + "/" + DomainesDc(), Authentification(),
                 txtMotDePasse.Text);
             var ds = new DirectorySearcher(entry);
-            ds.Filter = "(&(&(objectClass=user)(memberOf=CN=Administrateurs,CN=Builtin," + DomainesDc() + "))(samAccountName=" + txtUtilisateur.Text + "))";
+            ds.Filter = "(&(&(objectClass=user)(memberOf=CN=Administrateurs,CN=Builtin," + DomainesDc() +
+                        "))(samAccountName=" + txtUtilisateur.Text + "))";
             var result = ds.FindOne();
 
             if (result != null)
@@ -210,7 +224,8 @@ namespace Fiche_nouveau_prof
             if (lblCheminFichierExcel.Text != "" && cboxOu.SelectedItem.ToString() != "") ImportUtilisateurs();
             if (lblCheminFichierExcel.Text == "" && txbNom.Text != "" && txbGroupe.Text != "" &&
                 txbPrénom.Text != "" && cboxOu.SelectedItem.ToString() != "")
-                CréationUtilisateur(txbNom.Text, txbPrénom.Text, txbGroupe.Text, OuChoisie(), txbIdED.Text, txbMdpED.Text);
+                CréationUtilisateur(txbNom.Text, txbPrénom.Text, txbGroupe.Text, OuChoisie(), txbIdED.Text,
+                    txbMdpED.Text);
             TxbRechercherCompte_TextChanged(sender, e);
         }
 
@@ -304,7 +319,7 @@ namespace Fiche_nouveau_prof
                 foreach (DataRow rang in liste.Rows)
                 {
                     var ad = new DirectoryEntry(
-                         @"LDAP://" + txtAdresseIp.Text + "/OU=" + cboxOu.SelectedItem + ",OU=college," +
+                        @"LDAP://" + txtAdresseIp.Text + "/OU=" + cboxOu.SelectedItem + ",OU=college," +
                         DomainesDc(), Authentification(), txtMotDePasse.Text);
                     var toutsLesRésultats = ad.Children;
                     if (RdBtnServeurAdmin.Checked)
@@ -433,7 +448,8 @@ namespace Fiche_nouveau_prof
             switch (ContexteChoisi())
             {
                 case "Créer une fiche prof":
-                    RemplirListeBox(ListeRésultats, @"\\Serveur2008\Laurent$\Année 2018-2019\Nouveaux profs 2018-2019", "*.*");
+                    RemplirListeBox(ListeRésultats, @"\\Serveur2008\Laurent$\Année 2018-2019\Nouveaux profs 2018-2019",
+                        "*.*");
                     cboxOu.Enabled = false;
                     txbEmail.Enabled = true;
                     txbCopieur.Enabled = true;
@@ -536,8 +552,8 @@ namespace Fiche_nouveau_prof
 
             var de =
                 new DirectoryEntry(
-                     @"LDAP://" + txtAdresseIp.Text + "/OU=" + cboxOu.SelectedItem + ",OU=college," +
-                        DomainesDc(), Authentification(), txtMotDePasse.Text);
+                    @"LDAP://" + txtAdresseIp.Text + "/OU=" + cboxOu.SelectedItem + ",OU=college," +
+                    DomainesDc(), Authentification(), txtMotDePasse.Text);
             SearchResultCollection results;
 
             var ds = new DirectorySearcher(de);
@@ -595,7 +611,8 @@ namespace Fiche_nouveau_prof
 
             #region Création du fichier CSV
 
-            var fullFilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"\\Serveur2008\Laurent$\Comptes AD\Comptes " + ListeRésultats.SelectedItem + ".csv");
+            var fullFilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory,
+                @"\\Serveur2008\Laurent$\Comptes AD\Comptes " + ListeRésultats.SelectedItem + ".csv");
             CréerFichierCsv(dt, fullFilePath);
 
             #endregion Création du fichier CSV
@@ -628,7 +645,8 @@ namespace Fiche_nouveau_prof
             #region Mise en forme du fichier XLSX
 
             var xlApp = new Microsoft.Office.Interop.Excel.Application();
-            var xlWorkBook = xlApp.Workbooks.Open(@"\\Serveur2008\Laurent$\Comptes AD\Comptes " + ListeRésultats.SelectedItem + ".xlsx");
+            var xlWorkBook = xlApp.Workbooks.Open(@"\\Serveur2008\Laurent$\Comptes AD\Comptes " +
+                                                  ListeRésultats.SelectedItem + ".xlsx");
             Worksheet worksheet1 = xlWorkBook.Worksheets[1];
             worksheet1.Columns.AutoFit();
             var sortBy = worksheet1.Range["D2", "D1000"];
@@ -660,15 +678,20 @@ namespace Fiche_nouveau_prof
             object qry = "select *from [Comptes " + ListeRésultats.SelectedItem + "$]";
             object nullobject = Missing.Value;
             oDoc.MailMerge.MainDocumentType = WdMailMergeMainDocType.wdFormLetters;
-            oDoc.MailMerge.OpenDataSource(@"\\Serveur2008\Laurent$\Comptes AD\Comptes " + ListeRésultats.SelectedItem + ".xlsx", ref nullobject, ref nullobject, ref nullobject,
+            oDoc.MailMerge.OpenDataSource(
+                @"\\Serveur2008\Laurent$\Comptes AD\Comptes " + ListeRésultats.SelectedItem + ".xlsx", ref nullobject,
+                ref nullobject, ref nullobject,
                 ref nullobject, ref nullobject, ref nullobject, ref nullobject, ref nullobject, ref nullobject,
                 ref nullobject, ref nullobject, ref qry, ref nullobject, ref nullobject, ref nullobject);
             oDoc.MailMerge.Destination = WdMailMergeDestination.wdSendToNewDocument;
             oDoc.MailMerge.Execute(false);
 
             var oLetters = wordApp.ActiveDocument;
-            oLetters.SaveAs2(@"\\Serveur2008\Laurent$\Comptes AD\Fiches " + ListeRésultats.SelectedItem + ".docx", WdSaveFormat.wdFormatDocumentDefault);
-            oLetters.ExportAsFixedFormat(@"\\Serveur2008\Laurent$\Comptes AD\Fiches " + ListeRésultats.SelectedItem + ".pdf", WdExportFormat.wdExportFormatPDF);
+            oLetters.SaveAs2(@"\\Serveur2008\Laurent$\Comptes AD\Fiches " + ListeRésultats.SelectedItem + ".docx",
+                WdSaveFormat.wdFormatDocumentDefault);
+            oLetters.ExportAsFixedFormat(
+                @"\\Serveur2008\Laurent$\Comptes AD\Fiches " + ListeRésultats.SelectedItem + ".pdf",
+                WdExportFormat.wdExportFormatPDF);
             oLetters.Close(WdSaveOptions.wdDoNotSaveChanges);
             oDoc.Close(WdSaveOptions.wdDoNotSaveChanges);
             wordApp.Quit();
@@ -682,7 +705,8 @@ namespace Fiche_nouveau_prof
             if (rdBtnCréationFicheProf.Checked)
             {
                 string file = ListeRésultats.SelectedItem.ToString();
-                string fullFileName = Path.Combine(@"\\Serveur2008\Laurent$\Année 2018-2019\Nouveaux profs 2018-2019", file);
+                string fullFileName = Path.Combine(@"\\Serveur2008\Laurent$\Année 2018-2019\Nouveaux profs 2018-2019",
+                    file);
                 Process.Start(fullFileName);
             }
         }
@@ -831,7 +855,8 @@ namespace Fiche_nouveau_prof
             if (!cbxDescription.SelectedItem.ToString().Contains("Tout le monde"))
             {
                 if (TxbRechercherCompte.Text != "")
-                    ouSearch.Filter = "(&(objectCategory=" + catégorie + ") (name=*" + TxbRechercherCompte.Text + "*)(description=" +
+                    ouSearch.Filter = "(&(objectCategory=" + catégorie + ") (name=*" + TxbRechercherCompte.Text +
+                                      "*)(description=" +
                                       cbxDescription.SelectedItem + "))";
                 else
                     ouSearch.Filter = "(&(objectCategory=" + catégorie + ")(description=" +
@@ -897,7 +922,8 @@ namespace Fiche_nouveau_prof
             {
                 CréationDossierUtilisateur(xlRange.Cells[i, 2].Value2.ToString());
                 CréationUtilisateur(xlRange.Cells[i, 2].Value2.ToString(), xlRange.Cells[i, 3].Value2.ToString(),
-                    xlRange.Cells[i, 1].Value2.ToString(), OuChoisie(), xlRange.Cells[i, 5].Value2.ToString(), xlRange.Cells[i, 6].Value2.ToString());
+                    xlRange.Cells[i, 1].Value2.ToString(), OuChoisie(), xlRange.Cells[i, 5].Value2.ToString(),
+                    xlRange.Cells[i, 6].Value2.ToString());
             }
 
             xlWorkbook.Close();
@@ -1003,7 +1029,8 @@ namespace Fiche_nouveau_prof
             {
                 var entry =
                     new DirectoryEntry(
-                        "LDAP://" + txtAdresseIp.Text + "/OU=" + ou + ", OU=college, " + DomainesDc(), Authentification(), txtMotDePasse.Text);
+                        "LDAP://" + txtAdresseIp.Text + "/OU=" + ou + ", OU=college, " + DomainesDc(),
+                        Authentification(), txtMotDePasse.Text);
                 var group = entry.Children.Add("CN=" + groupe, "group");
                 group.Properties["sAmAccountName"].Value = groupe;
                 if (groupe == "Eleves")
@@ -1021,7 +1048,8 @@ namespace Fiche_nouveau_prof
         {
             var entry =
                 new DirectoryEntry(
-                        "LDAP://" + txtAdresseIp.Text + "/OU=" + ou + ", OU=college, " + DomainesDc(), Authentification(), txtMotDePasse.Text);
+                    "LDAP://" + txtAdresseIp.Text + "/OU=" + ou + ", OU=college, " + DomainesDc(), Authentification(),
+                    txtMotDePasse.Text);
             var group = entry.Children.Add("CN=distri-" + groupe, "group");
             group.Properties["sAmAccountName"].Value = "distri-" + groupe;
             group.Properties["groupType"].Value = 0x2;
@@ -1048,7 +1076,7 @@ namespace Fiche_nouveau_prof
             var deOu =
                 new DirectoryEntry(
                     "LDAP://" + txtAdresseIp.Text + "/" + DomainesDc(),
-                   Authentification(), txtMotDePasse.Text, AuthenticationTypes.Secure);
+                    Authentification(), txtMotDePasse.Text, AuthenticationTypes.Secure);
             var rechercher = new DirectorySearcher(deOu, "(sAMAccountName=" + utilisateur + ")");
             var compteAd = rechercher.FindOne();
             var sid = new SecurityIdentifier(compteAd.Properties["objectSid"][0] as byte[], 0);
@@ -1068,7 +1096,7 @@ namespace Fiche_nouveau_prof
             var deOu =
                 new DirectoryEntry(
                     "LDAP://" + txtAdresseIp.Text + "/" + DomainesDc(),
-                   Authentification(), txtMotDePasse.Text, AuthenticationTypes.Secure);
+                    Authentification(), txtMotDePasse.Text, AuthenticationTypes.Secure);
             var rechercher = new DirectorySearcher(deOu, "(sAMAccountName=" + utilisateur + ")");
             var compteAd = rechercher.FindOne();
             var sid = new SecurityIdentifier(compteAd.Properties["objectSid"][0] as byte[], 0);
@@ -1120,7 +1148,7 @@ namespace Fiche_nouveau_prof
                 var rootDse =
                     new DirectoryEntry(
                         @"LDAP://" + txtAdresseIp.Text + "/OU=" + cboxOu.SelectedItem + ",OU=college," +
-                       DomainesDc(), Authentification(), txtMotDePasse.Text);
+                        DomainesDc(), Authentification(), txtMotDePasse.Text);
                 var ouSearch = new DirectorySearcher(rootDse);
                 if (rdBtnUtilisateurs.Checked)
                     ouSearch.Filter = "(&(objectCategory=Person)(objectClass=user)(displayName=" + item + "))";
@@ -1146,7 +1174,7 @@ namespace Fiche_nouveau_prof
                 {
                     var ad = new DirectoryEntry(
                         @"LDAP://" + txtAdresseIp.Text + "/OU=" + cboxOu.SelectedItem + ",OU=college," +
-                       DomainesDc(), Authentification(), txtMotDePasse.Text);
+                        DomainesDc(), Authentification(), txtMotDePasse.Text);
                     var toutsLesRésultats = ad.Children;
                     var compteASupprimer = toutsLesRésultats.Find("CN=" + rang["Compte"]);
                     ClearAttributes(@"\\Serveur2008\" + OuChoisie() + @"\" + rang["Compte"]);
@@ -1194,7 +1222,6 @@ namespace Fiche_nouveau_prof
 
         private void SuppressionDossier(string chemin)
         {
-
             var dir = new DirectoryInfo(chemin);
 
             if (dir.Exists)
@@ -1249,7 +1276,7 @@ namespace Fiche_nouveau_prof
             var deOu =
                 new DirectoryEntry(
                     "LDAP://" + txtAdresseIp.Text + "/" + DomainesDc(),
-                   Authentification(), txtMotDePasse.Text, AuthenticationTypes.Secure);
+                    Authentification(), txtMotDePasse.Text, AuthenticationTypes.Secure);
             var rechercher = new DirectorySearcher(deOu, "(sAMAccountName=" + utilisateur + ")");
             var compteAd = rechercher.FindOne();
             var sid = new SecurityIdentifier(compteAd.Properties["objectSid"][0] as byte[], 0);
@@ -1417,7 +1444,7 @@ namespace Fiche_nouveau_prof
                 foreach (DataRow rang in liste.Rows)
                 {
                     var ad = new DirectoryEntry(
-                       @"LDAP://" + txtAdresseIp.Text + "/OU=" + cboxOu.SelectedItem + ",OU=college," +
+                        @"LDAP://" + txtAdresseIp.Text + "/OU=" + cboxOu.SelectedItem + ",OU=college," +
                         DomainesDc(), Authentification(), txtMotDePasse.Text);
                     var tousLesRésultats = ad.Children;
                     var compteAvecPhoto = tousLesRésultats.Find("CN=" + rang["Compte"]);
@@ -1481,7 +1508,8 @@ namespace Fiche_nouveau_prof
                 string fileName = openFileDialog1.SafeFileName;
                 string chemin = openFileDialog1.FileName.Replace(fileName, "");
 
-                var deOu = new DirectoryEntry("LDAP://" + txtAdresseIp.Text + "/" + DomainesDc(), Authentification(), txtMotDePasse.Text);
+                var deOu = new DirectoryEntry("LDAP://" + txtAdresseIp.Text + "/" + DomainesDc(), Authentification(),
+                    txtMotDePasse.Text);
                 var rechercher = new DirectorySearcher(deOu, "(DisplayName=" + ListeRésultats.SelectedItem + ")");
                 var compteAd = rechercher.FindOne();
 
@@ -1522,7 +1550,8 @@ namespace Fiche_nouveau_prof
 
         private void AfficherPhotoElève()
         {
-            var deOu = new DirectoryEntry("LDAP://" + txtAdresseIp.Text + "/" + DomainesDc(), Authentification(), txtMotDePasse.Text);
+            var deOu = new DirectoryEntry("LDAP://" + txtAdresseIp.Text + "/" + DomainesDc(), Authentification(),
+                txtMotDePasse.Text);
             var rechercher = new DirectorySearcher(deOu, "(DisplayName=" + ListeRésultats.SelectedItem + ")");
             var compteAd = rechercher.FindOne();
             BtnAjoutPhoto.Visible = true;
@@ -1537,7 +1566,8 @@ namespace Fiche_nouveau_prof
                 NomPrénom = "";
                 HomeDirectory = "";
 
-                if ((directoryEntry.Properties.Contains("thumbnailPhoto")) && ((byte[])directoryEntry.Properties["thumbnailPhoto"][0] != null))
+                if ((directoryEntry.Properties.Contains("thumbnailPhoto")) &&
+                    ((byte[])directoryEntry.Properties["thumbnailPhoto"][0] != null))
                 {
                     var pic = (byte[])directoryEntry.Properties["thumbnailPhoto"][0];
                     var ms = new MemoryStream(pic);
@@ -1582,7 +1612,8 @@ namespace Fiche_nouveau_prof
 
             var de =
                 new DirectoryEntry(
-                    @"LDAP://" + txtAdresseIp.Text + "/OU=" + cboxOu.SelectedItem + ",OU=college," + DomainesDc(), Authentification(), txtMotDePasse.Text);
+                    @"LDAP://" + txtAdresseIp.Text + "/OU=" + cboxOu.SelectedItem + ",OU=college," + DomainesDc(),
+                    Authentification(), txtMotDePasse.Text);
             SearchResultCollection results;
 
             var ds = new DirectorySearcher(de);
@@ -1639,7 +1670,8 @@ namespace Fiche_nouveau_prof
 
             #region Création du fichier CSV
 
-            var fullFilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"\\Serveur2008\Laurent$\Comptes AD\Comptes " + cboxOu.SelectedItem + ".csv");
+            var fullFilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory,
+                @"\\Serveur2008\Laurent$\Comptes AD\Comptes " + cboxOu.SelectedItem + ".csv");
             CréerFichierCsv(dt, fullFilePath);
 
             #endregion Création du fichier CSV
@@ -1672,7 +1704,8 @@ namespace Fiche_nouveau_prof
             #region Mise en forme du fichier XLSX
 
             var xlApp = new Microsoft.Office.Interop.Excel.Application();
-            var xlWorkBook = xlApp.Workbooks.Open(@"\\Serveur2008\Laurent$\Comptes AD\Comptes " + cboxOu.SelectedItem + ".xlsx");
+            var xlWorkBook =
+                xlApp.Workbooks.Open(@"\\Serveur2008\Laurent$\Comptes AD\Comptes " + cboxOu.SelectedItem + ".xlsx");
             Worksheet worksheet1 = xlWorkBook.Worksheets[1];
             worksheet1.Columns.AutoFit();
             var sortBy = worksheet1.Range["D2", "D1000"];
@@ -1704,15 +1737,18 @@ namespace Fiche_nouveau_prof
             object qry = "select *from [Comptes " + cboxOu.SelectedItem + "$]";
             object nullobject = Missing.Value;
             oDoc.MailMerge.MainDocumentType = WdMailMergeMainDocType.wdFormLetters;
-            oDoc.MailMerge.OpenDataSource(@"\\Serveur2008\Laurent$\Comptes AD\Comptes " + cboxOu.SelectedItem + ".xlsx", ref nullobject, ref nullobject, ref nullobject,
+            oDoc.MailMerge.OpenDataSource(@"\\Serveur2008\Laurent$\Comptes AD\Comptes " + cboxOu.SelectedItem + ".xlsx",
+                ref nullobject, ref nullobject, ref nullobject,
                 ref nullobject, ref nullobject, ref nullobject, ref nullobject, ref nullobject, ref nullobject,
                 ref nullobject, ref nullobject, ref qry, ref nullobject, ref nullobject, ref nullobject);
             oDoc.MailMerge.Destination = WdMailMergeDestination.wdSendToNewDocument;
             oDoc.MailMerge.Execute(false);
 
             var oLetters = wordApp.ActiveDocument;
-            oLetters.SaveAs2(@"\\Serveur2008\Laurent$\Comptes AD\Fiches " + cboxOu.SelectedItem + ".docx", WdSaveFormat.wdFormatDocumentDefault);
-            oLetters.ExportAsFixedFormat(@"\\Serveur2008\Laurent$\Comptes AD\Fiches " + cboxOu.SelectedItem + ".pdf", WdExportFormat.wdExportFormatPDF);
+            oLetters.SaveAs2(@"\\Serveur2008\Laurent$\Comptes AD\Fiches " + cboxOu.SelectedItem + ".docx",
+                WdSaveFormat.wdFormatDocumentDefault);
+            oLetters.ExportAsFixedFormat(@"\\Serveur2008\Laurent$\Comptes AD\Fiches " + cboxOu.SelectedItem + ".pdf",
+                WdExportFormat.wdExportFormatPDF);
             oLetters.Close(WdSaveOptions.wdDoNotSaveChanges);
             oDoc.Close(WdSaveOptions.wdDoNotSaveChanges);
             wordApp.Quit();
@@ -1726,7 +1762,8 @@ namespace Fiche_nouveau_prof
 
             excelApp.Visible = true;
 
-            var workbook = excelApp.Workbooks.Add(@"\\Serveur2008\Laurent$\Comptes AD\Comptes " + cboxOu.SelectedItem + ".xlsx");
+            var workbook =
+                excelApp.Workbooks.Add(@"\\Serveur2008\Laurent$\Comptes AD\Comptes " + cboxOu.SelectedItem + ".xlsx");
 
             var ws = excelApp.Worksheets[1] as Worksheet;
 
@@ -1780,8 +1817,10 @@ namespace Fiche_nouveau_prof
                         workbook.Worksheets[count].Cells[1, 6].Value = "id ED";
                         workbook.Worksheets[count].Cells[1, 7].Value = "mdp ED";
                         workbook.Worksheets[count].Rows(1).RowHeight = 30;
-                        workbook.Worksheets[count].Rows(1).HorizontalAlignment = Microsoft.Office.Interop.Excel.XlHAlign.xlHAlignCenter;
-                        workbook.Worksheets[count].Rows(1).VerticalAlignment = Microsoft.Office.Interop.Excel.XlVAlign.xlVAlignCenter;
+                        workbook.Worksheets[count].Rows(1).HorizontalAlignment =
+                            Microsoft.Office.Interop.Excel.XlHAlign.xlHAlignCenter;
+                        workbook.Worksheets[count].Rows(1).VerticalAlignment =
+                            Microsoft.Office.Interop.Excel.XlVAlign.xlVAlignCenter;
                         workbook.Worksheets[count].Cells[1, 1].EntireRow.Font.Bold = true;
                         Microsoft.Office.Interop.Excel.Range range1 = workbook.Worksheets[count].Range["A1", "G1"];
                         range1.Interior.Color = Color.LightGray;
@@ -1792,7 +1831,8 @@ namespace Fiche_nouveau_prof
             }
             File.Delete(@"\\Serveur2008\Laurent$\Comptes AD\Comptes AD " + cboxOu.SelectedItem + " par classe.xlsx");
 
-            workbook.SaveAs(@"\\Serveur2008\Laurent$\Comptes AD\Comptes AD " + cboxOu.SelectedItem + " par classe.xlsx", XlFileFormat.xlWorkbookDefault);
+            workbook.SaveAs(@"\\Serveur2008\Laurent$\Comptes AD\Comptes AD " + cboxOu.SelectedItem + " par classe.xlsx",
+                XlFileFormat.xlWorkbookDefault);
             workbook.Close();
             excelApp.Quit();
             GC.Collect();
@@ -1880,6 +1920,72 @@ namespace Fiche_nouveau_prof
                 {
                     Console.WriteLine(ex.ToString());
                 }
+        }
+
+        private void btnDateNaissance_Click(object sender, EventArgs e)
+        {
+            MajUtilisateurs();
+        }
+
+        private void MajUtilisateurs()
+        {
+            var xlApp = new Microsoft.Office.Interop.Excel.Application();
+            var xlWorkbook = xlApp.Workbooks.Open(lblCheminFichierExcel.Text);
+            _Worksheet xlWorksheet = xlWorkbook.Sheets[1];
+            var xlRange = xlWorksheet.UsedRange;
+
+            var rowCount = xlRange.Rows.Count;
+
+            for (var i = 2; i <= rowCount; i++)
+            {
+                double myOaDate = xlRange.Cells[i, 4].Value2;
+                DateTime dateNaissance = DateTime.FromOADate(myOaDate);
+                MajUtilisateur(xlRange.Cells[i, 5].Value2.ToString(), dateNaissance.ToString("dd/MM/yyyy"));
+            }
+
+            xlWorkbook.Close();
+            GC.Collect();
+            GC.WaitForPendingFinalizers();
+        }
+
+        private void MajUtilisateur(string idEd, string naissance)
+        {
+            var rootDse =
+                new DirectoryEntry(
+                    @"LDAP://" + txtAdresseIp.Text + "/OU=" + cboxOu.SelectedItem + ",OU=college," +
+                    DomainesDc(), Authentification(), txtMotDePasse.Text);
+            var ouSearch = new DirectorySearcher(rootDse);
+
+            ouSearch.Filter = "(&(objectCategory=Person)(objectClass=user)(department=" + idEd + "))";
+
+            var résultats = ouSearch.FindOne();
+            if (résultats != null)
+            {
+                DirectoryEntry entryToUpdate = résultats.GetDirectoryEntry();
+                entryToUpdate.Properties["title"].Value = naissance;
+                entryToUpdate.CommitChanges();
+            }
+        }
+
+        private void ChercherAnniversaire()
+        {
+            var rootDse =
+                new DirectoryEntry(
+                    @"LDAP://" + txtAdresseIp.Text + "/OU=" + cboxOu.SelectedItem + ",OU=college," +
+                    DomainesDc(), Authentification(), txtMotDePasse.Text);
+
+            var ouSearch = new DirectorySearcher(rootDse);
+
+            ouSearch.Filter = "(&(objectCategory=person)(objectClass=user))";
+
+            SearchResultCollection résultats;
+            résultats = ouSearch.FindAll();
+
+            foreach (SearchResult résultat in résultats)
+            {
+                if (résultat.Properties["title"][0].ToString().Contains(DateDuJour))
+                    lblAnniversaire.Text = lblAnniversaire.Text + résultat.Properties["displayName"][0].ToString() + @" - ";
+            }
         }
     }
 }
